@@ -6,24 +6,18 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>The first technology blog | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的常规用法。
-NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
-富文本分为不可变(NSAttributedString)和可变(NSMuta">
+  <meta name="description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="The first technology blog">
 <meta property="og:url" content="http://yoursite.com/2016/03/22/The-first-techenology-blog/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
-<meta property="og:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的常规用法。
-NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
-富文本分为不可变(NSAttributedString)和可变(NSMuta">
+<meta property="og:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/ThefirstBlog_show1%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-23%20%E4%B8%8B%E5%8D%887.23.03.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/ThefirstBlog_result%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-25%20%E4%B8%8A%E5%8D%881.02.13.png">
-<meta property="og:updated_time" content="2016-03-24T17:04:13.000Z">
+<meta property="og:updated_time" content="2016-03-24T17:26:12.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="The first technology blog">
-<meta name="twitter:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的常规用法。
-NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
-富文本分为不可变(NSAttributedString)和可变(NSMuta">
+<meta name="twitter:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -221,7 +215,7 @@ NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的�
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的常规用法。</p>
+        <p>第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。<a id="more"></a></p>
 <h2 id="NSAttributedString">NSAttributedString</h2><p>NSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。</p>
 <p>富文本分为不可变(NSAttributedString)和可变(NSMutableAttributedString)两种类型,两者的区别在于初始化完成后可变类型可以对其内部的值进行修改操作(即:覆盖,插入,删除字符串等操作), 而不可变类型则反之。<br>由于NSAttributedString类型方法比较局限,我们直接创建继承自它的NSMutableAttributedString类型对象<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常规初始化方法有三个</span></span><br><span class="line"><span class="built_in">NSString</span> *str = <span class="string">@"The first Technology blog"</span>;</span><br><span class="line"><span class="comment">// 1.直接赋值(NSString类型)</span></span><br><span class="line">- (instancetype)initWithString:(<span class="built_in">NSString</span> *)str;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr1 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithString:str];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.赋值并添加文本属性</span></span><br><span class="line">- (instancetype)initWithString:(<span class="built_in">NSString</span> *)str attributes:(nullable <span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *)attrs;</span><br><span class="line"><span class="built_in">NSDictionary</span> *attributesDic = @&#123;<span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">20</span>],<span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> blueColor]&#125;;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr2 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithString:str attributes:attributesDic];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.直接赋值(NSAttributedString类型)</span></span><br><span class="line">- (instancetype)initWithAttributedString:(<span class="built_in">NSAttributedString</span> *)attrStr;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr3 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithAttributedString:mutableAttributeStr2];</span><br></pre></td></tr></table></figure></p>
 <p>第一种初始化时:不能直接设置文本属性<br>第二种初始化时:可以设置文本属性<br>第三种初始化时:直接获取mutableAttributeStr2的文本属性<br>介绍完初始化方法,再来看一看它都有哪些属性:</p>
