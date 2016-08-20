@@ -4,20 +4,26 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>The first technology blog | Leon’s Blog</title>
+  <title>NSAttributedString的基本用法和特殊处理 | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
+  <meta name="description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。
+NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
+富文本分为不可变(NSAttributedString)和可变(NSMuta">
 <meta property="og:type" content="article">
-<meta property="og:title" content="The first technology blog">
+<meta property="og:title" content="NSAttributedString的基本用法和特殊处理">
 <meta property="og:url" content="http://yoursite.com/2016/03/22/The-first-techenology-blog/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
-<meta property="og:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
+<meta property="og:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。
+NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
+富文本分为不可变(NSAttributedString)和可变(NSMuta">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/ThefirstBlog_show1%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-23%20%E4%B8%8B%E5%8D%887.23.03.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/ThefirstBlog_result%E5%B1%8F%E5%B9%95%E5%BF%AB%E7%85%A7%202016-03-25%20%E4%B8%8A%E5%8D%881.02.13.png">
-<meta property="og:updated_time" content="2016-06-22T09:49:56.000Z">
+<meta property="og:updated_time" content="2016-08-20T17:06:27.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="The first technology blog">
-<meta name="twitter:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。">
+<meta name="twitter:title" content="NSAttributedString的基本用法和特殊处理">
+<meta name="twitter:description" content="第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。
+NSAttributedStringNSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。
+富文本分为不可变(NSAttributedString)和可变(NSMuta">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -195,7 +201,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      The first technology blog
+      NSAttributedString的基本用法和特殊处理
     </h1>
   
 
@@ -215,9 +221,9 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。<a id="more"></a></p>
+        <p>第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。</p>
 <h2 id="NSAttributedString">NSAttributedString</h2><p>NSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。</p>
-<p>富文本分为不可变(NSAttributedString)和可变(NSMutableAttributedString)两种类型,两者的区别在于初始化完成后可变类型可以对其内部的值进行修改操作(即:覆盖,插入,删除字符串等操作), 而不可变类型则反之。<br>由于NSAttributedString类型方法比较局限,我们直接创建继承自它的NSMutableAttributedString类型对象<br><figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 常规初始化方法有三个</span></span><br><span class="line"><span class="built_in">NSString</span> *str = <span class="string">@"The first Technology blog"</span>;</span><br><span class="line"><span class="comment">// 1.直接赋值(NSString类型)</span></span><br><span class="line">- (instancetype)initWithString:(<span class="built_in">NSString</span> *)str;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr1 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithString:str];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.赋值并添加文本属性</span></span><br><span class="line">- (instancetype)initWithString:(<span class="built_in">NSString</span> *)str attributes:(nullable <span class="built_in">NSDictionary</span>&lt;<span class="built_in">NSString</span> *, <span class="keyword">id</span>&gt; *)attrs;</span><br><span class="line"><span class="built_in">NSDictionary</span> *attributesDic = @&#123;<span class="built_in">NSFontAttributeName</span> : [<span class="built_in">UIFont</span> systemFontOfSize:<span class="number">20</span>],<span class="built_in">NSForegroundColorAttributeName</span> : [<span class="built_in">UIColor</span> blueColor]&#125;;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr2 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithString:str attributes:attributesDic];</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3.直接赋值(NSAttributedString类型)</span></span><br><span class="line">- (instancetype)initWithAttributedString:(<span class="built_in">NSAttributedString</span> *)attrStr;</span><br><span class="line"><span class="built_in">NSMutableAttributedString</span> *mutableAttributeStr3 = [[<span class="built_in">NSMutableAttributedString</span> alloc]initWithAttributedString:mutableAttributeStr2];</span><br></pre></td></tr></table></figure></p>
+<p>富文本分为不可变(NSAttributedString)和可变(NSMutableAttributedString)两种类型,两者的区别在于初始化完成后可变类型可以对其内部的值进行修改操作(即:覆盖,插入,删除字符串等操作), 而不可变类型则反之。<br>由于NSAttributedString类型方法比较局限,我们直接创建继承自它的NSMutableAttributedString类型对象<br><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">// &#24120;&#35268;&#21021;&#22987;&#21270;&#26041;&#27861;&#26377;&#19977;&#20010;&#10;NSString *str = @&#34;The first Technology blog&#34;;&#10;// 1.&#30452;&#25509;&#36171;&#20540;(NSString&#31867;&#22411;)&#10;- (instancetype)initWithString:(NSString *)str;&#10;NSMutableAttributedString *mutableAttributeStr1 = [[NSMutableAttributedString alloc]initWithString:str];&#10;&#10;// 2.&#36171;&#20540;&#24182;&#28155;&#21152;&#25991;&#26412;&#23646;&#24615;&#10;- (instancetype)initWithString:(NSString *)str attributes:(nullable NSDictionary&#60;NSString *, id&#62; *)attrs;&#10;NSDictionary *attributesDic = @&#123;NSFontAttributeName : [UIFont systemFontOfSize:20],NSForegroundColorAttributeName : [UIColor blueColor]&#125;;&#10;NSMutableAttributedString *mutableAttributeStr2 = [[NSMutableAttributedString alloc]initWithString:str attributes:attributesDic];&#10;&#10;// 3.&#30452;&#25509;&#36171;&#20540;(NSAttributedString&#31867;&#22411;)&#10;- (instancetype)initWithAttributedString:(NSAttributedString *)attrStr;&#10;NSMutableAttributedString *mutableAttributeStr3 = [[NSMutableAttributedString alloc]initWithAttributedString:mutableAttributeStr2];</span><br></pre></td></tr></table></figure></p>
 <p>第一种初始化时:不能直接设置文本属性<br>第二种初始化时:可以设置文本属性<br>第三种初始化时:直接获取mutableAttributeStr2的文本属性<br>介绍完初始化方法,再来看一看它都有哪些属性:</p>
 <figure class="highlight 1c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// NSFontAttributeName                设置字体属性，默认值：字体：Helvetica(Neue) 字号：12</span></span><br><span class="line"><span class="comment">// NSForegroundColorAttributeNam      设置字体颜色，取值为 UIColor对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSBackgroundColorAttributeName     设置字体所在区域背景颜色，取值为 UIColor对象，默认值为nil, 透明色</span></span><br><span class="line"><span class="comment">// NSLigatureAttributeName            设置连体属性，取值为NSNumber 对象(整数)，0 表示没有连体字符，1 表示使用默认的连体字符</span></span><br><span class="line"><span class="comment">// NSKernAttributeName                设定字符间距，取值为 NSNumber 对象（整数），正值间距加宽，负值间距变窄</span></span><br><span class="line"><span class="comment">// NSStrikethroughStyleAttributeName  设置删除线，取值为 NSNumber 对象（整数）</span></span><br><span class="line"><span class="comment">// NSStrikethroughColorAttributeName  设置删除线颜色，取值为 UIColor 对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSUnderlineStyleAttributeName      设置下划线，取值为 NSNumber 对象（整数），枚举常量 NSUnderlineStyle中的值，与删除线类似</span></span><br><span class="line"><span class="comment">// NSUnderlineColorAttributeName      设置下划线颜色，取值为 UIColor 对象，默认值为黑色</span></span><br><span class="line"><span class="comment">// NSStrokeWidthAttributeName         设置笔画宽度，取值为 NSNumber 对象（整数），负值填充效果，正值中空效果</span></span><br><span class="line"><span class="comment">// NSStrokeColorAttributeName         填充部分颜色，不是字体颜色，取值为 UIColor 对象</span></span><br><span class="line"><span class="comment">// NSShadowAttributeName              设置阴影属性，取值为 NSShadow 对象</span></span><br><span class="line"><span class="comment">// NSTextEffectAttributeName          设置文本特殊效果，取值为 NSString 对象，目前只有图版印刷效果可用：</span></span><br><span class="line"><span class="comment">// NSBaselineOffsetAttributeName      设置基线偏移值，取值为 NSNumber （float）,正值上偏，负值下偏</span></span><br><span class="line"><span class="comment">// NSObliquenessAttributeName         设置字形倾斜度，取值为 NSNumber （float）,正值右倾，负值左倾</span></span><br><span class="line"><span class="comment">// NSExpansionAttributeName           设置文本横向拉伸属性，取值为 NSNumber （float）,正值横向拉伸文本，负值横向压缩文本</span></span><br><span class="line"><span class="comment">// NSWritingDirectionAttributeName    设置文字书写方向，从左向右书写或者从右向左书写</span></span><br><span class="line"><span class="comment">// NSVerticalGlyphFormAttributeName   设置文字排版方向，取值为 NSNumber 对象(整数)，0 表示横排文本，1 表示竖排文本</span></span><br><span class="line"><span class="comment">// NSLinkAttributeName                设置链接属性，点击后调用浏览器打开指定URL地址</span></span><br><span class="line"><span class="comment">// NSAttachmentAttributeName          设置文本附件,取值为NSTextAttachment对象,常用于文字图片混排</span></span><br><span class="line"><span class="comment">// NSParagraphStyleAttributeName      设置文本段落排版格式，取值为 NSParagraphStyle 对象</span></span><br></pre></td></tr></table></figure>
 <p>因为NSAttributedString的属性以字典的形式存在的，所以上面的属性作为key对应后面的value类型 即:@{key : value}形式。<br>富文本属性可以在初始化时直接设置,也可以在其初始化完成之后设置或添加(注意:初始化之后进行属性操作必须是NSMutableAttributedString类型):</p>
@@ -297,7 +303,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="The-first-techenology-blog" data-title="The first technology blog" data-url="http://yoursite.com/2016/03/22/The-first-techenology-blog/"></div>
+	<div class="ds-thread" data-thread-key="The-first-techenology-blog" data-title="NSAttributedString的基本用法和特殊处理" data-url="http://yoursite.com/2016/03/22/The-first-techenology-blog/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">
