@@ -4,23 +4,23 @@
   <meta charset="utf-8">
   
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
-  <title>StaticsPackage | Leon’s Blog</title>
+  <title>iOS多种静态库打包成统一静态库 | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，在最终打包静态库的时候遇到了点小问题在此记录一下。
 
 什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态库和动态库两种。iOS中的静态库有 .a 和 .framework两种形式；动态库有.dylib 和 .framework 形式，后来.dylib动态库又被苹果替换成.tbd的形式。  
 静态库和动态库的介绍">
 <meta property="og:type" content="article">
-<meta property="og:title" content="StaticsPackage">
+<meta property="og:title" content="iOS多种静态库打包成统一静态库">
 <meta property="og:url" content="http://yoursite.com/2016/06/22/StaticsPackage/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，在最终打包静态库的时候遇到了点小问题在此记录一下。
 
 什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态库和动态库两种。iOS中的静态库有 .a 和 .framework两种形式；动态库有.dylib 和 .framework 形式，后来.dylib动态库又被苹果替换成.tbd的形式。  
 静态库和动态库的介绍">
-<meta property="og:updated_time" content="2016-08-20T16:41:34.000Z">
+<meta property="og:updated_time" content="2016-08-20T16:51:41.000Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="StaticsPackage">
+<meta name="twitter:title" content="iOS多种静态库打包成统一静态库">
 <meta name="twitter:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，在最终打包静态库的时候遇到了点小问题在此记录一下。
 
 什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态库和动态库两种。iOS中的静态库有 .a 和 .framework两种形式；动态库有.dylib 和 .framework 形式，后来.dylib动态库又被苹果替换成.tbd的形式。  
@@ -202,7 +202,7 @@
         
   
     <h1 class="article-title" itemprop="name">
-      StaticsPackage
+      iOS多种静态库打包成统一静态库
     </h1>
   
 
@@ -237,9 +237,9 @@
 <li>静态库：链接时，静态库会被完整地复制到可执行文件中，被多次使用就有多份冗余拷贝。</li>
 <li>动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</li>
 <li>.a文件是一个纯二进制文件，至少需要配合.h文件去使用，如果需要资源文件，要在把资源文件放在外部并不能把资源文件一同打包成.a文件。</li>
-<li>.framework相当于.a + .h + sourceFile的整合。</li>
+<li>.framework相当于.a + .h + sourceFile的整合，打包过程中可加入其它.a文件进行一同打包成最终的.framework文件。</li>
 </ul>
-
+<h2 id="打包静态库">打包静态库</h2>
       
     </div>
     
@@ -285,7 +285,7 @@
 
 <div class="duoshuo">
 	<!-- 多说评论框 start -->
-	<div class="ds-thread" data-thread-key="StaticsPackage" data-title="StaticsPackage" data-url="http://yoursite.com/2016/06/22/StaticsPackage/"></div>
+	<div class="ds-thread" data-thread-key="StaticsPackage" data-title="iOS多种静态库打包成统一静态库" data-url="http://yoursite.com/2016/06/22/StaticsPackage/"></div>
 	<!-- 多说评论框 end -->
 	<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
 	<script type="text/javascript">

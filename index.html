@@ -194,7 +194,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/22/StaticsPackage/">StaticsPackage</a>
+      <a class="article-title" href="/2016/06/22/StaticsPackage/">iOS多种静态库打包成统一静态库</a>
     </h1>
   
 
@@ -218,9 +218,9 @@
 <li>静态库：链接时，静态库会被完整地复制到可执行文件中，被多次使用就有多份冗余拷贝。</li>
 <li>动态库：链接时不复制，程序运行时由系统动态加载到内存，供程序调用，系统只加载一次，多个程序共用，节省内存。</li>
 <li>.a文件是一个纯二进制文件，至少需要配合.h文件去使用，如果需要资源文件，要在把资源文件放在外部并不能把资源文件一同打包成.a文件。</li>
-<li>.framework相当于.a + .h + sourceFile的整合。</li>
+<li>.framework相当于.a + .h + sourceFile的整合，打包过程中可加入其它.a文件进行一同打包成最终的.framework文件。</li>
 </ul>
-
+<h2 id="打包静态库">打包静态库</h2>
       
     </div>
     
