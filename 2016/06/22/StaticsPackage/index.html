@@ -18,7 +18,17 @@
 
 什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态库和动态库两种。iOS中的静态库有 .a 和 .framework两种形式；动态库有.dylib 和 .framework 形式，后来.dylib动态库又被苹果替换成.tbd的形式。  
 静态库和动态库的介绍">
-<meta property="og:updated_time" content="2016-08-20T17:27:58.000Z">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_1.jpg">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_2.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_3.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_4.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_5.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_6.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_7.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_8.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_9.png">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_10.png">
+<meta property="og:updated_time" content="2016-09-01T18:59:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS多种静态库打包成统一静态库">
 <meta name="twitter:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，在最终打包静态库的时候遇到了点小问题在此记录一下。
@@ -242,10 +252,24 @@
 <h2 id="实践">实践</h2><p>打包动态库和静态库的步骤就在这里省略了，google和百度一下有一大把的资源，照着做就可以搞定了。    </p>
 <p>接下来要做的就是把包含有其它静态库（.framework 或 .a）统一打包成我们自己的静态库包。  </p>
 <p>有两种情况：  </p>
-<ol>
+<ul>
 <li>当需要打包进来的是.a文件的时候，我们直接把需要打包的.a文件拖进打包的工程，.h暴露在外部进行打包即可（可以打包成.a或者.framework）。</li>
-<li>当需要打包进来的是.framework文件时，我们需要把framework文件手动拆分一下，还记得我们上面提到的.a + .h + sourceFile = .framework吗？ 要做的就是。。。。容我想一想 太晚了 明天写！</li>
-</ol>
+<li>当需要打包进来的是.framework文件时，我们需要把framework文件手动拆分一下，还记得我们上面提到的.a + .h + sourceFile = .framework吗？ 就是进入把.framework中的二进制文件单抽出来进行打包。</li>
+</ul>
+<p>举个栗子,我们要把一个包含.bundle文件的第三方库打包成.a静态库:</p>
+<ul>
+<li>第一步,先创建一个打包.a静态库的工程:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_1.jpg" alt=""></li>
+<li>第二步,把我们下载好的SVProgressHUD文件拖入到工程内:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_2.png" alt=""></li>
+<li>第三步,如图操作:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_3.png" alt=""></li>
+<li>第四步,如图操作:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_4.png" alt=""></li>
+<li>第五步,commad + B 真机编译一下然后再模拟器编译一下,为什么要真机编译呢?因为如果我们不真机编译的话,如第三步图中左下角标注的.a包将始终是红色的,我们将获取不到文件的路径,真机编译和模拟器编译会出来两个.a包,打包出来的.a静态库分别可以在真机和模拟器运行,如果我们需要在真机和模拟器都要运行的话,需要执行  <pre><code>lipo -create <span class="regexp">/Users/</span>harvey<span class="regexp">/Library/</span>Developer<span class="regexp">/Xcode/</span>DerivedData<span class="regexp">/FMDB-clvayfrjgytqrbdkyqrtcjkxfeuz/</span>Build<span class="regexp">/Products/</span>Release-iphonesimulator<span class="regexp">/FMDB.framework/</span>FMDB <span class="regexp">/Users/</span>harvey<span class="regexp">/Library/</span>Developer<span class="regexp">/Xcode/</span>DerivedData<span class="regexp">/FMDB-clvayfrjgytqrbdkyqrtcjkxfeuz/</span>Build<span class="regexp">/Products/</span>Release-iphoneos<span class="regexp">/Release-iphoneos.framework/</span>FMDB -output <span class="regexp">/Users/</span>harvey<span class="regexp">/Desktop/</span>FMDB
+</code></pre>将它们合并下即可。因为我只是想在模拟器测试一下,所以就偷懒不合并了^ ^, 编译后查找到.a文件的路径如下:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_5.png" alt=""><br>usr文件下是我们暴露出来的.h文件  </li>
+<li>第六步,我们新建一个测试的工程,将SVProgressHUD.h(我暴露出来的头文件)和libLibraryPackag.a 导入到测试工程:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_6.png" alt=""></li>
+<li>第七步,在ViewController实现文件导入SVProgressHUD.h头文件,调用它的loading方法<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_7.png" alt=""></li>
+<li>第八步,command + R 运行,发现crash了,看下控制面板:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_8.png" alt=""></li>
+<li>第九步,知道原因后,我们重新去打包静态库的工程打包一遍,这次我们把第二步中的红框.bundle文件移除掉打包,然后把新打包成功的.a文件 + 刚才移除掉的.bundle文件直接拖入到测试工程内,如图:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_9.png" alt=""></li>
+<li>第十步,再command + R运行如下:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_10.png" alt=""></li>
+</ul>
 
       
     </div>
