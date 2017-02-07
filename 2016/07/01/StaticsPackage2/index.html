@@ -18,15 +18,15 @@
 
 第一步,新建打包.framework的项目
 第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bu">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/550">
-<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/550">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/500">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/500">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/500">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/500">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/500">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/500">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic8.png?imageView2/2/w/375">
-<meta property="og:updated_time" content="2017-02-07T09:44:32.000Z">
+<meta property="og:updated_time" content="2017-02-07T09:46:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS打包静态库(二)">
 <meta name="twitter:description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。
@@ -232,13 +232,13 @@
       
         <p>上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。</p>
 <hr>
-<p>第一步,新建打包.framework的项目<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/550" alt=""></p>
-<p>第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bundle资源文件,与打包.a库一样,.bundle资源文件需要在外部配合使用。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/550" alt=""></p>
-<p>第三步,将需要暴露的.h文件拖拽带public区域<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/550" alt=""></p>
-<p>第四部,设置编译模式为Release模式<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/550" alt=""></p>
-<p>第五步,build settings 下的Mach-O Type 类型一定要改为 Static Library,因为苹果不支持动态库类型,.framework也属于静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/550" alt=""></p>
-<p>第六步,分别选择真机和模拟器编译一遍,会分别生成Release-iphoneos和<br>Release-iphonesimulator两个文件夹,文件夹下便是我们编译后生成的.framework静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/550" alt=""></p>
-<p>第七步,合并模拟器和真机的.framework静态库下的二进制文件,<font color="red">注意:</font>路径要具体到二进制文件而不是.framework静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/550" alt=""></p>
+<p>第一步,新建打包.framework的项目<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt=""></p>
+<p>第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bundle资源文件,与打包.a库一样,.bundle资源文件需要在外部配合使用。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/500" alt=""></p>
+<p>第三步,将需要暴露的.h文件拖拽带public区域<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/500" alt=""></p>
+<p>第四部,设置编译模式为Release模式<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/500" alt=""></p>
+<p>第五步,build settings 下的Mach-O Type 类型一定要改为 Static Library,因为苹果不支持动态库类型,.framework也属于静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/500" alt=""></p>
+<p>第六步,分别选择真机和模拟器编译一遍,会分别生成Release-iphoneos和<br>Release-iphonesimulator两个文件夹,文件夹下便是我们编译后生成的.framework静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/500" alt=""></p>
+<p>第七步,合并模拟器和真机的.framework静态库下的二进制文件,<font color="red">注意:</font>路径要具体到二进制文件而不是.framework静态库。<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/500" alt=""></p>
 <figure class="highlight sql"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -<span class="operator"><span class="keyword">create</span> /<span class="keyword">Users</span>/[your <span class="keyword">user</span> <span class="keyword">name</span>]/<span class="keyword">Library</span>/Developer/Xcode/DerivedData/DynamicSVProgressHUD-hhzxauickcqbyyaijmnejkydrnug/<span class="keyword">Build</span>/Products/<span class="keyword">Release</span>-iphoneos/DynamicSVProgressHUD.framework/DynamicSVProgressHUD /<span class="keyword">Users</span>/[your <span class="keyword">user</span> <span class="keyword">name</span>]/<span class="keyword">Library</span>/Developer/Xcode/DerivedData/DynamicSVProgressHUD-hhzxauickcqbyyaijmnejkydrnug/<span class="keyword">Build</span>/Products/<span class="keyword">Release</span>-iphonesimulator/DynamicSVProgressHUD.framework/DynamicSVProgressHUD -<span class="keyword">output</span> /<span class="keyword">Users</span>/[your <span class="keyword">user</span> <span class="keyword">name</span>]/Desktop/DynamicSVProgressHUD/DynamicSVProgressHUD</span></span><br></pre></td></tr></table></figure>
 <p>最后将任意一个.framework下的二进制文件替换成新生成的二进制文件即可。<br>第八步,我们新建一个新的工程,将我们自己生成.framework静态库拖入工程,对了,别忘了把SVProgressHUD.bundle资源文件也拖入工程,接下来run一下看看效果如下:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic8.png?imageView2/2/w/375" alt=""></p>
 <p>经过这两小节的介绍我们可以发现,.framework实质就是.a + .h 组合,.a静态库也需要配合.h文件使用,只不过我们生成.framework的时候,.h已经包含到了.framework静态库里面了,而.a静态库只是一个单独的库,.h文件没有包含进去,需要配合着使用才能发挥作用。</p>
