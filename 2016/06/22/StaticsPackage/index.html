@@ -28,7 +28,7 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_8.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_9.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_10.png?imageView2/2/w/375/interlace/1">
-<meta property="og:updated_time" content="2017-01-22T10:29:27.000Z">
+<meta property="og:updated_time" content="2017-02-07T07:25:42.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS打包静态库(一)">
 <meta name="twitter:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，在最终打包静态库的时候遇到了点小问题在此记录一下。
@@ -249,6 +249,8 @@
 <li>.a文件是一个纯二进制文件，至少需要配合.h文件去使用，如果需要资源文件，要在把资源文件放在外部并不能把资源文件一同打包成.a文件。</li>
 <li>.framework相当于.a + .h + sourceFile的整合，打包过程中可加入其它.a文件进行一同打包成最终的.framework文件。</li>
 </ul>
+<font color="red">(注意:.framwork中将图片资源或.xib 加入到其中也是读取不到的,因为iOS系统不会去扫描.framework下的资源文件。当然,我们可以放入一些说明文件在其中作为说明文件,查看起来还是清晰明了哒。)</font>
+
 <h2 id="实践">实践</h2><p>我们在打包.a文件时可能会遇到这3种情况: </p>
 <ol>
 <li>把.h和.m文件打包成.a文件和.h文件。</li>
@@ -270,7 +272,7 @@
 <li>第九步,知道原因后,我们重新去打包静态库的工程打包一遍,这次我们把第二步中的红框.bundle文件移除掉打包,然后把新打包成功的.a文件 + 刚才移除掉的.bundle文件直接拖入到测试工程内,如图:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_9.png" alt=""></li>
 <li>第十步,再command + R运行如下:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_10.png?imageView2/2/w/375/interlace/1" alt=""></li>
 </ul>
-<p>如果这时候我们需要把libLibraryPackage.a与另一个.a文件进行合并,另一个.a文件比如叫otherlibLibraryPackage.a,这时候我们只需要把libLibraryPackage.a和otherlibLibraryPackage.a添加到打包静态库的工程中,重复上述步骤进行就可以了。</p>
+<p>如果这时候我们需要把libLibraryPackage.a与另一个.a文件进行合并,另一个.a文件比如叫otherlibLibraryPackage.a,这时候我们只需要把libLibraryPackage.a和otherlibLibraryPackage.a添加到打包静态库的工程中打包成一个全新的.a静态库,具体操作重复上述步骤进行就可以了。</p>
 
       
     </div>
@@ -280,11 +282,11 @@
     
 <nav id="article-nav">
   
-    <a href="/2017/01/22/StaticsPackage2/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/07/01/StaticsPackage2/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          StaticsPackage2
+          iOS打包静态库(二)
         
       </div>
     </a>
