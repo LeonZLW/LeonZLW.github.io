@@ -7,15 +7,17 @@
   <title>iOS打包静态库(二) | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。
-第一步,新建打包.framework的项目
-第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bun">
+第一步,新建打包.framework的项目  
+
+第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS打包静态库(二)">
 <meta property="og:url" content="http://yoursite.com/2016/07/01/StaticsPackage2/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。
-第一步,新建打包.framework的项目
-第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bun">
+第一步,新建打包.framework的项目  
+
+第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/600">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/600">
@@ -24,12 +26,13 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/600">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/600">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic8.png?imageView2/2/w/375">
-<meta property="og:updated_time" content="2017-02-07T10:06:52.000Z">
+<meta property="og:updated_time" content="2017-02-07T10:27:27.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS打包静态库(二)">
 <meta name="twitter:description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。
-第一步,新建打包.framework的项目
-第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bun">
+第一步,新建打包.framework的项目  
+
+第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -228,7 +231,8 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程以及.framework打包成.a和.a打包成.framework。</p>
-<h5 id="第一步,新建打包-framework的项目">第一步,新建打包.framework的项目</h5><p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt=""></p>
+<p>第一步,新建打包.framework的项目  </p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt=""></p>
 <h5 id="第二步,将下载下来的SVProgressHUD文件包拖入工程,并将-bundle文件移除,原因是-bundle文件打包到-framework中,iOS系统并不会去扫描-framework下的-bundle资源文件,与打包-a库一样,-bundle资源文件需要在外部配合使用。">第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bundle资源文件,与打包.a库一样,.bundle资源文件需要在外部配合使用。</h5><p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/600" alt=""></p>
 <a id="more"></a>
 <h5 id="第三步,将需要暴露的-h文件拖拽带public区域">第三步,将需要暴露的.h文件拖拽带public区域</h5><p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/600" alt=""></p>
