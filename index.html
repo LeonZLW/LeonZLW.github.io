@@ -204,33 +204,11 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>当项目不断扩大,团队中不断有新的成员加入,这时候就需要我们的项目有可查看的技术文档,方便新加入的成员查阅,更高效地了解项目。但是这种文档如果从团队中专门调配出人去整理的话,不仅低效而且容易出错,还好iOS也有类似于java语言中的javadoc可以根据源码中的注释来生成技术文档的工具。</p>
-<p>目前iOS比较受欢迎的自动生成文档工具有<a href="http://www.stack.nl/~dimitri/doxygen/index.html" target="_blank" rel="external">doxygen</a>, <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html" target="_blank" rel="external">headdoc</a> 和 <a href="https://github.com/tomaz/appledoc" target="_blank" rel="external">appledoc</a>三个,下面来看一下这三个工具的对比情况。</p>
+<p>目前iOS比较常用的自动生成文档工具有<a href="http://www.stack.nl/~dimitri/doxygen/index.html">doxygen</a>, <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html">headdoc</a> 和 <a href="https://github.com/tomaz/appledoc">appledoc</a>三个,下面来看一下这三个工具的对比情况。</p>
 <p>Doxygen</p>
 <blockquote>
 <p>Doxygen原本是为C++开发的文档生成工具，当然它是开源的，通过一票扩展也能支持各种主流非主流语言。除了能生成HTML外，还能生成pdf和LATEXLATEX格式。在appledoc出现之前，很多人就喜欢用这个来生成ObjC代码的文档。相比HeaderDoc来说，有很多可以调教的地方。苹果官方也曾为这个工具写过文档。一切看上去都很棒，不足的地方就是，它生成的文档风格和官方文档的风格差了很多（虽然说不算太难看，但是放到Xcode里看格格不入），配置复杂等。。 </p>
 </blockquote>
-<p>HeaderDoc</p>
-<blockquote>
-<p>HeaderDoc是苹果官方的文档生成工具。支持JavaDoc风格的注释，支持一些比较常见的语言，例如Java、C/C++、ObjC、Python、Ruby等等。 官方的好处就是：安好Xcode就自带了，生成的文档风格和Apple官方保持一致，支持语言较多。缺点就是可调教的的地方较少，不生成聚合页，注释风格要求较严等。</p>
-</blockquote>
-<p>appledoc</p>
-<blockquote>
-<p>appledoc是最年轻的一个，并且只为Objective-C服务（很专一），能生成和Apple一个风格的文档，功能齐全，使用方便，还可以直接编译成docset安装进xcode。。看样子除了语言支持太少，其他的表现都不错，关键是最贴合Xcode。 虽然没有统计数据，但我相信ObjC这个用的人应该是最多的。</p>
-</blockquote>
-<p>因为我们的项目是基于object-c去开发的,所以经过上面的对比,我更加青睐appledoc,接下来就让我们用appledoc来生成一份文档吧。</p>
-<p>安装appledoc</p>
-<p>方法一:</p>
-<p>执行命令</p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git clone gi<span class="variable">t:</span>//github.<span class="keyword">com</span>/tomaz/appledoc.git</span><br><span class="line"><span class="keyword">cd</span> appledoc</span><br><span class="line">sudo <span class="keyword">sh</span> install-appledoc.<span class="keyword">sh</span></span><br></pre></td></tr></table></figure>
-<p>方法二:</p>
-<ol>
-<li>安装Homebrew</li>
-<li>执行命令: brew install appledoc</li>
-</ol>
-<p>验证是否安装:</p>
-<figure class="highlight applescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">appledoc <span class="comment">--version</span></span><br></pre></td></tr></table></figure>
-<p>如果显示了版本号说明安装成功了,接下来就可以使用了。</p>
-
       
     </div>
     
@@ -243,6 +221,10 @@
 
       
 
+      
+        <p class="article-more-link">
+          <a  href="/2017/02/10/AppleDoc/#more">more >></a>
+        </p>
       
       <div class="clearfix"></div>
     </div>
