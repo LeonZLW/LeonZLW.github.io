@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle3.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle4.png?imageView2/2/w/800">
-<meta property="og:updated_time" content="2017-02-10T07:35:04.000Z">
+<meta property="og:updated_time" content="2017-02-12T08:49:02.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="制作.bundle文件">
 <meta name="twitter:description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
@@ -227,6 +227,7 @@
 <p>Bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
 </blockquote>
 <p><strong> <font size="5"> 如何制作.bundle文件? </font> </strong></p>
+<a id="more"></a>
 <p><strong>方式1:</strong></p>
 <ol>
 <li>创建一个文件夹</li>
@@ -240,7 +241,6 @@
 <font color="red"> 如果不转换, 读取的时候会导致如下错误: </font>
 
 <figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Terminating app due <span class="keyword">to</span> uncaught exception </span><br><span class="line"><span class="attribute">'NSInternalInconsistencyException</span>', reason: <span class="attribute">'Could</span> <span class="keyword">not</span> load NIB <span class="keyword">in</span> bundle:</span><br><span class="line"><span class="attribute">'NSBundle</span> &lt;/var/mobile/Applications/C6718DB8-<span class="number">0</span>C0F-<span class="number">4</span>D38-<span class="number">84E6</span>-<span class="number">55</span>C145279957</span><br><span class="line">/Documents/asset-<span class="number">4</span>.bundle&gt; (<span class="keyword">not</span> yet loaded)' <span class="keyword">with</span> name <span class="attribute">'file</span>''</span><br></pre></td></tr></table></figure>
-<a id="more"></a>
 <p><strong>方式2:</strong></p>
 <p>1.新建bundle项目<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800" alt=""></p>
 <p>2.添加资源文件<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800" alt=""></p>

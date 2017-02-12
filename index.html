@@ -296,19 +296,6 @@
 <p>Bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
 </blockquote>
 <p><strong> <font size=5> 如何制作.bundle文件? </font> </strong></p>
-<p><strong>方式1:</strong></p>
-<ol>
-<li>创建一个文件夹</li>
-<li>将资源文件放到创建的文件夹中</li>
-<li>给文件夹添加.bundle后缀</li>
-<li>把.bundle文件拖拽到项目中使用即可</li>
-</ol>
-<font color=red>这里需要注意的是:如果资源中包含.xib文件,需要使用命令把xib转化为nib文件: </font>
-
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">$</span> <span class="comment">ibtool</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">errors</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">warnings</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">output</span><span class="literal">-</span><span class="comment">format</span> <span class="comment">human</span><span class="literal">-</span><span class="comment">readable</span><span class="literal">-</span><span class="comment">text</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">compile</span> <span class="comment">文件名</span><span class="string">.</span><span class="comment">nib</span> <span class="comment">文件名</span><span class="string">.</span><span class="comment">xib</span></span><br></pre></td></tr></table></figure>
-<font color=red> 如果不转换, 读取的时候会导致如下错误: </font>
-
-<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Terminating app due <span class="keyword">to</span> uncaught exception </span><br><span class="line"><span class="attribute">'NSInternalInconsistencyException</span>', reason: <span class="attribute">'Could</span> <span class="keyword">not</span> load NIB <span class="keyword">in</span> bundle:</span><br><span class="line"><span class="attribute">'NSBundle</span> &lt;/var/mobile/Applications/C6718DB8-<span class="number">0</span>C0F-<span class="number">4</span>D38-<span class="number">84E6</span>-<span class="number">55</span>C145279957</span><br><span class="line">/Documents/asset-<span class="number">4</span>.bundle&gt; (<span class="keyword">not</span> yet loaded)' <span class="keyword">with</span> name <span class="attribute">'file</span>''</span><br></pre></td></tr></table></figure>
       
     </div>
     
