@@ -269,7 +269,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在项目开工之前,为了保证代码质量,通常我们会和团队中的成员讨论并制定一份代码规范文档,虽然文档已经形成了,但是在实际开发的过程中为了赶项目亦或者某个成员习惯于自己以前的代码风格忽略了规范文档中的细节要求,导致了部分代码风格不统一,这时候再通过审视写过的代码来排查是一件枯燥又乏味的过程,相信大多数紧张进行中的团队也没有足够的时间来做这样一件事情,如果我们能够像xcode编译工程代码一样Command + B就能提示哪里没有符合代码规范就省去了我们大量的Code Review时间,既然本篇文章讲的是自动化Code Review,接下来我们实现这一自动化过程。</p>
-<p>#<strong> OCLint </strong></p>
+<p><strong> <font size=5> OCLint </font> </strong></p>
 <blockquote>
 <p><a href="http://oclint.org/">OCLint</a> 是一个开源的，基于 Clang 用 C++ 编写而成的，可以用于 C、C++ 和 Objective-C 的静态代码分析器。它可以在扫描的过程中动态加载规则文件（Rules），因此可以实现非常灵活的，高度可自定义的代码分析方案。它几乎可以和大多数系统无缝集成，例如 Cmake、Bear、xcodebuild、xctool、Xcode、xcpretty、Jenkins CI、Travis CI 等。</p>
 </blockquote>
