@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location2.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location3.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location4.png">
-<meta property="og:updated_time" content="2017-02-13T11:10:58.000Z">
+<meta property="og:updated_time" content="2017-02-14T10:50:43.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="本地自动化Code Review集成">
 <meta name="twitter:description" content="在项目开工之前,为了保证代码质量,通常我们会和团队中的成员讨论并制定一份代码规范文档,虽然文档已经形成了,但是在实际开发的过程中为了赶项目亦或者某个成员习惯于自己以前的代码风格忽略了规范文档中的细节要求,导致了部分代码风格不统一,这时候再通过审视写过的代码来排查是一件枯燥又乏味的过程,相信大多数紧张进行中的团队也没有足够的时间来做这样一件事情,如果我们能够像xcode编译工程代码一样Command">
@@ -250,7 +250,7 @@
 <p>最后在当前目录发现compile_commands.json生成了(是个闺女[偷笑]),但是终端控制器中却显示了这样一段话</p>
 <figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">This binary <span class="keyword">is</span> no longer under maintenance <span class="keyword">by</span> OCLint team.</span><br><span class="line">Please consider <span class="keyword">using</span> xcpretty (https:<span class="comment">//github.com/supermarin/xcpretty) instead!</span></span><br></pre></td></tr></table></figure>
 <p>原来OCLint团队将不再维护oclint-xcodebuild,并告诉我们使用xcpretty来替代,好吧,动手再生一个!</p>
-<p>xcpretty</p>
+<p><strong> <font size="5"> xcpretty </font> </strong></p>
 <blockquote>
 <p><a href="https://github.com/supermarin/xcpretty" target="_blank" rel="external">xcpretty</a>是用来格式化xcodebuild输出的工具，使用ruby开发。</p>
 </blockquote>

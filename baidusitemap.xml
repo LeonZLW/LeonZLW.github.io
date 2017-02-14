@@ -4,6 +4,23 @@
 
     
   <url>
+    <loc>http://yoursite.com/2016/10/15/OCLint/</loc>
+    <lastmod>2017-02-14T10:50:43.000Z</lastmod>
+    <data>
+        <display>
+        <title>本地自动化Code Review集成</title>
+        <pubTime>2016-10-15T03:34:36.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2017/02/14/iBeacon/</loc>
     <lastmod>2017-02-14T10:47:48.000Z</lastmod>
     <data>
@@ -25,23 +42,6 @@
         <display>
         <title>iOS打包静态库(一)</title>
         <pubTime>2016-06-22T11:06:52.000Z</pubTime>
-        
-        <tag>技术</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/10/15/OCLint/</loc>
-    <lastmod>2017-02-13T11:10:58.000Z</lastmod>
-    <data>
-        <display>
-        <title>本地自动化Code Review集成</title>
-        <pubTime>2016-10-15T03:34:36.000Z</pubTime>
         
         <tag>技术</tag>
          
