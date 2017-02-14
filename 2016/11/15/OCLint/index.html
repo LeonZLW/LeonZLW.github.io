@@ -16,7 +16,7 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location2.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location3.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location4.png">
-<meta property="og:updated_time" content="2017-02-14T10:58:43.000Z">
+<meta property="og:updated_time" content="2017-02-14T11:02:59.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="本地自动化Code Review集成">
 <meta name="twitter:description" content="在项目开工之前,为了保证代码质量,通常我们会和团队中的成员讨论并制定一份代码规范文档,虽然文档已经形成了,但是在实际开发的过程中为了赶项目亦或者某个成员习惯于自己以前的代码风格忽略了规范文档中的细节要求,导致了部分代码风格不统一,这时候再通过审视写过的代码来排查是一件枯燥又乏味的过程,相信大多数紧张进行中的团队也没有足够的时间来做这样一件事情,如果我们能够像xcode编译工程代码一样Command">
@@ -283,6 +283,7 @@
 <p>如果你的代码不符合规范的话就会报诸如这样的警告⚠️:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location2.png" alt=""></p>
 <p>从警告可以看出是不符合Size规则中的LongLine规范,我们可以打开<a href="http://oclint-docs.readthedocs.io/en/stable/rules/index.html" target="_blank" rel="external">Rules</a>查看具体不符合哪一条规则:<br><img src="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location3.png" alt=""><br><img src="http://7xob19.com1.z0.glb.clouddn.com/OCLint_Location4.png" alt=""></p>
 <p><strong> <font size="5"> Issues </font> </strong></p>
+<hr>
 <p>可能一路操作过来并不是很顺利,会遇到各种各样的问题,比如下面这样的错误:</p>
 <figure class="highlight erlang"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="variable">Running</span> <span class="variable">OCLint</span>....<span class="number">20</span> errors generated.</span><br><span class="line"><span class="number">21</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">24</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">3</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">2</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">32</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">20</span> errors generated.</span><br><span class="line"><span class="number">21</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line"><span class="number">24</span> errors generated.</span><br><span class="line"><span class="number">1</span> error generated.</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
 <p>我也遇到过上面的报错,不过我是升级了一下oclint就解决了的,如果解决不了的话可以参考一下<a href="https://github.com/oclint/oclint/issues/380" target="_blank" rel="external">这里</a>,里面有很多issues以及解决办法,希望可以帮助到你^ ^</p>
@@ -300,7 +301,7 @@
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          appledoc自动生成文档
+          AppleDoc自动生成文档
         
       </div>
     </a>

@@ -7,17 +7,15 @@
   <title>iOS打包静态库(一) | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，最终要打包成静态库供游戏商使用,在这里做下记录。
-为什么要打包成静态库?
-举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
-什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静">
+为什么要打包成静态库?举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
+什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iOS打包静态库(一)">
 <meta property="og:url" content="http://yoursite.com/2016/06/22/StaticsPackage/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，最终要打包成静态库供游戏商使用,在这里做下记录。
-为什么要打包成静态库?
-举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
-什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静">
+为什么要打包成静态库?举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
+什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_1.jpg">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_2.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_3.png">
@@ -28,13 +26,12 @@
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_8.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_9.png">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/%E9%9D%99%E6%80%81%E5%BA%93.a_10.png?imageView2/2/w/375/interlace/1">
-<meta property="og:updated_time" content="2017-02-13T11:12:51.000Z">
+<meta property="og:updated_time" content="2017-02-14T11:03:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iOS打包静态库(一)">
 <meta name="twitter:description" content="前段时间由于工作的调动，接触到了游戏SDK的开发工作，最终要打包成静态库供游戏商使用,在这里做下记录。
-为什么要打包成静态库?
-举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
-什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静">
+为什么要打包成静态库?举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。
+什么是库？库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -233,8 +230,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>前段时间由于工作的调动，接触到了游戏SDK的开发工作，最终要打包成静态库供游戏商使用,在这里做下记录。</p>
-<p>为什么要打包成静态库?</p>
-<p>举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。</p>
+<h2 id="为什么要打包成静态库?">为什么要打包成静态库?</h2><p>举个栗子,比如支付宝,百度地图SDK中,他们仅仅是给我们暴露出来了.h文件中的接口,具体的实现隐藏到了静态库中,因为他们不想让别人拿到自己公司私密性的内容,这就是静态库的作用(使用场景)。</p>
 <h2 id="什么是库？">什么是库？</h2><p>库从本质上来说是一种可执行代码的二进制格式，可以被载入内存中执行。库分静态库和动态库两种。<br>iOS中的静态库有 .a 和 .framework两种形式；动态库有.dylib 和 .framework 形式，后来.dylib动态库又被苹果替换成.tbd的形式。  </p>
 <h2 id="静态库和动态库的介绍">静态库和动态库的介绍</h2><ul>
 <li>静态库：静态库即静态链接库（Windows下的.lib，Linux 和 Mac 下的.a。之所以叫做静态，是因为静态库在编译的时候会被直接拷贝一份，复制到目标程序里，这段代码在目标程序里就不会再改变了。<br>静态库的好处很明显，编译完成之后，库文件实际上就没有作用了。目标程序没有外部依赖，直接就可以运行。当然其缺点也很明显，就是会使用目标程序的体积增大。<a id="more"></a></li>

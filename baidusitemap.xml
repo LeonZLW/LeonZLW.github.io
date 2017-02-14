@@ -4,8 +4,42 @@
 
     
   <url>
+    <loc>http://yoursite.com/2017/02/10/AppleDoc/</loc>
+    <lastmod>2017-02-14T11:06:35.000Z</lastmod>
+    <data>
+        <display>
+        <title>AppleDoc自动生成文档</title>
+        <pubTime>2017-02-10T07:23:35.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
+    <loc>http://yoursite.com/2016/06/22/StaticsPackage/</loc>
+    <lastmod>2017-02-14T11:03:39.000Z</lastmod>
+    <data>
+        <display>
+        <title>iOS打包静态库(一)</title>
+        <pubTime>2016-06-22T11:06:52.000Z</pubTime>
+        
+        <tag>技术</tag>
+         
+         
+           
+        </display>
+    </data>
+    </url>
+
+    
+  <url>
     <loc>http://yoursite.com/2016/11/15/OCLint/</loc>
-    <lastmod>2017-02-14T10:58:43.000Z</lastmod>
+    <lastmod>2017-02-14T11:02:59.000Z</lastmod>
     <data>
         <display>
         <title>本地自动化Code Review集成</title>
@@ -28,23 +62,6 @@
         <title>让我想一想写什么</title>
         <pubTime>2017-02-14T10:47:20.000Z</pubTime>
         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2016/06/22/StaticsPackage/</loc>
-    <lastmod>2017-02-13T11:12:51.000Z</lastmod>
-    <data>
-        <display>
-        <title>iOS打包静态库(一)</title>
-        <pubTime>2016-06-22T11:06:52.000Z</pubTime>
-        
-        <tag>技术</tag>
-         
          
            
         </display>
@@ -76,23 +93,6 @@
         <display>
         <title>iOS打包静态库(二)</title>
         <pubTime>2016-07-21T10:31:16.000Z</pubTime>
-        
-        <tag>技术</tag>
-         
-         
-           
-        </display>
-    </data>
-    </url>
-
-    
-  <url>
-    <loc>http://yoursite.com/2017/02/10/AppleDoc/</loc>
-    <lastmod>2017-02-13T03:25:55.000Z</lastmod>
-    <data>
-        <display>
-        <title>appledoc自动生成文档</title>
-        <pubTime>2017-02-10T07:23:35.000Z</pubTime>
         
         <tag>技术</tag>
          
