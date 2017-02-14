@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://yoursite.com/2017/02/14/iBeacon/</loc>
+    
+    <lastmod>2017-02-14T10:47:48.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://yoursite.com/2016/06/22/StaticsPackage/</loc>
     
     <lastmod>2017-02-13T11:12:51.000Z</lastmod>
