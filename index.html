@@ -109,7 +109,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/出发/" style="font-size: 10px;">出发</a>
 					</div>
 				</section>
 				
@@ -177,6 +177,92 @@
 
       <div class="body-wrap">
   
+    <article id="post-URL-Schemes" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/02/28/URL-Schemes/" class="article-date">
+  	<time datetime="2017-02-28T04:57:27.000Z" itemprop="datePublished">2017-02-28</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/02/28/URL-Schemes/">iOS应用间通讯</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们在日常使用移动应用产品时经常会遇到正在使用的这款APP在操作中经常会跳转到另一款APP中去操作,比如支付宝支付,微信支付,微博分享等。这不禁让我们联想到苹果的沙盒机制,受苹果的这一机制影响,我们不能应用之间资源共享,也就是说我们的应用都是独立的块,应用内所需要的资源都是自给自足不受外界的”救济”,那么应用之间通讯的行为就是通过<code>URL Schemes</code>来实现的。</p>
+<h1 id="URL_Schemes"><strong>URL Schemes</strong></h1><p>我们通过对比网页链接来理解iOS上的 URL Schemes。</p>
+<p>URL Schemes有两个单词:</p>
+<ul>
+<li>URL:链接地址或网址,<code>https://www.baidu.com</code> 就是一个URL。</li>
+<li>Schemes:表示的是URL中的最初位置,即<code>://</code>之前的那段字符,比如 <code>https://www.baidu.com</code> 这个URL的Schemes就是https。</li>
+</ul>
+<p>根据上面对URL Schemes的理解,我们在iOS中如果想定位到某个APP,只需要知道 <code>Schemes</code> 部分就可以做到了,比如我们要打开微信这个APP,我们只需要知道微信的 <code>Schemes</code> 是 <code>wexin</code> ,在后面拼接上 <code>://</code> 即: <code>wexin://</code><br>然后在 <code>safari</code> 浏览器输入网址的地方输入 <code>wexin://</code> 确认后就会在屏幕中弹出 <code>在&quot;微信&quot;中打开链接吗?</code> 的提示框,当你选择打开操作后就会自动跳转到微信界面了。</p>
+<p>目前我们仅仅是定位到了某个APP,如果想跳转到这个APP并让它做一些我们想要的操作的话,我们需要在<code>://</code>后面跟一些路径参数让它定位到具体的功能或页面:</p>
+<table>
+<thead>
+<tr>
+<th>网页(百度)</th>
+<th style="text-align:center">iOS应用(微信)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>网站首页: <a href="https://www.baidu.com">https://www.baidu.com</a></td>
+<td style="text-align:center">打开应用: wexin://</td>
+</tr>
+<tr>
+<td>子页面: <a href="https://www.baidu.com/duty(百度免责声明页面">https://www.baidu.com/duty(百度免责声明页面</a>)</td>
+<td style="text-align:center">wexin://dl/moments (朋友圈)</td>
+</tr>
+</tbody>
+</table>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2017/02/28/URL-Schemes/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-iBeacon" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -204,8 +290,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。</p>
-<p><strong> <font size=5>iBeacon</font> </strong></p>
-<p>iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:</p>
+<h2 id="iBeacon"><strong>iBeacon</strong></h2><p>iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:</p>
 <ul>
 <li>耗电量:持续运作的时间更长,<a href="http://estimote.com/">estimote</a>声称可以运作24个月,具体的运作时间还是和iBeacon设备的广播频率周期有关。</li>
 <li>低成本:iBeacon设备的成本相当于传统蓝牙设备的60%-80%。</li>
@@ -218,7 +303,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
@@ -244,76 +329,11 @@
 
 
   
-    <article id="post-AppleDoc" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2017/02/10/AppleDoc/" class="article-date">
-  	<time datetime="2017-02-10T07:23:35.000Z" itemprop="datePublished">2017-02-10</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2017/02/10/AppleDoc/">AppleDoc自动生成文档</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>当项目不断扩大,团队中不断有新的成员加入,这时候就需要我们的项目有可查看的技术文档,方便新加入的成员查阅,快速地了解项目。但是这种文档如果从团队中专门调配出人去整理的话,既低效成本又高,还好iOS也有类似于java语言中的javadoc可以根据源码中的注释来生成技术文档的工具。</p>
-<p>目前iOS比较常用的自动生成文档工具有<a href="http://www.stack.nl/~dimitri/doxygen/index.html">doxygen</a>, <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html">headdoc</a> 和 <a href="https://github.com/tomaz/appledoc">appledoc</a>三个,下面来看一下这三个工具的对比情况。</p>
-<p><strong>Doxygen</strong></p>
-<blockquote>
-<p>Doxygen原本是为C++开发的文档生成工具，当然它是开源的，通过一票扩展也能支持各种主流非主流语言。除了能生成HTML外，还能生成pdf和LATEXLATEX格式。在appledoc出现之前，很多人就喜欢用这个来生成ObjC代码的文档。相比HeaderDoc来说，有很多可以调教的地方。苹果官方也曾为这个工具写过文档。一切看上去都很棒，不足的地方就是，它生成的文档风格和官方文档的风格差了很多（虽然说不算太难看，但是放到Xcode里看格格不入），配置复杂等。。 </p>
-</blockquote>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2017/02/10/AppleDoc/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
     <article id="post-OCLint" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/11/15/OCLint/" class="article-date">
-  	<time datetime="2016-11-15T03:34:36.000Z" itemprop="datePublished">2016-11-15</time>
+      <a href="/2016/10/15/OCLint/" class="article-date">
+  	<time datetime="2016-10-15T03:34:36.000Z" itemprop="datePublished">2016-10-15</time>
 </a>
     </div>
   
@@ -326,7 +346,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/11/15/OCLint/">本地自动化Code Review集成</a>
+      <a class="article-title" href="/2016/10/15/OCLint/">本地自动化Code Review集成</a>
     </h1>
   
 
@@ -348,14 +368,79 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
 
       
         <p class="article-more-link">
-          <a  href="/2016/11/15/OCLint/#more">more >></a>
+          <a  href="/2016/10/15/OCLint/#more">more >></a>
+        </p>
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
+    <article id="post-AppleDoc" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/20/AppleDoc/" class="article-date">
+  	<time datetime="2016-06-20T07:23:35.000Z" itemprop="datePublished">2016-06-20</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/20/AppleDoc/">AppleDoc自动生成文档</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>当项目不断扩大,团队中不断有新的成员加入,这时候就需要我们的项目有可查看的技术文档,方便新加入的成员查阅,快速地了解项目。但是这种文档如果从团队中专门调配出人去整理的话,既低效成本又高,还好iOS也有类似于java语言中的javadoc可以根据源码中的注释来生成技术文档的工具。</p>
+<p>目前iOS比较常用的自动生成文档工具有<a href="http://www.stack.nl/~dimitri/doxygen/index.html">doxygen</a>, <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html">headdoc</a> 和 <a href="https://github.com/tomaz/appledoc">appledoc</a>三个,下面来看一下这三个工具的对比情况。</p>
+<p><strong>Doxygen</strong></p>
+<blockquote>
+<p>Doxygen原本是为C++开发的文档生成工具，当然它是开源的，通过一票扩展也能支持各种主流非主流语言。除了能生成HTML外，还能生成pdf和LATEXLATEX格式。在appledoc出现之前，很多人就喜欢用这个来生成ObjC代码的文档。相比HeaderDoc来说，有很多可以调教的地方。苹果官方也曾为这个工具写过文档。一切看上去都很棒，不足的地方就是，它生成的文档风格和官方文档的风格差了很多（虽然说不算太难看，但是放到Xcode里看格格不入），配置复杂等。。 </p>
+</blockquote>
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+
+      
+        <p class="article-more-link">
+          <a  href="/2016/06/20/AppleDoc/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -377,8 +462,8 @@
     <article id="post-StaticsPackage3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/02/StaticsPackage3/" class="article-date">
-  	<time datetime="2016-09-02T06:47:24.000Z" itemprop="datePublished">2016-09-02</time>
+      <a href="/2016/05/10/StaticsPackage3/" class="article-date">
+  	<time datetime="2016-05-10T06:47:24.000Z" itemprop="datePublished">2016-05-10</time>
 </a>
     </div>
   
@@ -391,7 +476,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/09/02/StaticsPackage3/">制作.bundle文件</a>
+      <a class="article-title" href="/2016/05/10/StaticsPackage3/">制作.bundle文件</a>
     </h1>
   
 
@@ -405,11 +490,6 @@
 <blockquote>
 <p>简单理解，就是资源文件包。我们将许多图片、XIB、文本文件组织在一起，打包成一个Bundle文件。方便在其他项目中引用包内的资源。</p>
 </blockquote>
-<p><strong> <font size=5> Bundle文件的特点？</font> </strong></p>
-<blockquote>
-<p>Bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
-</blockquote>
-<p><strong> <font size=5> 如何制作.bundle文件? </font> </strong></p>
       
     </div>
     
@@ -417,14 +497,14 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
 
       
         <p class="article-more-link">
-          <a  href="/2016/09/02/StaticsPackage3/#more">more >></a>
+          <a  href="/2016/05/10/StaticsPackage3/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -446,8 +526,8 @@
     <article id="post-StaticsPackage2" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/07/21/StaticsPackage2/" class="article-date">
-  	<time datetime="2016-07-21T10:31:16.000Z" itemprop="datePublished">2016-07-21</time>
+      <a href="/2016/05/04/StaticsPackage2/" class="article-date">
+  	<time datetime="2016-05-04T10:31:16.000Z" itemprop="datePublished">2016-05-04</time>
 </a>
     </div>
   
@@ -460,7 +540,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/07/21/StaticsPackage2/">iOS打包静态库(二)</a>
+      <a class="article-title" href="/2016/05/04/StaticsPackage2/">iOS打包静态库(二)</a>
     </h1>
   
 
@@ -480,14 +560,14 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
 
       
         <p class="article-more-link">
-          <a  href="/2016/07/21/StaticsPackage2/#more">more >></a>
+          <a  href="/2016/05/04/StaticsPackage2/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -509,8 +589,8 @@
     <article id="post-StaticsPackage" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/06/22/StaticsPackage/" class="article-date">
-  	<time datetime="2016-06-22T11:06:52.000Z" itemprop="datePublished">2016-06-22</time>
+      <a href="/2016/04/22/StaticsPackage/" class="article-date">
+  	<time datetime="2016-04-22T11:06:52.000Z" itemprop="datePublished">2016-04-22</time>
 </a>
     </div>
   
@@ -523,7 +603,7 @@
         
   
     <h1 itemprop="name">
-      <a class="article-title" href="/2016/06/22/StaticsPackage/">iOS打包静态库(一)</a>
+      <a class="article-title" href="/2016/04/22/StaticsPackage/">iOS打包静态库(一)</a>
     </h1>
   
 
@@ -544,14 +624,14 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
 
       
         <p class="article-more-link">
-          <a  href="/2016/06/22/StaticsPackage/#more">more >></a>
+          <a  href="/2016/04/22/StaticsPackage/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
@@ -606,7 +686,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
       
@@ -658,7 +738,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>Hi,<br>大家好,我是Leon.<br>年前就开始着手搭建个人博客,无奈中途项目开工一直忙到了现在,反过头来再整理的时候发现遗忘的差不多了,只能查资料重新来过,虽然道路曲折,但总算是完工了,还是值得开心纪念一下,哈哈!<br>创建博客的初衷是想整理一些在项目中遇到的实际问题和对自己一段时间的技术总结。希望在自己的辛勤耕耘下,这片荒芜的小田地能够变得丰富多彩!
+        <p>Hi,<br>大家好,我是Leon.<br>年前就开始着手搭建个人博客,无奈中途项目开工一直忙到了现在,反过头来再整理的时候发现遗忘的差不多了,只能重新来过,虽然道路曲折,但总算是完工了,还是值得开心纪念一下,哈哈!<br>创建博客的初衷是想整理一些在项目中遇到的实际问题和对自己一段时间的技术总结。希望在自己的辛勤耕耘下,这片荒芜的小田地能够变得丰富多彩!
       
     </div>
     
@@ -666,7 +746,7 @@
       
       
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/随笔/">随笔</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/出发/">出发</a></li></ul>
 	</div>
 
       

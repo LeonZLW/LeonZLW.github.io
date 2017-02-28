@@ -9,14 +9,14 @@
   <meta name="description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="制作.bundle文件">
-<meta property="og:url" content="http://yoursite.com/2016/09/02/StaticsPackage3/index.html">
+<meta property="og:url" content="http://yoursite.com/2016/05/10/StaticsPackage3/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle3.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle4.png?imageView2/2/w/800">
-<meta property="og:updated_time" content="2017-02-13T03:32:55.000Z">
+<meta property="og:updated_time" content="2017-02-21T02:46:39.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="制作.bundle文件">
 <meta name="twitter:description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
@@ -114,7 +114,7 @@
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/出发/" style="font-size: 10px;">出发</a>
 					</div>
 				</section>
 				
@@ -183,8 +183,8 @@
       <div class="body-wrap"><article id="post-StaticsPackage3" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2016/09/02/StaticsPackage3/" class="article-date">
-  	<time datetime="2016-09-02T06:47:24.000Z" itemprop="datePublished">2016-09-02</time>
+      <a href="/2016/05/10/StaticsPackage3/" class="article-date">
+  	<time datetime="2016-05-10T06:47:24.000Z" itemprop="datePublished">2016-05-10</time>
 </a>
     </div>
   
@@ -206,7 +206,7 @@
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
         
@@ -222,12 +222,12 @@
 <blockquote>
 <p>简单理解，就是资源文件包。我们将许多图片、XIB、文本文件组织在一起，打包成一个Bundle文件。方便在其他项目中引用包内的资源。</p>
 </blockquote>
+<a id="more"></a>
 <p><strong> <font size="5"> Bundle文件的特点？</font> </strong></p>
 <blockquote>
 <p>Bundle是静态的，也就是说，我们包含到包中的资源文件作为一个资源包是不参加项目编译的。也就意味着，bundle包中不能包含可执行的文件。它仅仅是作为资源，被解析成为特定的2进制数据。</p>
 </blockquote>
 <p><strong> <font size="5"> 如何制作.bundle文件? </font> </strong></p>
-<a id="more"></a>
 <p><strong>方式1:</strong></p>
 <ol>
 <li>创建一个文件夹</li>
@@ -268,17 +268,17 @@
     
 <nav id="article-nav">
   
-    <a href="/2016/11/15/OCLint/" id="article-nav-newer" class="article-nav-link-wrap">
+    <a href="/2016/06/20/AppleDoc/" id="article-nav-newer" class="article-nav-link-wrap">
       <strong class="article-nav-caption"><</strong>
       <div class="article-nav-title">
         
-          本地自动化Code Review集成
+          AppleDoc自动生成文档
         
       </div>
     </a>
   
   
-    <a href="/2016/07/21/StaticsPackage2/" id="article-nav-older" class="article-nav-link-wrap">
+    <a href="/2016/05/04/StaticsPackage2/" id="article-nav-older" class="article-nav-link-wrap">
       <div class="article-nav-title">iOS打包静态库(二)</div>
       <strong class="article-nav-caption">></strong>
     </a>

@@ -7,27 +7,24 @@
   <title>iBeacon调研记录(一) | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。
- iBeacon 
-iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
+iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
 
-耗电量:持续运作的时间更长,estimote声称可以运作2">
+耗电量:持续运作的时间更长,estimote声称可以运作24个月">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iBeacon调研记录(一)">
 <meta property="og:url" content="http://yoursite.com/2017/02/14/iBeacon/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。
- iBeacon 
-iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
+iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
 
-耗电量:持续运作的时间更长,estimote声称可以运作2">
-<meta property="og:updated_time" content="2017-02-20T16:46:26.000Z">
+耗电量:持续运作的时间更长,estimote声称可以运作24个月">
+<meta property="og:updated_time" content="2017-02-21T02:57:03.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iBeacon调研记录(一)">
 <meta name="twitter:description" content="最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。
- iBeacon 
-iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
+iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
 
-耗电量:持续运作的时间更长,estimote声称可以运作2">
+耗电量:持续运作的时间更长,estimote声称可以运作24个月">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -122,7 +119,7 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
 				
 				<section class="switch-part switch-part2">
 					<div class="widget tagcloud" id="js-tagcloud">
-						<a href="/tags/技术/" style="font-size: 20px;">技术</a> <a href="/tags/随笔/" style="font-size: 10px;">随笔</a>
+						<a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/出发/" style="font-size: 10px;">出发</a>
 					</div>
 				</section>
 				
@@ -214,7 +211,7 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
       <div class="article-info article-info-post">
         
 	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/技术/">技术</a></li></ul>
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
 	</div>
 
         
@@ -226,16 +223,14 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
     <div class="article-entry" itemprop="articleBody">
       
         <p>最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。</p>
-<p><strong> <font size="5">iBeacon</font> </strong></p>
-<p>iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:</p>
+<h2 id="iBeacon"><strong>iBeacon</strong></h2><p>iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:</p>
 <ul>
 <li>耗电量:持续运作的时间更长,<a href="http://estimote.com/" target="_blank" rel="external">estimote</a>声称可以运作24个月,具体的运作时间还是和iBeacon设备的广播频率周期有关。</li>
 <li>低成本:iBeacon设备的成本相当于传统蓝牙设备的60%-80%。</li>
 <li>应用:iBeacon设备适用于只要求少量定期传输数据的简单应用,传统的蓝牙适用于需要持续通信和大量数据传输的复杂应用。</li>
 </ul>
 <a id="more"></a>
-<p><strong>iBeacon标识组成</strong></p>
-<p>iBeacon主要是由<code>proximityUUID</code>,<code>major</code>,<code>minor</code>来标识:</p>
+<h2 id="iBeacon标识组成"><strong>iBeacon标识组成</strong></h2><p>iBeacon主要是由<code>proximityUUID</code>,<code>major</code>,<code>minor</code>来标识:</p>
 <ul>
 <li><strong>proximityUUID(唯一标识):</strong>一个128位的值,用它来作为唯一标识,它与我们传统理解的唯一标识有一些区别,它可以是多个ibeacon设备同时使用一个UUID标识。</li>
 <li><strong>major(主要值):</strong>一个16位无符号整数,用于区分拥有相同proximityUUID值的iBeacon设备。</li>
@@ -249,10 +244,8 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
 <li>proximityUUID + 非空major + 非空minor</li>
 </ul>
 <p>major和minor可以为空值,如果是空的情况,扫描的时候只需要去校验proximityUUID是否匹配即可。</p>
-<p><strong>使用场景</strong></p>
-<p>比如我们的广告机设备要投放到全国各地的机场场景,那么可以用proximityUUID来标记公司,major来标记城市,minor来标记具体机场(有些城市有两个机场的情况),这样就可以确定ibeacon设备在哪个城市的哪个机场了。最终怎样去组合标记,根据实际的需求而定。</p>
-<p><strong>API介绍</strong></p>
-<p>Apple把iBeacon功能集成到了Core location框架里面,所以在我们要使用的类中引入<code>&lt;CoreLocation/CoreLocation.h&gt;</code>。</p>
+<h2 id="使用场景"><strong>使用场景</strong></h2><p>比如我们的广告机设备要投放到全国各地的机场场景,那么可以用proximityUUID来标记公司,major来标记城市,minor来标记具体机场(有些城市有两个机场的情况),这样就可以确定ibeacon设备在哪个城市的哪个机场了。最终怎样去组合标记,根据实际的需求而定。</p>
+<h2 id="API介绍"><strong>API介绍</strong></h2><p>Apple把iBeacon功能集成到了Core location框架里面,所以在我们要使用的类中引入<code>&lt;CoreLocation/CoreLocation.h&gt;</code>。</p>
 <p>如果我们想扫描到周围的iBeacon设备,首先要知道周围ibeacon设备的proximityUUID,major,minor,然后要用<code>CLBeaconRegion</code>类的实例来定义iBeacon的区域:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 周围有多个iBeacon的话就根据iBeacon设备的参数信息逐个CLBeaconRegion实例,这里我只初始化一个来说明</span></span><br><span class="line">CLBeaconRegion *beaconRegion = [[CLBeaconRegion alloc]initWithProximityUUID:@<span class="string">"UUID"</span></span><br><span class="line">                                                         major:<span class="number">10084</span></span><br><span class="line">                                                         minor:<span class="number">14406</span></span><br><span class="line">                                                    identifier:@<span class="string">"标识内容"</span>];</span><br></pre></td></tr></table></figure>
 <p>接下来我们要创建<code>CLLocationManager</code>管理对象,因为我们想要监控iBeacon设备就是由它来控制的,CLLocationManager类的实例方法主要有下面这几个方法来监视iBeacon区域:</p>
@@ -262,7 +255,7 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
 <li><strong>startRangingBeaconsInRegion:</strong> 这个方法相当于按一定频率去扫描iBeacon设备,频率大概是1s/次,扫描结果通过 <code>locationManager:didRangeBeacons:inRegion:</code> 代理方法返回,我们可以从中得到beacons数组,数组中存放的是<code>CLBeacon</code>类的实例,它们是由近到远的顺序排列的,数组中的第一个是最近的iBeacon设备,以此类推。我们通过数组中的实例对象可以获得iBeacon设备的信息和相距的<code>具体距离accuracy</code>还有<code>rrsi(信号强度)</code>值。如果需要停止扫描的话,调用 <code>stopRangingBeaconsInRegion:</code>方法。</li>
 </ul>
 <p>开启监听模式:</p>
-<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">CLBeaconRegion</span> *<span class="keyword">beaconRegion </span>= [[CLBeaconRegion alloc]initWithProximityUUID:<span class="comment">@"UUID"</span></span><br><span class="line"><span class="label">                                                         major:</span><span class="number">10084</span></span><br><span class="line"><span class="label">                                                         minor:</span><span class="number">14406</span></span><br><span class="line"><span class="label">                                                    identifier:</span><span class="comment">@"标识内容"];</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyOnEntry </span>= NO<span class="comment">;</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyOnExit </span>= NO<span class="comment">;</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyEntryStateOnDisplay </span>= YES<span class="comment">;</span></span><br><span class="line">                                                    </span><br><span class="line">[<span class="keyword">self.locationManager </span>startMonitoringForRegion:<span class="keyword">beaconRegion];</span><br><span class="line"></span>[<span class="keyword">self.locationManager </span>requestStateForRegion:<span class="keyword">beaconRegion];</span><br><span class="line"></span>[<span class="keyword">self.locationManager </span>startRangingBeaconsInRegion:<span class="keyword">beaconRegion];</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="label">CLBeaconRegion</span> *<span class="keyword">beaconRegion </span>= [[CLBeaconRegion alloc]initWithProximityUUID:<span class="comment">@"UUID"</span></span><br><span class="line"><span class="label">                                                         major:</span><span class="number">10084</span></span><br><span class="line"><span class="label">                                                         minor:</span><span class="number">14406</span></span><br><span class="line"><span class="label">                                                    identifier:</span><span class="comment">@"标识字段"];</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyOnEntry </span>= NO<span class="comment">;</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyOnExit </span>= NO<span class="comment">;</span></span><br><span class="line"><span class="keyword">beaconRegion.notifyEntryStateOnDisplay </span>= YES<span class="comment">;</span></span><br><span class="line">                                                    </span><br><span class="line">[<span class="keyword">self.locationManager </span>startMonitoringForRegion:<span class="keyword">beaconRegion];</span><br><span class="line"></span>[<span class="keyword">self.locationManager </span>requestStateForRegion:<span class="keyword">beaconRegion];</span><br><span class="line"></span>[<span class="keyword">self.locationManager </span>startRangingBeaconsInRegion:<span class="keyword">beaconRegion];</span></span><br></pre></td></tr></table></figure>
 <p>上面的代码我们为beaconRegion的属性做了赋值操作,接下来介绍一下<code>notifyOnEntry</code>,<code>notifyOnExit</code>,<code>notifyEntryStateOnDisplay</code>属性的作用:</p>
 <ul>
 <li><strong>notifyOnEntry:</strong> 设置进入iBeacon区域时是否调用代理方法 <code>locationManager:didEnterRegion:</code>,默认状态是YES</li>
@@ -281,9 +274,14 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
 <p>If the app is not running when a boundary crossing occurs, the system launches the app into the background to handle it. Upon launch, your app must configure new location manager and delegate objects to receive the notification. The notification is sent to your delegate’s <code>locationManager:didExitRegion:</code> method.</p>
 </blockquote>
 <p>可是经过测试,不论设置为YES或NO,当经过iBeacon区域时都会触发 locationManager:didEnterRegion: 和 locationManager:didExitRegion: 代理方法,具体什么原因还没搞清楚,我已在<a href="https://github.com/Estimote/iOS-SDK/issues/248" target="_blank" rel="external">github</a>和<a href="http://stackoverflow.com/questions/42269028/ibeacon-notifyonentry-no-and-notifyonexit-no-but-delegate-is-being-called" target="_blank" rel="external">stack overflow</a>提问,有了解的朋友还望指点。</p>
-<p><strong>后台和程序关闭的行为</strong></p>
-<p>苹果iBeacon是支持后台和杀掉应用进程后还能保持监测行为的,但是要在AppDelegate类中实现<code>CLLocationManagerDelegate</code>代理,创建<code>CLLocationManager</code>对象,并设置其delegate为self,在后台或应用关闭后,只要你从边界进入iBeacon区域或离开iBeacon区域都会触发 <code>locationManager:didEnterRegion:</code> 和 <code>locationManager:didExitRegion:</code> 代理方法,如果你设置了<code>notifyEntryStateOnDisplay=YES</code>,当屏幕亮起来的时候,如果身在iBeacon区域也会执行 <code>locationManager:didDetermineState:forRegion:</code> 代理方法,但是当程关闭的时候 <code>locationManager:didRangeBeacons:inRegion:</code> 代理方法是不会被执行的,如果需要的话,可以考虑在AppDelegate中调用 <code>startRangingBeaconsInRegion:</code> 实例方法来实现!</p>
+<h2 id="后台和程序关闭的行为"><strong>后台和程序关闭的行为</strong></h2><p>苹果iBeacon是支持后台和杀掉应用进程后还能保持监测行为的,但是要在AppDelegate类中实现<code>CLLocationManagerDelegate</code>代理,创建<code>CLLocationManager</code>对象,并设置其delegate为self,在后台或应用关闭后,只要你从边界进入iBeacon区域或离开iBeacon区域都会触发 <code>locationManager:didEnterRegion:</code> 和 <code>locationManager:didExitRegion:</code> 代理方法,如果你设置了<code>notifyEntryStateOnDisplay=YES</code>,当屏幕从黑屏亮起来的时候,如果身在iBeacon区域也会执行 <code>locationManager:didDetermineState:forRegion:</code> 代理方法,但是当程关闭的时候 <code>locationManager:didRangeBeacons:inRegion:</code> 代理方法是不会被执行的,如果需要的话,可以考虑在AppDelegate中调用 <code>startRangingBeaconsInRegion:</code> 实例方法来实现!</p>
 <p>本节主要是了解一下iBeacon是什么以及API的基本使用,相对来说还是比较简单的,但是在初探的过程中调试起来还是比较费事儿的,主要体现在监测到iBeacon的时间延迟没有规律,有时很快就监测到,有时延迟长达几分钟之久。</p>
+<p>参考链接:   </p>
+<ul>
+<li><a href="http://objcio.com/blog/2014/05/01/can-you-smell-the-ibeacon/" target="_blank" rel="external">http://objcio.com/blog/2014/05/01/can-you-smell-the-ibeacon/</a></li>
+<li><a href="http://developer.radiusnetworks.com/2013/11/13/ibeacon-monitoring-in-the-background-and-foreground.html" target="_blank" rel="external">http://developer.radiusnetworks.com/2013/11/13/ibeacon-monitoring-in-the-background-and-foreground.html</a></li>
+<li><a href="http://southpeak.github.io/2014/07/27/ibeacon-exploration/" target="_blank" rel="external">http://southpeak.github.io/2014/07/27/ibeacon-exploration/</a></li>
+</ul>
 
       
     </div>
@@ -293,9 +291,18 @@ iBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),�
     
 <nav id="article-nav">
   
+    <a href="/2017/02/28/URL-Schemes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iOS应用间通讯
+        
+      </div>
+    </a>
   
-    <a href="/2017/02/10/AppleDoc/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">AppleDoc自动生成文档</div>
+  
+    <a href="/2016/10/15/OCLint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">本地自动化Code Review集成</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
