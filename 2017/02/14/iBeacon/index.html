@@ -12,13 +12,13 @@ iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Ene
 耗电量:持续运作的时间更长,estimote声称可以运作24个月">
 <meta property="og:type" content="article">
 <meta property="og:title" content="iBeacon调研记录(一)">
-<meta property="og:url" content="http://yoursite.com/2017/02/14/iBeacon/index.html">
+<meta property="og:url" content="http://leonzlw.github.io/2017/02/14/iBeacon/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。
 iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Energy),它与传统的蓝牙概括有这几点区别:
 
 耗电量:持续运作的时间更长,estimote声称可以运作24个月">
-<meta property="og:updated_time" content="2017-02-21T02:57:03.000Z">
+<meta property="og:updated_time" content="2017-03-08T17:06:00.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iBeacon调研记录(一)">
 <meta name="twitter:description" content="最近公司机场的广告机项目要实现用户只要走近机器就在手机上推送广告消息的功能,基于这一点让我想到了苹果公司iOS7推出的iBeacon定位技术,之前也没有实际使用过,趁着项目需要,边研究边记录。
@@ -274,7 +274,8 @@ iBeaconiBeacon的底层技术是采用的低功耗蓝牙技术(Bluetooth Low Ene
 <p>If the app is not running when a boundary crossing occurs, the system launches the app into the background to handle it. Upon launch, your app must configure new location manager and delegate objects to receive the notification. The notification is sent to your delegate’s <code>locationManager:didExitRegion:</code> method.</p>
 </blockquote>
 <p>可是经过测试,不论设置为YES或NO,当经过iBeacon区域时都会触发 locationManager:didEnterRegion: 和 locationManager:didExitRegion: 代理方法,具体什么原因还没搞清楚,我已在<a href="https://github.com/Estimote/iOS-SDK/issues/248" target="_blank" rel="external">github</a>和<a href="http://stackoverflow.com/questions/42269028/ibeacon-notifyonentry-no-and-notifyonexit-no-but-delegate-is-being-called" target="_blank" rel="external">stack overflow</a>提问,有了解的朋友还望指点。</p>
-<h2 id="后台和程序关闭的行为"><strong>后台和程序关闭的行为</strong></h2><p>苹果iBeacon是支持后台和杀掉应用进程后还能保持监测行为的,但是要在AppDelegate类中实现<code>CLLocationManagerDelegate</code>代理,创建<code>CLLocationManager</code>对象,并设置其delegate为self,在后台或应用关闭后,只要你从边界进入iBeacon区域或离开iBeacon区域都会触发 <code>locationManager:didEnterRegion:</code> 和 <code>locationManager:didExitRegion:</code> 代理方法,如果你设置了<code>notifyEntryStateOnDisplay=YES</code>,当屏幕从黑屏亮起来的时候,如果身在iBeacon区域也会执行 <code>locationManager:didDetermineState:forRegion:</code> 代理方法,但是当程关闭的时候 <code>locationManager:didRangeBeacons:inRegion:</code> 代理方法是不会被执行的,如果需要的话,可以考虑在AppDelegate中调用 <code>startRangingBeaconsInRegion:</code> 实例方法来实现!</p>
+<h2 id="后台和程序关闭的行为"><strong>后台和程序关闭的行为</strong></h2><p>苹果对iBeacon是支持后台和杀掉应用进程后还能保持监测行为的,而且你也能拿到你监视区域的信息,因为当你在程序的任何地方调用<code>startMonitoringForRegion:</code> 添加监视区域,这些监视区域都会被<code>CLLocationManager</code>管理着。我们只需要在AppDelegate类中实现<code>CLLocationManagerDelegate</code>代理,创建<code>CLLocationManager</code>对象,并设置其delegate为self,在后台或应用关闭后,只要你从边界进入iBeacon区域或离开iBeacon区域都会触发 <code>locationManager:didEnterRegion:</code> 和 <code>locationManager:didExitRegion:</code> 代理方法,如果你设置了<code>notifyEntryStateOnDisplay=YES</code>,当屏幕从黑屏亮起来的时候,如果身在iBeacon区域也会执行 <code>locationManager:didDetermineState:forRegion:</code> 代理方法,但是当程关闭的时候 <code>locationManager:didRangeBeacons:inRegion:</code> 代理方法是不会被执行的,如果需要的话,可以考虑在AppDelegate中调用 <code>startRangingBeaconsInRegion:</code> 实例方法来实现!</p>
+<p><font color="red"> <strong>为什么要在AppDelegate中实现上面几个代理方法? </strong> </font><br>因为苹果规定的这一机制,如果app处于关闭的状态,进入到了监控的区域,它只能在AppDelegate类中响应。比如:我们在其他页面添加了监视区域,并将这些响应的代理方法都在写在了该页面,当程序处于关闭状态,只要你不打开App进入到这个页面,那么这些代理方法是不会被执行到的。</p>
 <p>本节主要是了解一下iBeacon是什么以及API的基本使用,相对来说还是比较简单的,但是在初探的过程中调试起来还是比较费事儿的,主要体现在监测到iBeacon的时间延迟没有规律,有时很快就监测到,有时延迟长达几分钟之久。</p>
 <p>参考链接:   </p>
 <ul>
