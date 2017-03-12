@@ -2,16 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
-    <loc>http://leonzlw.github.io/2017/02/14/iBeacon/</loc>
+    <loc>http://leonzlw.github.io/2017/03/02/iBeacon2/</loc>
     
-    <lastmod>2017-03-08T17:06:00.000Z</lastmod>
+    <lastmod>2017-03-12T12:37:26.000Z</lastmod>
     
   </url>
   
   <url>
-    <loc>http://leonzlw.github.io/2017/03/02/iBeacon2/</loc>
+    <loc>http://leonzlw.github.io/2016/03/21/myBlog/</loc>
     
-    <lastmod>2017-03-08T16:35:11.000Z</lastmod>
+    <lastmod>2017-03-09T09:02:40.000Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://leonzlw.github.io/2017/02/14/iBeacon/</loc>
+    
+    <lastmod>2017-03-08T17:06:00.000Z</lastmod>
     
   </url>
   
@@ -26,13 +33,6 @@
     <loc>http://leonzlw.github.io/2016/05/10/StaticsPackage3/</loc>
     
     <lastmod>2017-02-21T02:46:39.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://leonzlw.github.io/2016/03/21/myBlog/</loc>
-    
-    <lastmod>2017-02-21T02:45:47.000Z</lastmod>
     
   </url>
   
