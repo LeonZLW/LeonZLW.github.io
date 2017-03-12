@@ -21,7 +21,7 @@
 实时监测到iBeacon信号变化
 可以方便添加/删除/修改监视的iBeac">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/iBeacon2.gif">
-<meta property="og:updated_time" content="2017-03-12T12:37:26.000Z">
+<meta property="og:updated_time" content="2017-03-12T13:44:24.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="iBeacon调研(二)">
 <meta name="twitter:description" content="iBeacon调研记录(一)主要介绍了iBeacon(Bluetooth Low Energy)是什么,使用场景,API介绍及注意事项。如果看过了上篇文章,相信你对iBeacon已经有了初步了解,这篇文章主要是利用上一篇所记录的内容写一个方便监视iBeacon设备信号动态变化和修改监视区域参数的工具。
@@ -237,6 +237,7 @@
 </ul>
 <p>看了上面的需求,首先我们要有一个列表用来展示所有iBeacon信号变化,当进行添加/修改操作的时候,需要跳转到一个新的页面去编辑,编辑完成之后再跳回到iBeacon列表页面,页面的简单操作描述就是这样。</p>
 <p>最终在真机下的效果:<img src="http://7xob19.com1.z0.glb.clouddn.com/iBeacon2.gif" alt=""></p>
+<a id="more"></a>
 <p>在开撸之前,还要了解一下<code>CLBeaconRegion</code>和<code>CLBeacon</code>:  </p>
 <ul>
 <li><strong>CLBeaconRegion:</strong>用来设置监视区域的行为特征(比如:设置notifyEntryStateOnDisplay=YES),还有存放监视区域的UUID,Major,Minor等信息。</li>
