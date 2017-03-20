@@ -529,6 +529,118 @@
 
 
   
+    <article id="post-NSTimer2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/06/05/NSTimer2/" class="article-date">
+  	<time datetime="2016-06-05T13:49:43.000Z" itemprop="datePublished">2016-06-05</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2016/06/05/NSTimer2/">解决NSTimer内存泄露的巧妙方式</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>在使用<strong>NSTimer</strong>的过程中可能会遇到控制器明明销毁了,但是就是不会走控制器的<strong>dealloc</strong>销毁方法,NSTimer也没有停止运行,这就说明在使用NSTimer过程中出现了循环引用导致的<strong>内存泄露问题</strong>,在<a href="http://stackoverflow.com/questions/16821736/weak-reference-to-nstimer-target-to-prevent-retain-cycle" target="_blank" rel="external">stackoverflow</a>上看到了一种巧妙的方式解除这种循环引用,在此记录一下。</p>
+<h1 id="发生内存泄漏的场景">发生内存泄漏的场景</h1><p>例如我们在viewController中声明了NSTimer属性,然后在viewDidLoad中去创建一个NSTimer实例赋值给myTimer,让它在dealloc方法中对myTimer进行销毁操作<code>(我们只考虑在dealloc方法中对其销毁)</code>:  </p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">@interface</span> <span class="title">ViewController</span> ()</span></span><br><span class="line"><span class="keyword">@property</span> (<span class="keyword">nonatomic</span>, <span class="keyword">weak</span>) <span class="built_in">NSTimer</span> *myTimer;</span><br><span class="line"><span class="keyword">@end</span></span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)dealloc &#123;</span><br><span class="line"> 	[_myTimer invalidate];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)viewDidLoad &#123;</span><br><span class="line">    [<span class="keyword">super</span> viewDidLoad];</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">self</span><span class="variable">.myTimer</span> = [<span class="built_in">NSTimer</span> scheduledTimerWithTimeInterval:<span class="number">1.0</span> target:<span class="keyword">self</span> selector:<span class="keyword">@selector</span>(logTime:) userInfo:<span class="string">@"打印log"</span> repeats:<span class="literal">YES</span>];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (<span class="keyword">void</span>)logTime:(<span class="built_in">NSTimer</span> *)timer &#123;</span><br><span class="line">    <span class="built_in">NSLog</span>(<span class="string">@"%@"</span>, timer<span class="variable">.userInfo</span>);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">```  </span><br><span class="line"></span><br><span class="line">这个viewController控制器是我从其他控制器push过来的,这时候我又pop到上一个页面,按道理说viewController应该在这个时候会走dealloc销毁方法对_myTimer进行销毁操作,然后并没有,结合[上篇对<span class="built_in">NSTimer</span>的介绍](http:<span class="comment">//leonzlw.github.io/2016/06/02/NSTimer/),分析原因如下:</span></span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 当前线程RunLoop对<span class="built_in">NSTimer</span>对象强引用</span><br><span class="line"><span class="number">2.</span> <span class="built_in">NSTimer</span>又对<span class="keyword">self</span>强引用</span><br><span class="line"><span class="number">3.</span> 这样就造成了控制器(<span class="keyword">self</span>)如果想要销毁的话,<span class="built_in">NSTimer</span>就要先调用invalidate来销毁</span><br><span class="line"><span class="number">4.</span> 但是控制器(<span class="keyword">self</span>)不销毁的话</span><br><span class="line"><span class="number">5.</span> 这就产生了一个死循环,谁也释放不掉</span><br><span class="line"></span><br><span class="line">到这里会让我们理所当然地想到用`__<span class="keyword">weak</span>`来避免循环引用:</span><br></pre></td></tr></table></figure>
+<p>__weak typeof(self) weakSelf = self;<br>self.myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakSelf selector:@selector(logTime:) userInfo:@”111” repeats:YES];</p>
+<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">结果还是没有避免循环引用的问题,[stackoverflow](http://stackoverflow.com/questions/<span class="number">16821736</span>/weak-reference-<span class="keyword">to</span>-nstimer-target-<span class="keyword">to</span>-prevent-retain-cycle)的回答有这样一段话:</span><br><span class="line"></span><br><span class="line">&gt;  It won<span class="attribute">'t</span> have the effect <span class="keyword">of</span> creating an NSTimer <span class="keyword">with</span> a weak reference. The only difference between that code <span class="keyword">and</span> using a __strong reference <span class="keyword">is</span> that <span class="keyword">if</span> self <span class="keyword">is</span> deallocated <span class="keyword">in</span> between the two lines given <span class="keyword">then</span> you<span class="attribute">'ll</span> pass nil <span class="keyword">to</span> the timer.</span><br><span class="line"></span><br><span class="line">意思是说 weak 和 <span class="keyword">strong</span> 唯一的区别就是：如果在这两行代码执行的期间 self 被释放了， NSTimer 的 target 会变成 nil。我们用下面这段代码来理解一下这里用__weak修饰是神马意思:</span><br></pre></td></tr></table></figure>
+<p>__weak typeof(self) weakSelf = self;<br>    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.0 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{</p>
+<p>   weakSelf.myTimer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:weakSelf selector:@selector(logTime:) userInfo:@”111” repeats:YES];<br>    });</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line">我们让<span class="built_in">NSTimer</span>添加的代码延后<span class="number">2</span>s执行,进入到这个控制器后立即(<span class="number">2</span>s内)pop出控制器,然后在block中打断点打印<span class="keyword">self</span>,这时候<span class="keyword">self</span>是空的,<span class="built_in">NSTimer</span>的target也就自然而然是<span class="literal">nil</span>。</span><br><span class="line"></span><br><span class="line"><span class="preprocessor"># 解决办法</span></span><br><span class="line">想解决这个问题,其实就是想办法让<span class="built_in">NSTimer</span>不强引用<span class="keyword">self</span>,那么我们可以创建一个中间对象来替代<span class="keyword">self</span>,让<span class="built_in">NSTimer</span>的target强引用这个中间对象,具体实现步骤如下:</span><br><span class="line"></span><br><span class="line"><span class="number">1.</span> 定义一个LEOTimerTarget中间类,它的实例对象专门用来取代当前控制器(<span class="keyword">self</span>)。</span><br><span class="line"><span class="number">2.</span> 然后我们为LEOTimerTarget类定义target和selector属性,这两个属性是用来存放目标对象(这里是控制器)和要执行的目标方法(这里指控制器中的方法)。</span><br><span class="line"><span class="number">3.</span> 然后在<span class="built_in">NSTimer</span>重复执行任务的方法中判断LEOTimerTarget实例对象的target是否为空,为空的话说明目标对象(这里指当前控制器)已经销毁,接着让<span class="built_in">NSTimer</span>实例调用`invalidate`销毁,如果不为空,就通过`performSelector:withObject:`让目标对象去执行目标方法。</span><br><span class="line"></span><br><span class="line">**代码如下:**</span><br></pre></td></tr></table></figure>
+<p>@interface LEOTimerTarget : NSObject<br>// 目标对象<br>@property (nonatomic,weak) id target;<br>// 目标方法<br>@property (nonatomic,assign) SEL selector;<br>// NSTimer实例<br>@property (nonatomic, weak) NSTimer *timer;<br>@end</p>
+<p>@implementation LEOTimerTarget</p>
+<ul>
+<li>(void)fire:(NSTimer *)timer {<br>  // target为弱引用,所以当target对象销毁时,target 为nil<br>  if (self.target) {<br>#pragma clang diagnostic push<br>#pragma clang diagnostic ignored “-Warc-performSelector-leaks”<pre><code><span class="preprocessor">[</span><span class="built_in">self</span><span class="built_in">.</span>target performSelect<span class="subst">or</span>:<span class="built_in">self</span><span class="built_in">.</span><span class="keyword">select</span><span class="subst">or</span> withObject:timer<span class="built_in">.</span>userInfo<span class="preprocessor">]</span><span class="markup">;</span>
+</code></pre>#pragma clang diagnostic pop<br>  }else {<pre><code><span class="title">[timer invalidate]</span><span class="comment">;</span>
+</code></pre>  }<br>}</li>
+</ul>
+<p>@end</p>
+<p>// 注意这里不是LEOTimerTarget类<br>@implementation LEOTimer</p>
+<ul>
+<li><p>(NSTimer *)scheduleTimerWithTimerInterval:(NSTimeInterval)interval</p>
+<pre><code>  <span class="tag">target</span>:(id)<span class="tag">aTarget</span>
+<span class="tag">selector</span>:(SEL)<span class="tag">aSelector</span>
+<span class="tag">userInfo</span>:(id)<span class="tag">userInfo</span>
+ <span class="tag">repeats</span>:(BOOL)<span class="tag">repeats</span> {
+</code></pre><p>  LEOTimerTarget *leoTimerTarget = [[LEOTimerTarget alloc]init];<br>  leoTimerTarget.target = aTarget;<br>  leoTimerTarget.selector = aSelector;<br>  leoTimerTarget.timer = [NSTimer scheduledTimerWithTimeInterval:interval</p>
+<pre><code>  <span class="attribute">target</span>:leoTimerTarget
+<span class="attribute">selector</span>:<span class="variable">@selector</span>(<span class="attribute">fire</span>:)
+<span class="attribute">userInfo</span>:userInfo
+ <span class="attribute">repeats</span>:repeats];
+</code></pre><p>  return leoTimerTarget.timer;<br>}</p>
+</li>
+</ul>
+<p>@end</p>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">这样,我们就避免了循环引用的问题,而且无需重复去写NSTimer的销毁方法<span class="escape">`i</span>nvalidate<span class="escape">`。</span></span><br><span class="line"></span><br><span class="line"><span class="label">如果更习惯block调用方式的话,我们也可以在其基础上`添加一个block调用接口:</span>`</span><br></pre></td></tr></table></figure>
+<ul>
+<li><p>(NSTimer *)scheduleTimerWithTimerInterval:(NSTimeInterval)interval</p>
+<pre><code><span class="tag">blockHandle</span>:(LEOTimerBlockHandle)<span class="tag">block</span>
+   <span class="tag">userInfo</span>:(id)<span class="tag">userInfo</span>
+    <span class="tag">repeats</span>:(BOOL)<span class="tag">repeats</span> {
+</code></pre><p>  // 这里的self指的是LEOTimer类,它调用的是类方法timerBlockInvoke:<br>  return [self scheduleTimerWithTimerInterval:interval</p>
+<pre><code>  <span class="attribute">target</span>:self
+<span class="attribute">selector</span>:<span class="variable">@selector</span>(<span class="attribute">timerBlockInvoke</span>:)
+<span class="attribute">userInfo</span>:@[[block copy],userInfo]
+ <span class="attribute">repeats</span>:repeats];
+</code></pre><p>}</p>
+</li>
+<li><p>(void)timerBlockInvoke:(NSArray *)userInfo {<br>  LEOTimerBlockHandle block = userInfo[0];<br>  id info = userInfo[1];<br>  if (block) {</p>
+<pre><code>block<span class="list">(<span class="keyword">info</span>)</span><span class="comment">;</span>
+</code></pre><p>  }<br>}</p>
+</li>
+</ul>
+<p>```</p>
+<p>但是这种block调用方式需要我们在获取NSTimer实例对象后,在合适的位置通过调用<code>invalidate</code>去销毁。</p>
+<p>参考:  </p>
+<ul>
+<li><a href="http://stackoverflow.com/questions/16821736/weak-reference-to-nstimer-target-to-prevent-retain-cycle" target="_blank" rel="external">http://stackoverflow.com/questions/16821736/weak-reference-to-nstimer-target-to-prevent-retain-cycle</a></li>
+</ul>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-NSTimer" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -555,7 +667,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单,但是往往用着简单的东东内部却暗藏玄机,如果不搞懂它的工作原理,很容易埋下许多坑。</p>
+        <p>在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。</p>
 <h1 id="NSTimer_&amp;_RunLoop"><strong>NSTimer &amp; RunLoop</strong></h1><p>首先NSTimer之所以可以定时去执行任务,实质上是被<code>当前</code>的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了当前的Runloop中,Runloop会获取到NSTimer每一个时间间隔的时间,然后依次去执行我们的事件方法。如果不太明白RunLoop运行机制的童鞋,请戳<a href="http://blog.ibireme.com/2015/05/18/runloop/">这里</a>。</p>
       
     </div>
@@ -763,68 +875,6 @@
       
         <p class="article-more-link">
           <a  href="/2016/04/22/StaticsPackage/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-The-first-techenology-blog" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/03/22/The-first-techenology-blog/" class="article-date">
-  	<time datetime="2016-03-22T08:52:49.000Z" itemprop="datePublished">2016-03-22</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/03/22/The-first-techenology-blog/">NSAttributedString的基本用法和特殊处理</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p>第一篇技术博客就从最近遇到的一个小问题着手吧,顺便也来复习一下NSAttributedString的基本用法。</p>
-<h2 id="NSAttributedString">NSAttributedString</h2><p>NSAttributedString叫做富文本，是一种带有属性的字符串，通过它可以轻松的在一个字符串中表现出多种字体、字号、字体大小等各不相同的风格，还可以对段落进行格式化。</p>
-<p>富文本分为不可变(NSAttributedString)和可变(NSMutableAttributedString)两种类型,两者的区别在于初始化完成后可变类型可以对其内部的值进行修改操作(即:覆盖,插入,删除字符串等操作), 而不可变类型则反之。<br>由于NSAttributedString类型方法比较局限,我们直接创建继承自它的NSMutableAttributedString类型对象
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/03/22/The-first-techenology-blog/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
