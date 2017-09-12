@@ -6,25 +6,25 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge" >
   <title>armv6,armv7,armv7s,arm64,i386,x86_64 | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,由于我之前也没有过多的了解,故查阅了相关资料后在此整理一下。
+  <meta name="description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
 指令集
 
-指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX">
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
 <meta property="og:type" content="article">
 <meta property="og:title" content="armv6,armv7,armv7s,arm64,i386,x86_64">
-<meta property="og:url" content="http://leonzlw.github.io/2017/05/13/ARM-CUP/index.html">
+<meta property="og:url" content="http://leonzlw.github.io/2017/01/13/ARM-CUP/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
-<meta property="og:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,由于我之前也没有过多的了解,故查阅了相关资料后在此整理一下。
+<meta property="og:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
 指令集
 
-指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX">
-<meta property="og:updated_time" content="2017-09-12T17:49:18.000Z">
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
+<meta property="og:updated_time" content="2017-09-12T18:01:14.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="armv6,armv7,armv7s,arm64,i386,x86_64">
-<meta name="twitter:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,由于我之前也没有过多的了解,故查阅了相关资料后在此整理一下。
+<meta name="twitter:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
 指令集
 
-指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX">
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -188,8 +188,8 @@
       <div class="body-wrap"><article id="post-ARM-CUP" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
-      <a href="/2017/05/13/ARM-CUP/" class="article-date">
-  	<time datetime="2017-05-12T16:10:37.000Z" itemprop="datePublished">2017-05-13</time>
+      <a href="/2017/01/13/ARM-CUP/" class="article-date">
+  	<time datetime="2017-01-12T16:10:37.000Z" itemprop="datePublished">2017-01-13</time>
 </a>
     </div>
   
@@ -222,7 +222,7 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p>我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,由于我之前也没有过多的了解,故查阅了相关资料后在此整理一下。</p>
+        <p>我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。</p>
 <p><strong><font size="5">指令集</font></strong></p>
 <blockquote>
 <p>指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，SSSE3 (Super SSE3)，SSE4A，SSE4.1，SSE4.2，AVX，AVX2，AVX-512，VMX等指令集。AMD主要是x86，x86-64，3D-Now!指令集。</p>
@@ -255,37 +255,29 @@
 <thead>
 <tr>
 <th style="text-align:center">指令集</th>
-<th style="text-align:center">设备型号</th>
+<th style="text-align:center">设备型号   </th>
 </tr>
 </thead>
 <tbody>
 <tr>
 <td style="text-align:center">arm64</td>
-<td style="text-align:center">iPhone7 \</td>
-<td>iPhone7s \</td>
-<td>iPhone6s \</td>
-<td>iphone6s plus｜iPhone6｜ iPhone6 plus｜iPhone5S \</td>
-<td>iPad Air｜ iPad mini2(iPad mini with Retina Display)</td>
-<td></td>
+<td style="text-align:center">iPhone7,iPhone7s,iPhone6s,iphone6s plus,iPhone6,iPhone6 plus,iPhone5S,iPad Air,iPad mini2(iPad mini with Retina Display)</td>
 </tr>
 <tr>
 <td style="text-align:center">armv7s</td>
-<td style="text-align:center">iPhone5｜iPhone5C｜iPad4(iPad with Retina Display)</td>
-<td></td>
+<td style="text-align:center">iPhone5,iPhone5C,iPad4(iPad with Retina Display) </td>
 </tr>
 <tr>
 <td style="text-align:center">armv7</td>
-<td style="text-align:center">iPhone4｜iPhone4S｜iPad｜iPad2｜iPad3(The New iPad)｜iPad mini｜iPod Touch 3G｜iPod Touch4</td>
-<td></td>
+<td style="text-align:center">iPhone4,iPhone4S,iPad,iPad2,iPad3(The New iPad),iPad mini,iPod Touch 3G,iPod Touch4 </td>
 </tr>
 <tr>
 <td style="text-align:center">armv6</td>
 <td style="text-align:center">iPhone, iPhone2, iPhone3G, 第一代、第二代 iPod Touch（一般不需要去支持）</td>
-<td></td>
 </tr>
 </tbody>
 </table>
-<p><strong><font size="5">Xcode &gt; target &gt; Buiding Settings中指令集相关选项</font></strong></p>
+<p><strong><font size="5">xcode</font></strong></p>
 
       
     </div>
@@ -295,9 +287,18 @@
     
 <nav id="article-nav">
   
+    <a href="/2017/02/14/iBeacon/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iBeacon调研记录(一)
+        
+      </div>
+    </a>
   
-    <a href="/2017/03/24/optimizeTableImageView/" id="article-nav-older" class="article-nav-link-wrap">
-      <div class="article-nav-title">TableView优化(图片加载)</div>
+  
+    <a href="/2016/10/15/OCLint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">本地自动化Code Review集成</div>
       <strong class="article-nav-caption">></strong>
     </a>
   
