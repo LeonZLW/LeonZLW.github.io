@@ -177,6 +177,126 @@
 
       <div class="body-wrap">
   
+    <article id="post-ARM-CUP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2017/05/13/ARM-CUP/" class="article-date">
+  	<time datetime="2017-05-12T16:10:37.000Z" itemprop="datePublished">2017-05-13</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 itemprop="name">
+      <a class="article-title" href="/2017/05/13/ARM-CUP/">armv6,armv7,armv7s,arm64,i386,x86_64</a>
+    </h1>
+  
+
+      </header>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,由于我之前也没有过多的了解,故查阅了相关资料后在此整理一下。</p>
+<p><strong><font size="5">指令集</font></strong></p>
+<blockquote>
+<p>指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，SSSE3 (Super SSE3)，SSE4A，SSE4.1，SSE4.2，AVX，AVX2，AVX-512，VMX等指令集。AMD主要是x86，x86-64，3D-Now!指令集。</p>
+</blockquote>
+<p>简单粗暴地理解下来就是指令集可以帮助CPU更高效地运行。</p>
+<p><strong><font size="5">ARM处理器</font></strong></p>
+<p>上面没有提到的armv6｜armv7｜armv7s｜arm64就属于ARM处理器的指令集。</p>
+<blockquote>
+<p>ARM处理器是英国Acorn有限公司设计的低功耗成本的第一款RISC微处理器。全称为Acorn RISC Machine。ARM处理器本身是32位设计，但也配备16位指令集，一般来讲比等价32位代码节省达35%，却能保留32位系统的所有优势。</p>
+</blockquote>
+<p>ARM处理器主要有这几个特点:</p>
+<ul>
+<li>体积小、低功耗、低成本、高性能</li>
+<li>支持Thumb（16位）/ARM（32位）双指令集，能很好的兼容8位/16位器件</li>
+<li>大量使用寄存器，指令执行速度更快</li>
+<li>大多数数据操作都在寄存器中完成</li>
+<li>寻址方式灵活简单，执行效率高</li>
+<li>指令长度固定</li>
+</ul>
+<p>因此几乎所有手机处理器都基于ARM,当然我们使用的iPhone系列手机就是使用的ARM处理器,也就是为什么我们xcode中要配置应用使用的指令集。</p>
+<p>armv6｜armv7｜armv7s｜arm64都是ARM处理器的指令集,这些指令集都是向下兼容的，例如armv7指令集兼容armv6，只是使用armv6的时候无法发挥出其性能，无法使用armv7的新特性，从而会导致程序执行效率没那么高。</p>
+<p>那么i386 | x86_64又是干嘛用的呢?</p>
+<ul>
+<li>i386:是针对intel通用微处理器32架构的</li>
+<li>x86_64:是针对x86架构的64位处理器</li>
+</ul>
+<p>我们在mac上运行模拟器,由于模拟器没有指令集,它使用的是mac的处理器,所以i386｜x86_64 是Mac处理器的指令集。</p>
+<p><strong><font size="5">iOS设备所使用的指令集</font></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令集</th>
+<th style="text-align:center">设备型号</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">arm64</td>
+<td style="text-align:center">iPhone7 \</td>
+<td>iPhone7s \</td>
+<td>iPhone6s \</td>
+<td>iphone6s plus｜iPhone6｜ iPhone6 plus｜iPhone5S \</td>
+<td>iPad Air｜ iPad mini2(iPad mini with Retina Display)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">armv7s</td>
+<td style="text-align:center">iPhone5｜iPhone5C｜iPad4(iPad with Retina Display)</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">armv7</td>
+<td style="text-align:center">iPhone4｜iPhone4S｜iPad｜iPad2｜iPad3(The New iPad)｜iPad mini｜iPod Touch 3G｜iPod Touch4</td>
+<td></td>
+</tr>
+<tr>
+<td style="text-align:center">armv6</td>
+<td style="text-align:center">iPhone, iPhone2, iPhone3G, 第一代、第二代 iPod Touch（一般不需要去支持）</td>
+<td></td>
+</tr>
+</tbody>
+</table>
+<p><strong><font size="5">Xcode &gt; target &gt; Buiding Settings中指令集相关选项</font></strong></p>
+
+      
+    </div>
+    
+    <div class="article-info article-info-index">
+      
+      
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+      
+
+      
+      <div class="clearfix"></div>
+    </div>
+    
+  </div>
+  
+</article>
+
+
+
+
+
+
+
+
+
+  
     <article id="post-optimizeTableImageView" class="article article-type-post" itemscope itemprop="blogPost">
   
     <div class="article-meta">
@@ -770,69 +890,6 @@
       
         <p class="article-more-link">
           <a  href="/2016/05/10/StaticsPackage3/#more">more >></a>
-        </p>
-      
-      <div class="clearfix"></div>
-    </div>
-    
-  </div>
-  
-</article>
-
-
-
-
-
-
-
-
-
-  
-    <article id="post-StaticsPackage2" class="article article-type-post" itemscope itemprop="blogPost">
-  
-    <div class="article-meta">
-      <a href="/2016/05/04/StaticsPackage2/" class="article-date">
-  	<time datetime="2016-05-04T10:31:16.000Z" itemprop="datePublished">2016-05-04</time>
-</a>
-    </div>
-  
-  <div class="article-inner">
-    
-      <input type="hidden" class="isFancy" />
-    
-    
-      <header class="article-header">
-        
-  
-    <h1 itemprop="name">
-      <a class="article-title" href="/2016/05/04/StaticsPackage2/">iOS打包静态库(二)</a>
-    </h1>
-  
-
-      </header>
-      
-    
-    <div class="article-entry" itemprop="articleBody">
-      
-        <p><a href="http://0.0.0.0:4000/2016/06/22/StaticsPackage/">上一篇</a>主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。<br>在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由个人喜好而定,区别不大,本人更喜欢使用.framework静态库,相对来说更方便一些,不用再去管那些.h文件应该放在哪里。</p>
-<hr>
-<p><strong> <font size=4 color=black> 第一步,新建打包.framework的项目<br></font> </strong></p>
-<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt=""></p>
-      
-    </div>
-    
-    <div class="article-info article-info-index">
-      
-      
-	<div class="article-tag tagcloud">
-		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
-	</div>
-
-      
-
-      
-        <p class="article-more-link">
-          <a  href="/2016/05/04/StaticsPackage2/#more">more >></a>
         </p>
       
       <div class="clearfix"></div>
