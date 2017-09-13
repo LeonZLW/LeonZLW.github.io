@@ -18,7 +18,7 @@
 指令集
 
 指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
-<meta property="og:updated_time" content="2017-09-12T18:01:14.000Z">
+<meta property="og:updated_time" content="2017-09-13T19:15:40.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="armv6,armv7,armv7s,arm64,i386,x86_64">
 <meta name="twitter:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
@@ -228,6 +228,7 @@
 <p>指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，SSSE3 (Super SSE3)，SSE4A，SSE4.1，SSE4.2，AVX，AVX2，AVX-512，VMX等指令集。AMD主要是x86，x86-64，3D-Now!指令集。</p>
 </blockquote>
 <p>简单粗暴地理解下来就是指令集可以帮助CPU更高效地运行。</p>
+<a id="more"></a>    
 <p><strong><font size="5">ARM处理器</font></strong></p>
 <p>上面没有提到的armv6｜armv7｜armv7s｜arm64就属于ARM处理器的指令集。</p>
 <blockquote>
@@ -261,7 +262,7 @@
 <tbody>
 <tr>
 <td style="text-align:center">arm64</td>
-<td style="text-align:center">iPhone7,iPhone7s,iPhone6s,iphone6s plus,iPhone6,iPhone6 plus,iPhone5S,iPad Air,iPad mini2(iPad mini with Retina Display)</td>
+<td style="text-align:center">iPhone7,iPhone6s,iphone6s plus,iPhone6,iPhone6 plus,iPhone5S,iPad Air,iPad mini2(iPad mini with Retina Display)</td>
 </tr>
 <tr>
 <td style="text-align:center">armv7s</td>
@@ -277,7 +278,31 @@
 </tr>
 </tbody>
 </table>
-<p><strong><font size="5">xcode</font></strong></p>
+<p><strong><font size="5">指令集相关选项说明</font></strong></p>
+<p>打开xcode-&gt;Buiding Setting-&gt;Architectures可以对应用支持的指令集进行配置。</p>
+<p><strong>Architectures</strong></p>
+<blockquote>
+<p>指定工程被编译成可支持哪些指令集类型，而支持的指令集越多，就会编译出包含多个指令集代码的数据包，对应生成二进制包就越大，也就是ipa包会变大。</p>
+</blockquote>
+<p><strong>Valid Architectures</strong></p>
+<blockquote>
+<p>限制可能被支持的指令集的范围，也就是Xcode编译出来的二进制包类型最终从这些类型产生，而编译出支持哪种指令集的包，将由<code>Architectures</code>与<code>Valid Architectures</code>的交集来确定。</p>
+</blockquote>
+<p>比如Architectures设置为arm64 | armv7s | armv7,Valid Architectures设置为arm64 | armv7s,那么它最终生成的二进制包只支持armv7s指令集。</p>
+<p><strong>Build Active Architecture Only</strong></p>
+<blockquote>
+<p>设置是否只对当前连接设备所支持的指令集进行编译。当为YES时,只对当前连接设备所支持的指令集进行编译。当为NO时,会编译所有支持的指令集。</p>
+</blockquote>
+<p>一般为了在debug环境能够编译的速度加快,可以设置为NO,当要release的时候设置为YES来适配不同的设备。</p>
+<p><strong><font size="5">总结</font></strong></p>
+<ul>
+<li>armv7s,armv7打包出来的代码是32位的,arm64打包出来的代码64位的。</li>
+<li>iPhone5s以前的机型(不包含5s)的cpu是32位的,之后的机型都是64位的。</li>
+<li>设备会择优去选择更匹配的包,比如当工程配置为armv7,arm64,则包中会包含32位和64位两份代码,那么在iPhone5s设备下安装,会首选64位的代码包。</li>
+<li>若工程配置为armv7打包出来的包是32位的,iPhone5s安装也会兼容,但是会降低性能。</li>
+<li>支持arm64的系统版本最低为iOS6,如果要兼容更低版本的系统,需要配置armv7 | armv7s生成32位的包来适配。</li>
+<li>我们在开发SDK打包成.a或.framework提供给他人用时,最好做到最大化的兼容,<code>ValidArchitectures</code>设置为：armv7｜armv7s｜arm64｜i386｜x86_64 <code>Architectures</code>设置为(可根据需要调整): armv7｜arm64。</li>
+</ul>
 
       
     </div>
