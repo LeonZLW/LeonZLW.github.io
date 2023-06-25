@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://leonzlw.github.io">
   <title>制作.bundle文件 | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
   <meta name="description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="制作.bundle文件">
 <meta property="og:url" content="http://leonzlw.github.io/2016/05/10/StaticsPackage3/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
 <meta property="og:description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800">
 <meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle3.png?imageView2/2/w/800">
@@ -22,6 +24,7 @@
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="制作.bundle文件">
 <meta name="twitter:description" content="在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程">
+<meta name="twitter:image" content="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -40,7 +43,7 @@
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -86,7 +89,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 		        
@@ -125,7 +128,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 			        
@@ -193,19 +196,19 @@
 </ol>
 <font color="red">这里需要注意的是:如果资源中包含.xib文件,需要使用命令把xib转化为nib文件: </font>
 
-<figure class="highlight brainfuck"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">$</span> <span class="comment">ibtool</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">errors</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">warnings</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">output</span><span class="literal">-</span><span class="comment">format</span> <span class="comment">human</span><span class="literal">-</span><span class="comment">readable</span><span class="literal">-</span><span class="comment">text</span> <span class="literal">-</span><span class="literal">-</span><span class="comment">compile</span> <span class="comment">文件名</span><span class="string">.</span><span class="comment">nib</span> <span class="comment">文件名</span><span class="string">.</span><span class="comment">xib</span></span><br></pre></td></tr></table></figure>
+<figure class="highlight jboss-cli"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ ibtool <span class="params">--errors</span> <span class="params">--warnings</span> <span class="params">--output-format</span> human-readable-text <span class="params">--compile</span> 文件名<span class="string">.nib</span> 文件名<span class="string">.xib</span></span><br></pre></td></tr></table></figure>
 <font color="red"> 如果不转换, 读取的时候会导致如下错误: </font>
 
-<figure class="highlight vhdl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Terminating app due <span class="keyword">to</span> uncaught exception </span><br><span class="line"><span class="attribute">'NSInternalInconsistencyException</span>', reason: <span class="attribute">'Could</span> <span class="keyword">not</span> load NIB <span class="keyword">in</span> bundle:</span><br><span class="line"><span class="attribute">'NSBundle</span> &lt;/var/mobile/Applications/C6718DB8-<span class="number">0</span>C0F-<span class="number">4</span>D38-<span class="number">84E6</span>-<span class="number">55</span>C145279957</span><br><span class="line">/Documents/asset-<span class="number">4</span>.bundle&gt; (<span class="keyword">not</span> yet loaded)' <span class="keyword">with</span> name <span class="attribute">'file</span>''</span><br></pre></td></tr></table></figure>
+<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Terminating app due to uncaught <span class="keyword">exception</span> </span><br><span class="line"><span class="symbol">'NSInternalInconsistencyException</span>', reason: <span class="symbol">'Could</span> <span class="keyword">not</span> load NIB <span class="keyword">in</span> bundle:</span><br><span class="line"><span class="symbol">'NSBundle</span> &lt;/var/mobile/Applications/C6718DB8-<span class="number">0</span>C0F-<span class="number">4</span>D38-<span class="number">84E6</span>-<span class="number">55</span>C145279957</span><br><span class="line">/Documents/asset-<span class="number">4</span>.bundle&gt; (<span class="keyword">not</span> yet loaded)' <span class="keyword">with</span> name <span class="symbol">'file</span>''</span><br></pre></td></tr></table></figure>
 <p><strong>方式2:</strong></p>
-<p>1.新建bundle项目<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800" alt=""></p>
-<p>2.添加资源文件<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800" alt=""></p>
-<p>3.因为只有macOS可以创建bundle项目,所以我们需要将build setting中<br>的Base SDK值改成iOS的版本<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle3.png?imageView2/2/w/800" alt=""></p>
-<p>4.编译工程生成.bundle文件<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle4.png?imageView2/2/w/800" alt=""></p>
+<p>1.新建bundle项目<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle1.png?imageView2/2/w/800" alt></p>
+<p>2.添加资源文件<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle2.png?imageView2/2/w/800" alt></p>
+<p>3.因为只有macOS可以创建bundle项目,所以我们需要将build setting中<br>的Base SDK值改成iOS的版本<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle3.png?imageView2/2/w/800" alt></p>
+<p>4.编译工程生成.bundle文件<br><img src="http://7xob19.com1.z0.glb.clouddn.com/Bundle4.png?imageView2/2/w/800" alt></p>
 <p><strong> <font size="5"> 使用bundle中的资源 </font> </strong></p>
 <p>由于bundle是静态的,不会进行编译的资源文件,所以要使用bundle中的资源，首先要找到我们生成Bundle文件路径来生成NSBundle实例,然后再使用资源名字从生成的NSBundle实例中找到对应的资源。</p>
 <p><strong> 获取Bundle中的nib资源文件 </strong></p>
-<figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在SecondVC的初始化方法中加载</span></span><br><span class="line">- (instancetype)init &#123;</span><br><span class="line">    NSBundle *bundle = [[NSBundle alloc]<span class="string">initWithPath:</span>[[NSBundle mainBundle] <span class="string">pathForResource:</span>@<span class="string">"CreateBundle"</span> <span class="string">ofType:</span>@<span class="string">"bundle"</span>]];</span><br><span class="line">    self = [<span class="keyword">super</span> <span class="string">initWithNibName:</span>@<span class="string">"SecondVC"</span> <span class="string">bundle:</span>bundle];</span><br><span class="line">    <span class="keyword">return</span> self;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 在SecondVC的初始化方法中加载</span></span><br><span class="line">- (<span class="keyword">instancetype</span>)init &#123;</span><br><span class="line">    <span class="built_in">NSBundle</span> *bundle = [[<span class="built_in">NSBundle</span> alloc]initWithPath:[[<span class="built_in">NSBundle</span> mainBundle] pathForResource:<span class="string">@"CreateBundle"</span> ofType:<span class="string">@"bundle"</span>]];</span><br><span class="line">    <span class="keyword">self</span> = [<span class="keyword">super</span> initWithNibName:<span class="string">@"SecondVC"</span> bundle:bundle];</span><br><span class="line">    <span class="keyword">return</span> <span class="keyword">self</span>;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <p>或者在需要使用的地方直接使用<strong>initWithNibName:bundle:</strong>去加载</p>
 <figure class="highlight groovy"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">NSBundle *bundle = [[NSBundle alloc]<span class="string">initWithPath:</span>[[NSBundle mainBundle] <span class="string">pathForResource:</span>@<span class="string">"CreateBundle"</span> <span class="string">ofType:</span>@<span class="string">"bundle"</span>]];</span><br><span class="line">   SecondVC *second = [[SecondVC alloc]<span class="string">initWithNibName:</span>@<span class="string">"SecondVC"</span> <span class="string">bundle:</span>bundle];</span><br><span class="line">   [self <span class="string">presentViewController:</span>second <span class="string">animated:</span>YES <span class="string">completion:</span>nil];</span><br></pre></td></tr></table></figure>
 <p><strong> 获取Bundle中的图片资源 </strong></p>
@@ -455,7 +458,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">出发</a>
+                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -463,7 +466,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
+                <a href="javascript:void(0)" class="js-tag color3">出发</a>
               </li>
             
             <div class="clearfix"></div>

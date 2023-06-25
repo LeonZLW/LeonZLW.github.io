@@ -1,26 +1,25 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://leonzlw.github.io">
   <title>NSTimer与RunLoop的那些事 | Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。
-NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
+  <meta name="description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。 NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
 <meta property="og:title" content="NSTimer与RunLoop的那些事">
 <meta property="og:url" content="http://leonzlw.github.io/2016/06/02/NSTimer/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
-<meta property="og:description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。
-NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
+<meta property="og:description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。 NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:updated_time" content="2017-03-19T16:21:23.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="NSTimer与RunLoop的那些事">
-<meta name="twitter:description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。
-NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
+<meta name="twitter:description" content="在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。 NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实质上是被当前的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -39,7 +38,7 @@ NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实�
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -85,7 +84,7 @@ NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实�
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 		        
@@ -124,7 +123,7 @@ NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实�
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 			        
@@ -173,7 +172,7 @@ NSTimer &amp;amp; RunLoop首先NSTimer之所以可以定时去执行任务,实�
     <div class="article-entry" itemprop="articleBody">
       
         <p>在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。</p>
-<h1 id="NSTimer_&amp;_RunLoop"><strong>NSTimer &amp; RunLoop</strong></h1><p>首先NSTimer之所以可以定时去执行任务,实质上是被<code>当前</code>的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了当前的Runloop中,Runloop会获取到NSTimer每一个时间间隔的时间,然后依次去执行我们的事件方法。如果不太明白RunLoop运行机制的童鞋,请戳<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">这里</a>。</p>
+<h1 id="NSTimer_&amp;_RunLoop"><strong>NSTimer &amp; RunLoop</strong></h1><p>首先NSTimer之所以可以定时去执行任务,实质上是被<code>当前</code>的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了当前的Runloop中,Runloop会获取到NSTimer每一个时间间隔的时间,然后依次去执行我们的事件方法。如果不太明白RunLoop运行机制的童鞋,请戳<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">这里</a>。</p>
 <a id="more"></a>
 <p><strong>有三种方式来初始化NSTimer:</strong></p>
 <ol>
@@ -204,7 +203,7 @@ NSTimer *myTimer = [NSTimer <span class="string">timerWithTimeInterval:</span><s
 <ul>
 <li>把NSTimer添加到NSRunLoopCommonModes模式(NSRunLoopCommonModes默认包含:NSDefaultRunLoopMode和UITrackingRunLoopMode)。</li>
 </ul>
-<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr_selector">[[NSRunLoop currentRunLoop]</span> <span class="tag">addTimer</span><span class="pseudo">:myTimer</span> <span class="tag">forMode</span><span class="pseudo">:NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="selector-attr">[[NSRunLoop currentRunLoop]</span> <span class="selector-tag">addTimer</span><span class="selector-pseudo">:myTimer</span> <span class="selector-tag">forMode</span><span class="selector-pseudo">:NSRunLoopCommonModes</span>];</span><br></pre></td></tr></table></figure>
 <p>以上都是在<code>主线程</code>的操作的,如果我们让它在<code>子线程</code>执行:</p>
 <pre><code>    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, <span class="number">0</span>), ^{
 
@@ -228,8 +227,8 @@ NSTimer *myTimer = [NSTimer <span class="string">timerWithTimeInterval:</span><s
 <p> Note in particular that run loops maintain strong references to their timers, so you don’t have to maintain your own strong reference to a timer after you have added it to a run loop.</p>
 </blockquote>
 <p>说的是NSTimer实例会被当前线程的RunLoop<code>强引用</code>,所以在使用时不需要把NSTimer声明成强引用类型的属性或成员变量。</p>
-<p>想了解线程与RunLoop之间关系的请看下面的<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="external">源码整理</a>:</p>
-<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 全局的Dictionary，key 是 pthread_t， value 是 CFRunLoopRef</span></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">CFMutableDictionaryRef</span> loopsDic;</span><br><span class="line"><span class="comment">/// 访问 loopsDic 时的锁</span></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">CFSpinLock_t</span> loopsLock;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/// 获取一个 pthread 对应的 RunLoop。</span></span><br><span class="line"><span class="built_in">CFRunLoopRef</span> _<span class="built_in">CFRunLoopGet</span>(pthread_t thread) &#123;</span><br><span class="line">    OSSpinLockLock(&amp;loopsLock);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!loopsDic) &#123;</span><br><span class="line">        <span class="comment">// 第一次进入时，初始化全局Dic，并先为主线程创建一个 RunLoop。</span></span><br><span class="line">        loopsDic = <span class="built_in">CFDictionaryCreateMutable</span>();</span><br><span class="line">        <span class="built_in">CFRunLoopRef</span> mainLoop = _<span class="built_in">CFRunLoopCreate</span>();</span><br><span class="line">        <span class="built_in">CFDictionarySetValue</span>(loopsDic, pthread_main_thread_np(), mainLoop);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 直接从 Dictionary 里获取。</span></span><br><span class="line">    <span class="built_in">CFRunLoopRef</span> loop = <span class="built_in">CFDictionaryGetValue</span>(loopsDic, thread));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!loop) &#123;</span><br><span class="line">        <span class="comment">/// 取不到时，创建一个</span></span><br><span class="line">        loop = _<span class="built_in">CFRunLoopCreate</span>();</span><br><span class="line">        <span class="built_in">CFDictionarySetValue</span>(loopsDic, thread, loop);</span><br><span class="line">        <span class="comment">/// 注册一个回调，当线程销毁时，顺便也销毁其对应的 RunLoop。</span></span><br><span class="line">        _<span class="built_in">CFSetTSD</span>(..., thread, loop, __<span class="built_in">CFFinalizeRunLoop</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    OSSpinLockUnLock(&amp;loopsLock);</span><br><span class="line">    <span class="keyword">return</span> loop;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">CFRunLoopRef</span> <span class="built_in">CFRunLoopGetMain</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> _<span class="built_in">CFRunLoopGet</span>(pthread_main_thread_np());</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">CFRunLoopRef</span> <span class="built_in">CFRunLoopGetCurrent</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> _<span class="built_in">CFRunLoopGet</span>(pthread_self());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>想了解线程与RunLoop之间关系的请看下面的<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">源码整理</a>:</p>
+<figure class="highlight objectivec"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/// 全局的Dictionary，key 是 pthread_t， value 是 CFRunLoopRef</span></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">CFMutableDictionaryRef</span> loopsDic;</span><br><span class="line"><span class="comment">/// 访问 loopsDic 时的锁</span></span><br><span class="line"><span class="keyword">static</span> <span class="built_in">CFSpinLock_t</span> loopsLock;</span><br><span class="line"> </span><br><span class="line"><span class="comment">/// 获取一个 pthread 对应的 RunLoop。</span></span><br><span class="line"><span class="built_in">CFRunLoopRef</span> _CFRunLoopGet(pthread_t thread) &#123;</span><br><span class="line">    OSSpinLockLock(&amp;loopsLock);</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!loopsDic) &#123;</span><br><span class="line">        <span class="comment">// 第一次进入时，初始化全局Dic，并先为主线程创建一个 RunLoop。</span></span><br><span class="line">        loopsDic = <span class="built_in">CFDictionaryCreateMutable</span>();</span><br><span class="line">        <span class="built_in">CFRunLoopRef</span> mainLoop = _CFRunLoopCreate();</span><br><span class="line">        <span class="built_in">CFDictionarySetValue</span>(loopsDic, pthread_main_thread_np(), mainLoop);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    <span class="comment">/// 直接从 Dictionary 里获取。</span></span><br><span class="line">    <span class="built_in">CFRunLoopRef</span> loop = <span class="built_in">CFDictionaryGetValue</span>(loopsDic, thread));</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> (!loop) &#123;</span><br><span class="line">        <span class="comment">/// 取不到时，创建一个</span></span><br><span class="line">        loop = _CFRunLoopCreate();</span><br><span class="line">        <span class="built_in">CFDictionarySetValue</span>(loopsDic, thread, loop);</span><br><span class="line">        <span class="comment">/// 注册一个回调，当线程销毁时，顺便也销毁其对应的 RunLoop。</span></span><br><span class="line">        _CFSetTSD(..., thread, loop, __CFFinalizeRunLoop);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    OSSpinLockUnLock(&amp;loopsLock);</span><br><span class="line">    <span class="keyword">return</span> loop;</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">CFRunLoopRef</span> <span class="built_in">CFRunLoopGetMain</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> _CFRunLoopGet(pthread_main_thread_np());</span><br><span class="line">&#125;</span><br><span class="line"> </span><br><span class="line"><span class="built_in">CFRunLoopRef</span> <span class="built_in">CFRunLoopGetCurrent</span>() &#123;</span><br><span class="line">    <span class="keyword">return</span> _CFRunLoopGet(pthread_self());</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h1 id="NSTimer触发时间"><strong>NSTimer触发时间</strong></h1><blockquote>
 <p>A timer is not a real-time mechanism; it fires only when one of the run loop modes to which the timer has been added is running and able to check if the timer’s firing time has passed. Because of the various input sources a typical run loop manages, the effective resolution of the time interval for a timer is limited to on the order of 50-100 milliseconds. If a timer’s firing time occurs during a long callout or while the run loop is in a mode that is not monitoring the timer, the timer does not fire until the next time the run loop checks the timer. Therefore, the actual time at which the timer fires potentially can be a significant period of time after the scheduled firing time.<br>e.  </p>
 </blockquote>
@@ -270,7 +269,7 @@ NSTimer *myTimer = [NSTimer <span class="string">timerWithTimeInterval:</span><s
 </ul>
 <p>参考文献:    </p>
 <ul>
-<li><a href="https://developer.apple.com/reference/foundation/timer" target="_blank" rel="external">NSTimer API Reference</a></li>
+<li><a href="https://developer.apple.com/reference/foundation/timer" target="_blank" rel="noopener">NSTimer API Reference</a></li>
 </ul>
 
       
@@ -512,7 +511,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">出发</a>
+                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -520,7 +519,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
+                <a href="javascript:void(0)" class="js-tag color3">出发</a>
               </li>
             
             <div class="clearfix"></div>

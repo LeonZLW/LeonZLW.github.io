@@ -1,22 +1,20 @@
 <!DOCTYPE html>
 <html>
-<head>
+<head><meta name="generator" content="Hexo 3.9.0">
   <meta charset="utf-8">
   
   <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <link rel="dns-prefetch" href="http://leonzlw.github.io">
   <title>Leon’s Blog</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-  <meta name="description">
-<meta property="og:type" content="website">
+  <meta property="og:type" content="website">
 <meta property="og:title" content="Leon’s Blog">
 <meta property="og:url" content="http://leonzlw.github.io/page/2/index.html">
 <meta property="og:site_name" content="Leon’s Blog">
-<meta property="og:description">
+<meta property="og:locale" content="zh-Hans">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Leon’s Blog">
-<meta name="twitter:description">
   
     <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
   
@@ -35,7 +33,7 @@
   
 
 </head>
-
+</html>
 <body>
   <div id="container" q-class="show:isCtnShow">
     <canvas id="anm-canvas" class="anm-canvas"></canvas>
@@ -81,7 +79,7 @@
 		<nav class="header-nav">
 			<div class="social">
 				
-					<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+					<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 		        
 					<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 		        
@@ -120,7 +118,7 @@
 			<nav class="header-nav">
 				<div class="social">
 					
-						<a class="github" target="_blank" href="/#" title="github"><i class="icon-github"></i></a>
+						<a class="github" target="_blank" href="#" title="github"><i class="icon-github"></i></a>
 			        
 						<a class="mail" target="_blank" href="/leon_lw@126.com" title="mail"><i class="icon-mail"></i></a>
 			        
@@ -171,7 +169,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在项目中我们经常会用到定时器(NSTimer)的定时执行任务功能,虽然它的用法很简单内部却暗藏玄机,如果不搞懂它的工作原理很容易埋下许多坑,在这里详细记录一下。</p>
-<h1 id="NSTimer_&amp;_RunLoop"><strong>NSTimer &amp; RunLoop</strong></h1><p>首先NSTimer之所以可以定时去执行任务,实质上是被<code>当前</code>的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了当前的Runloop中,Runloop会获取到NSTimer每一个时间间隔的时间,然后依次去执行我们的事件方法。如果不太明白RunLoop运行机制的童鞋,请戳<a href="http://blog.ibireme.com/2015/05/18/runloop/">这里</a>。</p>
+<h1 id="NSTimer_&amp;_RunLoop"><strong>NSTimer &amp; RunLoop</strong></h1><p>首先NSTimer之所以可以定时去执行任务,实质上是被<code>当前</code>的Runloop驱动的,如果没有Runloop那它就不能运作，所以当我们让NSTimer定时处理事情的时候,要记得将NSTimer添加到了当前的Runloop中,Runloop会获取到NSTimer每一个时间间隔的时间,然后依次去执行我们的事件方法。如果不太明白RunLoop运行机制的童鞋,请戳<a href="http://blog.ibireme.com/2015/05/18/runloop/" target="_blank" rel="noopener">这里</a>。</p>
         
           <a class="article-more-a" href="/2016/06/02/NSTimer/#more">more >></a>
         
@@ -248,7 +246,7 @@
     <div class="article-entry" itemprop="articleBody">
       
         <p>在我们使用第三方框架时经常会看到xxx.bundle的文件,我们找到该文件,右键显示包内容,会看到很多图片,配置文件,.xib等资源文件。在我们SDK打包的过程中,也会将资源文件一并打包成.bundle文件使用,那是为什么呢?其实.bundle文件与我们平时的文件夹并无太大区别,在我看来只是加了后缀罢了,它更像是一个包,如果在工程外部想查看内部的文件需要显示包内容查看,在移动包文件的过程中在一定程度上也降低了他人对包内容误改的几率。</p>
-<p><strong> <font size=5>什么是bundle文件?</font> </strong></p>
+<p><strong> <font size="5">什么是bundle文件?</font> </strong></p>
 <blockquote>
 <p>简单理解，就是资源文件包。我们将许多图片、XIB、文本文件组织在一起，打包成一个Bundle文件。方便在其他项目中引用包内的资源。</p>
 </blockquote>
@@ -327,10 +325,10 @@
     
     <div class="article-entry" itemprop="articleBody">
       
-        <p><a href="http://0.0.0.0:4000/2016/06/22/StaticsPackage/">上一篇</a>主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。<br>在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由个人喜好而定,区别不大,本人更喜欢使用.framework静态库,相对来说更方便一些,不用再去管那些.h文件应该放在哪里。</p>
+        <p><a href="http://0.0.0.0:4000/2016/06/22/StaticsPackage/" target="_blank" rel="noopener">上一篇</a>主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。<br>在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由个人喜好而定,区别不大,本人更喜欢使用.framework静态库,相对来说更方便一些,不用再去管那些.h文件应该放在哪里。</p>
 <hr>
-<p><strong> <font size=4 color=black> 第一步,新建打包.framework的项目<br></font> </strong></p>
-<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt=""></p>
+<p><strong> <font size="4" color="black"> 第一步,新建打包.framework的项目<br></font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt></p>
         
           <a class="article-more-a" href="/2016/05/04/StaticsPackage2/#more">more >></a>
         
@@ -722,7 +720,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color3">出发</a>
+                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
               </li>
              
               <li class="article-tag-list-item">
@@ -730,7 +728,7 @@ return o(i(t),arguments.length<2?void 0:u(arguments[1]))}})},function(t,n,r){var
               </li>
              
               <li class="article-tag-list-item">
-                <a href="javascript:void(0)" class="js-tag color1">出发222</a>
+                <a href="javascript:void(0)" class="js-tag color3">出发</a>
               </li>
             
             <div class="clearfix"></div>
