@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://leonzlw.github.io/2023/06/25/gitlab%E9%83%A8%E7%BD%B2/</loc>
+    
+    <lastmod>2023-06-25T17:31:08.508Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://leonzlw.github.io/2023/06/25/hexo/</loc>
     
     <lastmod>2023-06-25T14:11:16.414Z</lastmod>
@@ -9,7 +16,7 @@
   </url>
   
   <url>
-    <loc>http://leonzlw.github.io/optimizeTableImageView.html</loc>
+    <loc>http://leonzlw.github.io/%E5%BA%9F%E5%BC%83/optimizeTableImageView.html</loc>
     
     <lastmod>2023-06-25T09:49:53.451Z</lastmod>
     
@@ -26,13 +33,6 @@
     <loc>http://leonzlw.github.io/categories/index.html</loc>
     
     <lastmod>2023-06-25T08:24:18.078Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://leonzlw.github.io/2023/06/25/CI:CD/</loc>
-    
-    <lastmod>2023-06-25T08:19:41.418Z</lastmod>
     
   </url>
   

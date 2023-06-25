@@ -1,0 +1,185 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>GitLab部署（Mac+Docker） | Leon’s Blog | Dreams don&#39;t work unless you do.</title>
+
+  
+  <meta name="author" content="Leon">
+  
+
+  
+  <meta name="description" content="iOS Developer">
+  
+
+  
+  
+  <meta name="keywords" content="代码仓库">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="GitLab部署（Mac+Docker）">
+
+  <meta property="og:site_name" content="Leon’s Blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Leon’s Blog</a>
+    </h1>
+    <p class="site-description">Dreams don&#39;t work unless you do.</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>GitLab部署（Mac+Docker）</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2023/06/25/gitlab部署/" rel="bookmark">
+        <time class="entry-date published" datetime="2023-06-25T10:03:07.000Z">
+          2023-06-25
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p><img src="https://picx.zhimg.com/v2-70be07ec28e5c912764a5d76e7474d05_720w.jpg?source=172ae18b" alt="使用 Docker 搭建 GitLab"></p>
+<p>GitLab作为目前最主流的分布式代码托管工具，不仅免费还支持私有化部署，同时又具备高度可定制化工作流特性，因此被业界大部分公司企业所采用。</p>
+<p>本文章主要记录基于Mac+Docker方案的Gitlab部署过程，如果你是个人，可以用来搭建自己的gitlab服务器作为私人代码仓库，如果你就职于小型或初创公司，在资源有限的情况下也可以尝试部署成团队代码仓库作为过渡。</p>
+<a id="more"></a>
+<h2 id="第一步：_下载、安装Docker">第一步： 下载、安装Docker</h2><h3 id="下载">下载</h3><p>打开 <a href="https://docs.docker.com/desktop/install/mac-install/" target="_blank" rel="noopener">docker官网</a> 选择Mac系统安装，可以看到有 <code>Intel</code> 和 <code>Apple silicon</code> 两个版本，根据自身条件选择相应的版本。</p>
+<p>安装要求（Intel）：<code>本文主要基于 Intel 介绍</code></p>
+<ul>
+<li>至少占用 4 GB RAM </li>
+<li>不得安装 4.3.30 版本之前的 VirtualBox，因为它与 Docker Desktop 不兼容。</li>
+</ul>
+<p>安装要求（Apple silicon）：</p>
+<ul>
+<li>建议先安装 <code>Rosetta 2</code> ，命令行：softwareupdate –install-rosetta</li>
+</ul>
+<p><img src="https://cdn.jsdelivr.net/gh/LeonZLW/Images/imgs/image-20230625235126525.png" alt="image-20230625235126525"></p>
+<h3 id="安装">安装</h3><p>双击下载好的 <code>Docker.dmg</code> ，像安装其它第三方应用一样把它移动到 <code>应用程序</code> 目录.</p>
+<h2 id="第二步：_注册/登陆Docker_&amp;_下载社区版镜像">第二步： 注册/登陆Docker &amp; 下载社区版镜像</h2><h3 id="注册/登陆Docker">注册/登陆Docker</h3><p>打开 docker 应用后，在下载镜像前需要先进行登陆，这里可能会遇到web页登陆成功，但是客户端始终在loading的情况。这是因为客户端登陆需要先进行 <code>终端翻墙</code> ，具体如何翻请自行百度（注意：第三方VPN并意味着终端也会走VPN）。</p>
+<h3 id="下载社区版镜像">下载社区版镜像</h3><p>在客户端顶部的搜索栏搜索 <code>gitlab-ce</code> ，下载收藏数最多的这个。</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LeonZLW/Images/imgs/image-20230626001625400.png" alt="image-20230626001625400"></p>
+<h2 id="第三步：_编写镜像配置_&amp;_运行镜像">第三步： 编写镜像配置 &amp; 运行镜像</h2><p>在本地存放 <code>Gitlab根目录</code> 创建 <code>docker-compose.yml 配置文件，详细配置如下：</code> 配置文件，配置参数如下：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#相关命令介绍，非顺序执行，仅注释记录。</span></span><br><span class="line"><span class="comment">#1.更新docker-compose文件后，使用此命令重载配置，gitlab-ctl reconfigure这个命令无法重载docker-compose的配置</span></span><br><span class="line"><span class="comment">#docker-compose up --force-recreate -d</span></span><br><span class="line"><span class="comment">#2.测试邮箱能否正常发送</span></span><br><span class="line"><span class="comment">#2-1进入该镜像的bash命令：docker exec -it gitlab-ce /bin/bash</span></span><br><span class="line"><span class="comment">#2-2进入gitlab-rails的console模式：gitlab-rails console</span></span><br><span class="line"><span class="comment">#2-3发送邮件命令：Notify.test_email('xxxx@163.com', '主题', '邮件内容').deliver_now</span></span><br><span class="line"><span class="comment">#3.配置重载命令：gitlab-ctl reconfigure</span></span><br><span class="line"><span class="comment">#4.重启服务命令：gitlab-ctl restart</span></span><br><span class="line"><span class="attr">version:</span> <span class="string">'1.0'</span></span><br><span class="line"><span class="attr">services:</span></span><br><span class="line">  <span class="attr">gitlab:</span></span><br><span class="line">    <span class="attr">image:</span> <span class="string">'gitlab/gitlab-ce:latest'</span></span><br><span class="line">    <span class="attr">container_name:</span> <span class="string">'gitlab-ce'</span></span><br><span class="line">    <span class="attr">restart:</span> <span class="string">always</span></span><br><span class="line">    <span class="attr">hostname:</span> <span class="string">'192.168.31.55'</span> <span class="comment">#主机名称，这里替换成你本地ip</span></span><br><span class="line">    <span class="attr">environment:</span></span><br><span class="line">      <span class="attr">TZ:</span> <span class="string">'Asia/Shanghai'</span></span><br><span class="line">      <span class="attr">GITLAB_OMNIBUS_CONFIG:</span> <span class="string">|</span></span><br><span class="line">        <span class="string">external_url</span> <span class="string">'http://192.168.31.55'</span> <span class="comment">#外部访问ip（需要跟hostname保持一致，不可添加端口号，否则docker镜像无法创建容器），默认端口80，这里填写主机ip地址，以便拉取代码，否则其它电脑无法拉取代码。在配置有外网访问的域名情况下，`hostname` 和 `external_url` ip更换为域名即可。</span></span><br><span class="line">        <span class="string">gitlab_rails['time_zone']</span> <span class="string">=</span> <span class="string">'Asia/Shanghai'</span> <span class="comment">#时区</span></span><br><span class="line">        <span class="comment">#======配置发件邮箱=======</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_enable']</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_address']</span> <span class="string">=</span> <span class="string">"smtp.qq.com"</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_port']</span> <span class="string">=</span> <span class="number">25</span> <span class="comment">#smtp_tls = false用25端口，true用465端口，否则邮件无法发出</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_user_name']</span> <span class="string">=</span> <span class="string">"xxxx@qq.com"</span> <span class="comment">#发件邮箱</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_password']</span> <span class="string">=</span> <span class="string">"yaxlafinrprybhgf"</span> <span class="comment">#邮箱令牌密钥（不是邮箱密码）</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_domain']</span> <span class="string">=</span> <span class="string">"smtp.qq.com"</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_authentication']</span> <span class="string">=</span> <span class="string">"login"</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_enable_starttls_auto']</span> <span class="string">=</span> <span class="literal">true</span></span><br><span class="line">        <span class="string">gitlab_rails['smtp_tls']</span> <span class="string">=</span> <span class="literal">false</span></span><br><span class="line">        <span class="comment"># gitlab_rails['smtp_pool'] = false</span></span><br><span class="line">        <span class="string">gitlab_rails['gitlab_email_from']</span> <span class="string">=</span> <span class="string">'xxxx@qq.com'</span> <span class="comment">#发件箱</span></span><br><span class="line">    <span class="attr">ports:</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'880:80'</span> <span class="comment">#本地端口：容器端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'843:443'</span> <span class="comment">#本地端口：容器端口</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'822:22'</span> <span class="comment">#本地端口：容器端口</span></span><br><span class="line">    <span class="attr">volumes:</span> <span class="comment">#挂在本地路径是为了防止容器被删除后，数据也跟着丢失了。</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'~/Desktop/docker/gitlab/gitlab-compose/config:/etc/gitlab'</span> <span class="comment">#挂载本地配置路径：容器配置路径 </span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'~/Desktop/docker/gitlab/gitlab-compose/logs:/var/log/gitlab'</span> <span class="comment">#挂载本地日志路径：容器日志路径</span></span><br><span class="line">      <span class="bullet">-</span> <span class="string">'~/Desktop/docker/gitlab/gitlab-compose/data:/var/opt/gitlab'</span> <span class="comment">#挂载本地数据路径：容器数据路径</span></span><br></pre></td></tr></table></figure>
+<p>运行镜像：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">gitlab-ctl</span> <span class="string">restart</span></span><br></pre></td></tr></table></figure>
+<p>打开浏览器，主机通过 <code>localhost:880</code> 访问，其它局域网设备通过 <code>192.168.31.55:880</code> 访问：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LeonZLW/Images/imgs/image-20230626011401537.png" alt="image-20230626011401537"></p>
+<p>管理员初始账号名为：<code>root</code></p>
+<p>密码可通过在挂载在本地的 <code>...../gitlab-compose/config/initial_root_password</code> 文件中获取到：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LeonZLW/Images/imgs/image-20230626011657033.png" alt="image-20230626011657033"></p>
+<p>登陆gitlab，创建代码仓库时会发现克隆代码的HTTP链接是 <code>http:192.168.31.55/xxxxx/xxxx</code> ，由于缺少端口号，因此无法拉取代码。因此我们还要去修改 <code>SSH</code> 和 <code>HTTP</code> 的端口号：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#1.首先进入到docker客户端-&gt;gitlab容器-&gt;iterm模式，然后执行以下命令：</span></span><br><span class="line"><span class="string">vi</span> <span class="string">/opt/gitlab/embedded/service/gitlab-rails/config/gitlab.yml</span></span><br><span class="line"><span class="comment">#2.找到此配置，修改端口为880</span></span><br><span class="line">  <span class="attr">gitlab:</span></span><br><span class="line">    <span class="attr">host:</span> <span class="number">192.168</span><span class="number">.31</span><span class="number">.55</span></span><br><span class="line">    <span class="attr">port:</span> <span class="number">880</span></span><br><span class="line">    <span class="attr">https:</span> <span class="literal">false</span></span><br><span class="line"><span class="comment">#3.退出保存，重启gitlab</span></span><br><span class="line"><span class="string">gitlab-ctl</span> <span class="string">restart</span></span><br></pre></td></tr></table></figure>
+<p>待重启完成后再次刷新页面就是带有 <code>ip+端口</code> 的地址了~</p>
+<h2 id="经验总结">经验总结</h2><p>仅作为局域网访问的话，<code>hostname</code> 和 <code>external_url</code> 都要填写Mac的内网ip地址，不能填 <code>127.0.0.1</code> 或 <code>localhost</code> ，否则在拉取代码时，截图中的地址将变成 <code>127.0.0.1</code> 或 <code>localhost</code> ，意味着其它局域网电脑想拉取代码将无法获取。</p>
+<p>如果要更新 <code>docker-compose.yml</code> 文件，通过 <code>gitlab-ctl reconfigure</code> 和 <code>gitlab-ctl restart</code> 是不生效的，需要通过docker命令来进行重新部署容器：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">docker-compose up --force-recreate -d</span><br></pre></td></tr></table></figure>
+<p>这个命令的作用就是 <code>删除gitlab容器 + 重新部署</code> , 因此将重要配置信息挂载到本地是十分必要的~</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+      
+
+    <span class="post-categories">
+      <i class="icon-categories"></i>
+        <a href="/categories/效率/">效率</a>
+    </span>
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/代码仓库/">代码仓库</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2023 Leon
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
