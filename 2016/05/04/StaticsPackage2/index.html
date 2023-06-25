@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>iOS打包静态库(二) | Leon’s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS打包静态库(二)">
+<meta property="og:url" content="http://leonzlw.github.io/2016/05/04/StaticsPackage2/index.html">
+<meta property="og:site_name" content="Leon’s Blog">
+<meta property="og:description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/600">
+<meta property="og:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic8.png?imageView2/2/w/375">
+<meta property="og:updated_time" content="2017-02-21T02:44:47.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="iOS打包静态库(二)">
+<meta name="twitter:description" content="上一篇主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由">
+<meta name="twitter:image" content="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600">
+  
+    <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xob19.com1.z0.glb.clouddn.com/myblog_avatar2.pic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leon_z</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Dreams don&#39;t work unless you do.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/“http:/weibo.com/lwzLeon”" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="/“leon_lw@126.com”" title="mail">mail</a>
+					        
+								<a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/出发/" style="font-size: 10px;">出发</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">不一样的烟火.</div>
+				</section>
+				
+			</div>
+		</div>	
+	</header>			
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leon_z</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xob19.com1.z0.glb.clouddn.com/myblog_avatar2.pic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leon_z</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Dreams don&#39;t work unless you do.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/“http:/weibo.com/lwzLeon”" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="/“leon_lw@126.com”" title="mail">mail</a>
+			        
+						<a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-StaticsPackage2" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/05/04/StaticsPackage2/" class="article-date">
+  	<time datetime="2016-05-04T10:31:16.000Z" itemprop="datePublished">2016-05-04</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      iOS打包静态库(二)
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p><a href="http://0.0.0.0:4000/2016/06/22/StaticsPackage/" target="_blank" rel="external">上一篇</a>主要是介绍打包.a静态库的一些操作,这一篇主要介绍一下打包.framework流程。<br>在接下来介绍的过程中,相信你也会慢慢体会到.framework和.a在实际应用中的关系是什么,了解了它们的关系后我们会对.framework如何打包成.a和.a如何打包成.framework进行说明,最终决定将你们的项目部分组件或功能模块打包成.framework形式的静态库比较好还是.a形式的静态库比较好由个人喜好而定,区别不大,本人更喜欢使用.framework静态库,相对来说更方便一些,不用再去管那些.h文件应该放在哪里。</p>
+<hr>
+<p><strong> <font size="4" color="black"> 第一步,新建打包.framework的项目<br></font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic1.png?imageView2/2/w/600" alt></p>
+<a id="more"></a>
+<p><strong> <font size="4" color="black"> 第二步,将下载下来的SVProgressHUD文件包拖入工程,并将.bundle文件移除,原因是.bundle文件打包到.framework中,iOS系统并不会去扫描.framework下的.bundle资源文件,与打包.a库一样,.bundle资源文件需要在外部配合使用。 </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic2.png?imageView2/2/w/600" alt></p>
+<p><strong> <font size="4" color="black"> 第三步,将需要暴露的.h文件拖拽带public区域 </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic3.png?imageView2/2/w/600" alt></p>
+<p><strong> <font size="4" color="black"> 第四部,设置编译模式为Release模式 </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic4.png?imageView2/2/w/600" alt></p>
+<p><strong> <font size="4" color="black"> 第五步,build settings 下的Mach-O Type 类型一定要改为 Static Library,因为苹果不支持动态库类型,.framework也属于静态库。 </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic5.png?imageView2/2/w/600" alt></p>
+<p><strong> <font size="4" color="black"> 第六步,分别选择真机和模拟器编译一遍,会分别生成Release-iphoneos和<br>Release-iphonesimulator两个文件夹,文件夹下便是我们编译后生成的.framework静态库。 </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic6.png?imageView2/2/w/600" alt></p>
+<p><strong> <font size="4" color="black"> 第七步,合并模拟器和真机的.framework静态库下的二进制文件,<font color="red">注意:</font>路径要具体到二进制文件而不是.framework静态库。</font>  </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic7.png?imageView2/2/w/600" alt></p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lipo -create /Users/[your<span class="built_in"> user </span>name]/Library/Developer/Xcode/DerivedData/DynamicSVProgressHUD-hhzxauickcqbyyaijmnejkydrnug/Build/Products/Release-iphoneos/DynamicSVProgressHUD.framework/DynamicSVProgressHUD /Users/[your<span class="built_in"> user </span>name]/Library/Developer/Xcode/DerivedData/DynamicSVProgressHUD-hhzxauickcqbyyaijmnejkydrnug/Build/Products/Release-iphonesimulator/DynamicSVProgressHUD.framework/DynamicSVProgressHUD -output /Users/[your<span class="built_in"> user </span>name]/Desktop/DynamicSVProgressHUD/DynamicSVProgressHUD</span><br></pre></td></tr></table></figure>
+<p>最后将任意一个.framework下的二进制文件替换成新生成的二进制文件即可。</p>
+<p><strong> <font size="4" color="black"> 第八步,我们新建一个新的工程,将我们自己生成.framework静态库拖入工程,对了,别忘了把SVProgressHUD.bundle资源文件也拖入工程,接下来run一下看看效果如下: </font> </strong></p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/Dynamic8.png?imageView2/2/w/375" alt></p>
+<p>经过这两小节的介绍我们可以发现,.framework实质就是.a + .h 组合,.a静态库也需要配合.h文件使用,只不过我们生成.framework的时候,.h已经包含到了.framework静态库里面了,而.a静态库只是一个单独的库,.h文件没有包含进去,需要配合着使用才能发挥作用。</p>
+<p>那么,如果我们想要把.framework打包成静态库.a的形式的话,只需要把.framework中的二进制文件和.h文件拖到打包.a静态库的工程中生成新的.a静态库即可。</p>
+<p>同理,如果.a静态库想打包成.framework静态库,也只需要把.h和.a文件拖入到打包.framework静态库的工程中生成.framework静态库即可。</p>
+<h2 id="打包-a和-framework静态库过程中可能会遇到问题总结">打包.a和.framework静态库过程中可能会遇到问题总结</h2><ul>
+<li>如果创建的framework中使用了category类，则在使用framework的项目配置中【Other Linker Flags】需要添加参数【-ObjC]或者【-all_load】</li>
+<li>如果使用framework的使用出现【Umbrella header for module ‘XXXX’ does not include header ‘XXXXX.h’】,是因为错把xxxxx.h拖到了public中。</li>
+<li>如果出现【dyld: Library not loaded:XXXXXX】，是因为打包的framework版本太高。比如打包framework时，选择的是iOS 9.0，而实际的工程环境是iOS 8开始的。</li>
+<li>如果创建的framework类中使用了.dylib或者.tbd，首先需要在实际项目中导入.dylib或者.tbd动态库，然后需要设置build setting 中的【Allow Non-modular Includes ….】为YES，否则会报错”Include of non-modular header inside framework module”。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/05/10/StaticsPackage3/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          制作.bundle文件
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/04/22/StaticsPackage/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">iOS打包静态库(一)</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'leonzlw'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+</div>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2023 Leon_z
+    	</div>
+	<div class="footer-right">
+      		<a href="http://leonzlw.github.io/" target="_blank">水滴石穿</a>
+      	</div>
+	<div class=“footer-center”>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<span id="busuanzi_container_site_pv">
+    total visit <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> times
+		</span>
+	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <meta http-equiv="X-UA-Compatible" content="IE=edge" >
+  <title>armv6,armv7,armv7s,arm64,i386,x86_64 | Leon’s Blog</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
+指令集
+
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="armv6,armv7,armv7s,arm64,i386,x86_64">
+<meta property="og:url" content="http://leonzlw.github.io/2016/07/02/ARM-CUP/index.html">
+<meta property="og:site_name" content="Leon’s Blog">
+<meta property="og:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
+指令集
+
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
+<meta property="og:updated_time" content="2018-02-05T19:34:22.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="armv6,armv7,armv7s,arm64,i386,x86_64">
+<meta name="twitter:description" content="我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。
+指令集
+
+指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，">
+  
+    <link rel="alternative" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+
+<body>
+  <div id="container">
+    <div class="left-col">
+    <div class="overlay"></div>
+<div class="intrude-less">
+	<header id="header" class="inner">
+		<a href="/" class="profilepic">
+			
+			<img lazy-src="http://7xob19.com1.z0.glb.clouddn.com/myblog_avatar2.pic.jpg" class="js-avatar">
+			
+		</a>
+
+		<hgroup>
+		  <h1 class="header-author"><a href="/">Leon_z</a></h1>
+		</hgroup>
+
+		
+		<p class="header-subtitle">Dreams don&#39;t work unless you do.</p>
+		
+
+		
+			<div class="switch-btn">
+				<div class="icon">
+					<div class="icon-ctn">
+						<div class="icon-wrap icon-house" data-idx="0">
+							<div class="birdhouse"></div>
+							<div class="birdhouse_holes"></div>
+						</div>
+						<div class="icon-wrap icon-ribbon hide" data-idx="1">
+							<div class="ribbon"></div>
+						</div>
+						
+						
+						<div class="icon-wrap icon-me hide" data-idx="3">
+							<div class="user"></div>
+							<div class="shoulder"></div>
+						</div>
+						
+					</div>
+					
+				</div>
+				<div class="tips-box hide">
+					<div class="tips-arrow"></div>
+					<ul class="tips-inner">
+						<li>菜单</li>
+						<li>标签</li>
+						
+						
+						<li>关于我</li>
+						
+					</ul>
+				</div>
+			</div>
+		
+
+		<div class="switch-area">
+			<div class="switch-wrap">
+				<section class="switch-part switch-part1">
+					<nav class="header-menu">
+						<ul>
+						
+							<li><a href="/">主页</a></li>
+				        
+							<li><a href="/archives">所有文章</a></li>
+				        
+						</ul>
+					</nav>
+					<nav class="header-nav">
+						<div class="social">
+							
+								<a class="github" target="_blank" href="#" title="github">github</a>
+					        
+								<a class="weibo" target="_blank" href="/“http:/weibo.com/lwzLeon”" title="weibo">weibo</a>
+					        
+								<a class="mail" target="_blank" href="/“leon_lw@126.com”" title="mail">mail</a>
+					        
+								<a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+					        
+						</div>
+					</nav>
+				</section>
+				
+				
+				<section class="switch-part switch-part2">
+					<div class="widget tagcloud" id="js-tagcloud">
+						<a href="/tags/iOS/" style="font-size: 20px;">iOS</a> <a href="/tags/出发/" style="font-size: 10px;">出发</a>
+					</div>
+				</section>
+				
+				
+				
+
+				
+				
+				<section class="switch-part switch-part3">
+				
+					<div id="js-aboutme">不一样的烟火.</div>
+				</section>
+				
+			</div>
+		</div>	
+	</header>			
+</div>
+
+    </div>
+    <div class="mid-col">
+      <nav id="mobile-nav">
+  	<div class="overlay">
+  		<div class="slider-trigger"></div>
+  		<h1 class="header-author js-mobile-header hide">Leon_z</h1>
+  	</div>
+	<div class="intrude-less">
+		<header id="header" class="inner">
+			<div class="profilepic">
+			
+				<img lazy-src="http://7xob19.com1.z0.glb.clouddn.com/myblog_avatar2.pic.jpg" class="js-avatar">
+			
+			</div>
+			<hgroup>
+			  <h1 class="header-author">Leon_z</h1>
+			</hgroup>
+			
+			<p class="header-subtitle">Dreams don&#39;t work unless you do.</p>
+			
+			<nav class="header-menu">
+				<ul>
+				
+					<li><a href="/">主页</a></li>
+		        
+					<li><a href="/archives">所有文章</a></li>
+		        
+		        <div class="clearfix"></div>
+				</ul>
+			</nav>
+			<nav class="header-nav">
+				<div class="social">
+					
+						<a class="github" target="_blank" href="#" title="github">github</a>
+			        
+						<a class="weibo" target="_blank" href="/“http:/weibo.com/lwzLeon”" title="weibo">weibo</a>
+			        
+						<a class="mail" target="_blank" href="/“leon_lw@126.com”" title="mail">mail</a>
+			        
+						<a class="facebook" target="_blank" href="#" title="facebook">facebook</a>
+			        
+				</div>
+			</nav>
+		</header>				
+	</div>
+</nav>
+
+      <div class="body-wrap"><article id="post-ARM-CUP" class="article article-type-post" itemscope itemprop="blogPost">
+  
+    <div class="article-meta">
+      <a href="/2016/07/02/ARM-CUP/" class="article-date">
+  	<time datetime="2016-07-01T16:10:37.000Z" itemprop="datePublished">2016-07-02</time>
+</a>
+    </div>
+  
+  <div class="article-inner">
+    
+      <input type="hidden" class="isFancy" />
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      armv6,armv7,armv7s,arm64,i386,x86_64
+    </h1>
+  
+
+      </header>
+      
+      <div class="article-info article-info-post">
+        
+	<div class="article-tag tagcloud">
+		<ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/iOS/">iOS</a></li></ul>
+	</div>
+
+        
+
+        <div class="clearfix"></div>
+      </div>
+      
+    
+    <div class="article-entry" itemprop="articleBody">
+      
+        <p>我们在xcode工程Build Settings中的Architectures一栏可以看到诸如armv7,arm64字样的配置信息,这类配置信息在我们日常开发过程中究竟起到什么作用,查阅了相关资料后在此整理一下。</p>
+<p><strong><font size="5">指令集</font></strong></p>
+<blockquote>
+<p>指令集是存储在CPU内部，对CPU运算进行指导和优化的硬程序。拥有这些指令集，CPU就可以更高效地运行。Intel主要有x86，EM64T，MMX，SSE，SSE2，SSE3，SSSE3 (Super SSE3)，SSE4A，SSE4.1，SSE4.2，AVX，AVX2，AVX-512，VMX等指令集。AMD主要是x86，x86-64，3D-Now!指令集。</p>
+</blockquote>
+<p>简单粗暴地理解下来就是指令集可以帮助CPU更高效地运行。</p>
+<a id="more"></a>    
+<p><strong><font size="5">ARM处理器</font></strong></p>
+<p>上面没有提到的armv6｜armv7｜armv7s｜arm64就属于ARM处理器的指令集。</p>
+<blockquote>
+<p>ARM处理器是英国Acorn有限公司设计的低功耗成本的第一款RISC微处理器。全称为Acorn RISC Machine。ARM处理器本身是32位设计，但也配备16位指令集，一般来讲比等价32位代码节省达35%，却能保留32位系统的所有优势。</p>
+</blockquote>
+<p>ARM处理器主要有这几个特点:</p>
+<ul>
+<li>体积小、低功耗、低成本、高性能</li>
+<li>支持Thumb（16位）/ARM（32位）双指令集，能很好的兼容8位/16位器件</li>
+<li>大量使用寄存器，指令执行速度更快</li>
+<li>大多数数据操作都在寄存器中完成</li>
+<li>寻址方式灵活简单，执行效率高</li>
+<li>指令长度固定</li>
+</ul>
+<p>因此几乎所有手机处理器都基于ARM,当然我们使用的iPhone系列手机就是使用的ARM处理器,也就是为什么我们xcode中要配置应用使用的指令集。</p>
+<p>armv6｜armv7｜armv7s｜arm64都是ARM处理器的指令集,这些指令集都是向下兼容的，例如armv7指令集兼容armv6，只是使用armv6的时候无法发挥出其性能，无法使用armv7的新特性，从而会导致程序执行效率没那么高。</p>
+<p>那么i386 | x86_64又是干嘛用的呢?</p>
+<ul>
+<li>i386:是针对intel通用微处理器32架构的</li>
+<li>x86_64:是针对x86架构的64位处理器</li>
+</ul>
+<p>我们在mac上运行模拟器,由于模拟器没有指令集,它使用的是mac的处理器,所以i386｜x86_64 是Mac处理器的指令集。</p>
+<p><strong><font size="5">iOS设备所使用的指令集</font></strong></p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令集</th>
+<th style="text-align:center">设备型号   </th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">arm64</td>
+<td style="text-align:center">iPhone7,iPhone6s,iphone6s plus,iPhone6,iPhone6 plus,iPhone5S,iPad Air,iPad mini2(iPad mini with Retina Display)</td>
+</tr>
+<tr>
+<td style="text-align:center">armv7s</td>
+<td style="text-align:center">iPhone5,iPhone5C,iPad4(iPad with Retina Display) </td>
+</tr>
+<tr>
+<td style="text-align:center">armv7</td>
+<td style="text-align:center">iPhone4,iPhone4S,iPad,iPad2,iPad3(The New iPad),iPad mini,iPod Touch 3G,iPod Touch4 </td>
+</tr>
+<tr>
+<td style="text-align:center">armv6</td>
+<td style="text-align:center">iPhone, iPhone2, iPhone3G, 第一代、第二代 iPod Touch（一般不需要去支持）</td>
+</tr>
+</tbody>
+</table>
+<p><strong><font size="5">指令集相关选项说明</font></strong></p>
+<p>打开xcode-&gt;Buiding Setting-&gt;Architectures可以对应用支持的指令集进行配置。</p>
+<p><strong>Architectures</strong></p>
+<blockquote>
+<p>指定工程被编译成可支持哪些指令集类型，而支持的指令集越多，就会编译出包含多个指令集代码的数据包，对应生成二进制包就越大，也就是ipa包会变大。</p>
+</blockquote>
+<p><strong>Valid Architectures</strong></p>
+<blockquote>
+<p>限制可能被支持的指令集的范围，也就是Xcode编译出来的二进制包类型最终从这些类型产生，而编译出支持哪种指令集的包，将由<code>Architectures</code>与<code>Valid Architectures</code>的交集来确定。</p>
+</blockquote>
+<p>比如Architectures设置为arm64 | armv7s | armv7,Valid Architectures设置为arm64 | armv7s,那么它最终生成的二进制包只支持armv7s指令集。</p>
+<p><strong>Build Active Architecture Only</strong></p>
+<blockquote>
+<p>设置是否只对当前连接设备所支持的指令集进行编译。当为YES时,只对当前连接设备所支持的指令集进行编译。当为NO时,会编译所有支持的指令集。</p>
+</blockquote>
+<p>一般为了在debug环境能够编译的速度加快,可以设置为NO,当要release的时候设置为YES来适配不同的设备。</p>
+<p><strong><font size="5">总结</font></strong></p>
+<ul>
+<li>armv7s,armv7打包出来的代码是32位的,arm64打包出来的代码64位的。</li>
+<li>iPhone5s以前的机型(不包含5s)的cpu是32位的,之后的机型都是64位的。</li>
+<li>设备会择优去选择更匹配的包,比如当工程配置为armv7,arm64,则包中会包含32位和64位两份代码,那么在iPhone5s设备下安装,会首选64位的代码包。</li>
+<li>若工程配置为armv7打包出来的包是32位的,iPhone5s安装也会兼容,但是会降低性能。</li>
+<li>支持arm64的系统版本最低为iOS6,如果要兼容更低版本的系统,需要配置armv7 | armv7s生成32位的包来适配。</li>
+<li>我们在开发SDK打包成.a或.framework提供给他人用时,最好做到最大化的兼容,<code>ValidArchitectures</code>设置为：armv7｜armv7s｜arm64｜i386｜x86_64 <code>Architectures</code>设置为(可根据需要调整): armv7｜arm64。</li>
+</ul>
+
+      
+    </div>
+    
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2016/07/07/URL-Schemes/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption"><</strong>
+      <div class="article-nav-title">
+        
+          iOS应用间通信
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2016/06/25/OCLint/" id="article-nav-older" class="article-nav-link-wrap">
+      <div class="article-nav-title">本地自动化Code Review集成</div>
+      <strong class="article-nav-caption">></strong>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+
+
+
+
+
+
+<section id="comments">
+  <div id="disqus_thread"></div>
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'leonzlw'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function() {
+      var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+      dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+      (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+    })();
+  </script>
+  <noscript>Please enable JavaScript to view the <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+</section>
+
+</div>
+      <script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<footer id="footer">
+  <div class="outer">
+    <div id="footer-info">
+    	<div class="footer-left">
+    		&copy; 2023 Leon_z
+    	</div>
+	<div class="footer-right">
+      		<a href="http://leonzlw.github.io/" target="_blank">水滴石穿</a>
+      	</div>
+	<div class=“footer-center”>
+		<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css">
+		<span id="busuanzi_container_site_pv">
+    total visit <span id="busuanzi_value_site_pv"><i class="fa fa-spinner fa-spin"></i></span> times
+		</span>
+	</div>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css">
+
+
+<script>
+	var yiliaConfig = {
+		fancybox: true,
+		mathjax: true,
+		animate: true,
+		isHome: false,
+		isPost: true,
+		isArchive: false,
+		isTag: false,
+		isCategory: false,
+		open_in_new: false
+	}
+</script>
+<script src="http://7.url.cn/edu/jslib/comb/require-2.1.6,jquery-1.9.1.min.js"></script>
+<script src="/js/main.js"></script>
+
+
+
+
+
+
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+    tex2jax: {
+        inlineMath: [ ['$','$'], ["\\(","\\)"]  ],
+        processEscapes: true,
+        skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    }
+});
+
+MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for(i=0; i < all.length; i += 1) {
+        all[i].SourceElement().parentNode.className += ' has-jax';                 
+    }       
+});
+</script>
+
+<script type="text/javascript" src="http://cdn.mathjax.org/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+
+
+  </div>
+</body>
+</html>
