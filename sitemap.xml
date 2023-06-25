@@ -2,23 +2,37 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://leonzlw.github.io/2016/08/10/optimizeTableImageView/</loc>
+    
+    <lastmod>2023-06-25T09:48:29.440Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://leonzlw.github.io/tags/index.html</loc>
+    
+    <lastmod>2023-06-25T08:27:46.366Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://leonzlw.github.io/categories/index.html</loc>
+    
+    <lastmod>2023-06-25T08:24:18.078Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://leonzlw.github.io/2023/06/25/CI:CD/</loc>
     
-    <lastmod>2023-06-25T03:51:31.620Z</lastmod>
+    <lastmod>2023-06-25T08:19:41.418Z</lastmod>
     
   </url>
   
   <url>
     <loc>http://leonzlw.github.io/2023/06/25/gitlab/</loc>
     
-    <lastmod>2023-06-25T03:51:31.620Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://leonzlw.github.io/2016/08/10/optimizeTableImageView/</loc>
-    
-    <lastmod>2018-02-05T19:40:45.000Z</lastmod>
+    <lastmod>2023-06-25T07:51:24.941Z</lastmod>
     
   </url>
   
