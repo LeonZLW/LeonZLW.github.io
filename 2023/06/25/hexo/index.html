@@ -1,0 +1,177 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>Hexo恢复运行问题记录 | Leon’s Blog | Dreams don&#39;t work unless you do.</title>
+
+  
+  <meta name="author" content="Leon">
+  
+
+  
+  <meta name="description" content="iOS Developer">
+  
+
+  
+  
+  <meta name="keywords" content="折腾笔记">
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="Hexo恢复运行问题记录">
+
+  <meta property="og:site_name" content="Leon’s Blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Leon’s Blog</a>
+    </h1>
+    <p class="site-description">Dreams don&#39;t work unless you do.</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>Hexo恢复运行问题记录</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2023/06/25/hexo/" rel="bookmark">
+        <time class="entry-date published" datetime="2023-06-25T10:03:07.000Z">
+          2023-06-25
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>今天清理旧电脑文件时，眼睛不经意间扫到了尘封已久的博客文件夹，一种回归写作的冲动油然而生…</p>
+<p>于是赶忙尝试运行一下，enm…果然运行不起来：</p>
+<p><img src="https://cdn.jsdelivr.net/gh/LeonZLW/Images/imgs/image-20230625200911821.png" alt></p>
+<a id="more"></a>
+<p>主要遇到的问题有：</p>
+<p>1.更新配置文件格式: 随着hexo版本更新后配置文件的格式也进行了调整</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># hexo3.22.0以下版本这样写没有问题</span></span><br><span class="line"><span class="comment"># 自动生成sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line"><span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line"><span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br><span class="line"></span><br><span class="line"><span class="comment"># hexo3.22.0以上版本，需要加空格</span></span><br><span class="line"><span class="comment">## 自动生成sitemap</span></span><br><span class="line"><span class="attr">sitemap:</span></span><br><span class="line"> <span class="attr">path:</span> <span class="string">sitemap.xml</span></span><br><span class="line"><span class="attr">baidusitemap:</span></span><br><span class="line"> <span class="attr">path:</span> <span class="string">baidusitemap.xml</span></span><br></pre></td></tr></table></figure>
+<p>2.端口冲突：默认hexo是占用4000端口</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">Error: listen EADDRINUSE:</span> <span class="string">address</span> <span class="string">already</span> <span class="string">in</span> <span class="string">use错误</span></span><br></pre></td></tr></table></figure>
+<p>使用此命令杀死占用端口的进程：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="attr">sudo lsof -i:</span> <span class="number">4000</span></span><br><span class="line"><span class="string">sudo</span> <span class="string">kill</span> <span class="number">-9</span> <span class="string">pid</span></span><br></pre></td></tr></table></figure>
+<p>或者可以通过此命令来修改hexo端口：</p>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">hexo</span> <span class="string">server</span> <span class="string">-p</span> <span class="number">5000</span>   <span class="comment">#更改端口</span></span><br></pre></td></tr></table></figure>
+<p>3.卸载、重装hexo：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">#由于太久没有升级，依赖库也非常多，通过npm命令卸载同样会报错导致无法卸载</span><br><span class="line">npm uninstall hexo-cli -g</span><br><span class="line"></span><br><span class="line">#我这里直接通过物理目录删除的方式更直接，又省去了一番折腾时间...</span><br><span class="line">cd `which hexo`/../../..</span><br><span class="line">rm -rf ./hexo ./hexo-cli</span><br></pre></td></tr></table></figure>
+<p>4.升级主题库：随着一些依赖库的升级，旧的主题包也会出现各种无法显示的问题，因此也做了更新。</p>
+<p>5.重新生成Github的SSH密钥：由于曾更新覆盖过本地密钥，因此又重新设置了一遍。</p>
+<p>上述问题解决后终于是可以正常跑起来了，但是遇到的新问题是本地显示正常，一部署到外网环境就变成了空白页面。</p>
+<p>经过一番搜索，发现空白页面的问题是由于node版本过高，hexo版本过低产生，两种解决方案：</p>
+<ul>
+<li>升级hexo：过程会很曲折…有时间折腾的可以采用这种方案</li>
+<li>降级node（推荐）：相对会比较顺利</li>
+</ul>
+<p>6.降级node：通过 <code>nvm</code> 工具来实现node版本的切换，避免造成依赖当前版node的代码无法执行。</p>
+<p>6-1：使用以下脚本安装（不通过brew安装是因为有bug）：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.1/install.sh | bash</span><br></pre></td></tr></table></figure>
+<p>6-2：接着执行：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">cd ~/.nvm</span><br><span class="line">sudo ./install.sh</span><br></pre></td></tr></table></figure>
+<p>6-3：安装结束后，重新打开 terminal 执行 <code>nvm --version</code> , 若显示版本号说明安装成功了。</p>
+<p>6-4: 用 nvm 降级 node 到 12.14.0</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span> 临时降级，只在当前terminal生效，若打开新的terminal仍旧是之前的版本</span><br><span class="line">nvm install 12.14.0</span><br><span class="line">nvm use 12.14.0</span><br><span class="line"><span class="meta">#</span> 若是全局降级，可以使用此命令</span><br><span class="line">nvm alias default 12.14.0</span><br></pre></td></tr></table></figure>
+<p>至此再重新部署就可以看到页面了</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">hexo -clean</span><br><span class="line">hexo -g</span><br><span class="line">hexo -d</span><br></pre></td></tr></table></figure>
+<p>参考：<a href="https://zhuanlan.zhihu.com/p/491881992?utm_id=0" target="_blank" rel="noopener">https://zhuanlan.zhihu.com/p/491881992?utm_id=0</a></p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/折腾笔记/">折腾笔记</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2023 Leon
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
