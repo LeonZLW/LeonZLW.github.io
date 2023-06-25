@@ -180,71 +180,6 @@
 
   
     
-    <h3 class="article-title"><a href="/2016/08/10/optimizeTableImageView/"><span>TableView优化(图片加载)</span></a></h3>
-    
-  
-
-  <div class="article-top-meta">
-    <span class="posted-on">
-      <a href="/2016/08/10/optimizeTableImageView/" rel="bookmark">
-        <time class="entry-date published" datetime="2016-08-10T08:14:26.000Z">
-          2016-08-10
-        </time>
-      </a>
-    </span>
-  </div>
-
-
-  
-
-  <div class="article-content">
-    <div class="entry">
-      
-        <p>TableView是我们开发过程中使用最频繁的UI控件之一,苹果已经为它做了很多优化(比如:cell重用池),再加上如今手机设备各方面性能的提升,让开发不需要为性能过多考虑就可以实现比较流畅的页面效果,但是同样的效果在老机型上不见得可以运行的很流畅。当下的应用中产生操作不流畅的原因往往是许多因素集合在一起导致的,比如:<strong>资源占用量过大,离屏渲染,视图层级过多,业务不正当处理阻塞主线程等等…</strong>,所以我们要从每一点抓起方可提升应用性能最大化,本篇文章将主要针对<strong>tableView上的图片加载</strong>来做优化处理。</p>
-<h1 id="图片加载过程"><strong>图片加载过程</strong></h1><p>首先要了解一下加载图片的过程:</p>
-<ol>
-<li>通过图片url下载图片</li>
-<li>写入磁盘</li>
-<li>从磁盘读取数据到内核缓冲区</li>
-<li>从内核缓冲区复制到用户空间</li>
-<li>解压缩成位图(非常耗cpu资源)</li>
-<li>将解压缩的位图传给UIImageView</li>
-<li>UIImageView传给CoreAnimation,然后提交给渲染服务</li>
-<li>渲染完成提交到帧缓冲区</li>
-<li>屏幕显示器从帧缓冲区逐行读取显示出来</li>
-</ol>
-        
-      
-    </div>
-
-  </div>
-
-  <div class="article-footer">
-    <div class="article-meta pull-left">
-
-    
-
-    
-    
-
-    <span class="post-tags">
-      <i class="icon-tags"></i>
-        <a href="/tags/iOS/">iOS</a>
-    </span>
-    
-
-    </div>
-
-    
-  </div>
-</article>
-
-
-
-  <article>
-
-  
-    
     <h3 class="article-title"><a href="/2016/07/21/iBeacon2/"><span>iBeacon调研实践(二)</span></a></h3>
     
   
@@ -529,6 +464,64 @@
 <hr>
 <blockquote>
 <p><a href="http://oclint.org/" target="_blank" rel="noopener">OCLint</a> 是一个开源的，基于 Clang 用 C++ 编写而成的，可以用于 C、C++ 和 Objective-C 的静态代码分析器。它可以在扫描的过程中动态加载规则文件（Rules），因此可以实现非常灵活的，高度可自定义的代码分析方案。它几乎可以和大多数系统无缝集成，例如 Cmake、Bear、xcodebuild、xctool、Xcode、xcpretty、Jenkins CI、Travis CI 等。</p>
+</blockquote>
+        
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/tags/iOS/">iOS</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+
+
+  <article>
+
+  
+    
+    <h3 class="article-title"><a href="/2016/06/20/AppleDoc/"><span>AppleDoc自动生成文档</span></a></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/2016/06/20/AppleDoc/" rel="bookmark">
+        <time class="entry-date published" datetime="2016-06-20T07:23:35.000Z">
+          2016-06-20
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>当项目不断扩大,团队中不断有新的成员加入,这时候就需要我们的项目有可查看的技术文档,方便新加入的成员查阅,快速地了解项目。但是这种文档如果从团队中专门调配出人去整理的话,既低效成本又高,还好iOS也有类似于java语言中的javadoc可以根据源码中的注释来生成技术文档的工具。</p>
+<p>目前iOS比较常用的自动生成文档工具有<a href="http://www.stack.nl/~dimitri/doxygen/index.html" target="_blank" rel="noopener">doxygen</a>, <a href="https://developer.apple.com/library/content/documentation/DeveloperTools/Conceptual/HeaderDoc/intro/intro.html" target="_blank" rel="noopener">headdoc</a> 和 <a href="https://github.com/tomaz/appledoc" target="_blank" rel="noopener">appledoc</a>三个,下面来看一下这三个工具的对比情况。</p>
+<p><strong>Doxygen</strong></p>
+<blockquote>
+<p>Doxygen原本是为C++开发的文档生成工具，当然它是开源的，通过一票扩展也能支持各种主流非主流语言。除了能生成HTML外，还能生成pdf和LATEXLATEX格式。在appledoc出现之前，很多人就喜欢用这个来生成ObjC代码的文档。相比HeaderDoc来说，有很多可以调教的地方。苹果官方也曾为这个工具写过文档。一切看上去都很棒，不足的地方就是，它生成的文档风格和官方文档的风格差了很多（虽然说不算太难看，但是放到Xcode里看格格不入），配置复杂等。。 </p>
 </blockquote>
         
       

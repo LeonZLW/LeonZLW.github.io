@@ -1,0 +1,216 @@
+<!DOCTYPE HTML>
+<html>
+<head><meta name="generator" content="Hexo 3.9.0">
+  <meta charset="utf-8">
+  
+  <title>TableView优化(图片加载) | Leon’s Blog | Dreams don&#39;t work unless you do.</title>
+
+  
+  <meta name="author" content="Leon">
+  
+
+  
+  <meta name="description" content="iOS Developer">
+  
+
+  
+  
+  <meta name="keywords" content>
+  
+
+  <meta id="viewport" name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+
+  <meta property="og:title" content="TableView优化(图片加载)">
+
+  <meta property="og:site_name" content="Leon’s Blog">
+
+  
+  <meta property="og:image" content="/favicon.ico">
+  
+
+  <link href="/favicon.ico" rel="icon">
+  <link rel="alternate" href="/atom.xml" title="Leon’s Blog" type="application/atom+xml">
+  <link rel="stylesheet" href="/css/style.css" media="screen" type="text/css">
+</head>
+
+
+<body>
+<div class="blog">
+  <div class="content">
+
+    <header>
+  <div class="site-branding">
+    <h1 class="site-title">
+      <a href="/">Leon’s Blog</a>
+    </h1>
+    <p class="site-description">Dreams don&#39;t work unless you do.</p>
+  </div>
+  <nav class="site-navigation">
+    <ul>
+      
+        <li><a href="/">主页</a></li>
+      
+        <li><a href="/archives">归档</a></li>
+      
+        <li><a href="/categories">分类</a></li>
+      
+        <li><a href="/tags">标签</a></li>
+      
+    </ul>
+  </nav>
+</header>
+
+    <main class="site-main posts-loop">
+    <article>
+
+  
+    
+    <h3 class="article-title"><span>TableView优化(图片加载)</span></h3>
+    
+  
+
+  <div class="article-top-meta">
+    <span class="posted-on">
+      <a href="/optimizeTableImageView.html" rel="bookmark">
+        <time class="entry-date published" datetime="2016-08-10T08:14:26.000Z">
+          2016-08-10
+        </time>
+      </a>
+    </span>
+  </div>
+
+
+  
+
+  <div class="article-content">
+    <div class="entry">
+      
+        <p>TableView是我们开发过程中使用最频繁的UI控件之一,苹果已经为它做了很多优化(比如:cell重用池),再加上如今手机设备各方面性能的提升,让开发不需要为性能过多考虑就可以实现比较流畅的页面效果,但是同样的效果在老机型上不见得可以运行的很流畅。当下的应用中产生操作不流畅的原因往往是许多因素集合在一起导致的,比如:<strong>资源占用量过大,离屏渲染,视图层级过多,业务不正当处理阻塞主线程等等…</strong>,所以我们要从每一点抓起方可提升应用性能最大化,本篇文章将主要针对<strong>tableView上的图片加载</strong>来做优化处理。</p>
+<h1 id="图片加载过程"><strong>图片加载过程</strong></h1><p>首先要了解一下加载图片的过程:</p>
+<ol>
+<li>通过图片url下载图片</li>
+<li>写入磁盘</li>
+<li>从磁盘读取数据到内核缓冲区</li>
+<li>从内核缓冲区复制到用户空间</li>
+<li>解压缩成位图(非常耗cpu资源)</li>
+<li>将解压缩的位图传给UIImageView</li>
+<li>UIImageView传给CoreAnimation,然后提交给渲染服务</li>
+<li>渲染完成提交到帧缓冲区</li>
+<li>屏幕显示器从帧缓冲区逐行读取显示出来</li>
+</ol>
+<a id="more"></a>
+<p>当我们滑动tableView图片列表时,每一个cell上的UIImageView都会进行上面的<strong>1-9步</strong>的过程,而出现性能问题的原因主要发生在<strong>第5步</strong>(在不考虑离屏渲染情况下,比如给UIImageView设置圆角,阴影等..),所以要想办法<strong>把解压缩的过程放到子线程去做</strong>,解压缩后的图片给缓存起来以供后续需要的时候使用,<code>SDWebImage</code>库就是这么去做的:</p>
+<ol>
+<li>通过图片url异步下载图片</li>
+<li>将图片异步解压缩</li>
+<li>将解压缩的图片传给UIImageView,并把url转化为存储Key将解压缩的图片缓存起来</li>
+<li>同一个url请求时,直接将缓存的解压缩图片取出来供UIImageView使用</li>
+</ol>
+<p>下面是SDWebImage把图片解压缩成可以直接渲染的UIImage的源码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">+ (UIImage *)decodedImageWithImage:(UIImage *)image &#123;</span><br><span class="line">    // while downloading huge amount of images</span><br><span class="line">    // autorelease the bitmap context</span><br><span class="line">    // and all vars to help system to free memory</span><br><span class="line">    // when there are memory warning.</span><br><span class="line">    // on iOS7, do not forget to call</span><br><span class="line">    // [[SDImageCache sharedImageCache] clearMemory];</span><br><span class="line">    </span><br><span class="line">    if (image == nil) &#123; // Prevent &quot;CGBitmapContextCreateImage: invalid context 0x0&quot; error</span><br><span class="line">        return nil;</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    @autoreleasepool&#123;</span><br><span class="line">        // do not decode animated images</span><br><span class="line">        if (image.images != nil) &#123;</span><br><span class="line">            return image;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        CGImageRef imageRef = image.CGImage;</span><br><span class="line">        </span><br><span class="line">        CGImageAlphaInfo alpha = CGImageGetAlphaInfo(imageRef);</span><br><span class="line">        BOOL anyAlpha = (alpha == kCGImageAlphaFirst ||</span><br><span class="line">                         alpha == kCGImageAlphaLast ||</span><br><span class="line">                         alpha == kCGImageAlphaPremultipliedFirst ||</span><br><span class="line">                         alpha == kCGImageAlphaPremultipliedLast);</span><br><span class="line">        if (anyAlpha) &#123;</span><br><span class="line">            return image;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        // current</span><br><span class="line">        CGColorSpaceModel imageColorSpaceModel = CGColorSpaceGetModel(CGImageGetColorSpace(imageRef));</span><br><span class="line">        CGColorSpaceRef colorspaceRef = CGImageGetColorSpace(imageRef);</span><br><span class="line">        </span><br><span class="line">        BOOL unsupportedColorSpace = (imageColorSpaceModel == kCGColorSpaceModelUnknown ||</span><br><span class="line">                                      imageColorSpaceModel == kCGColorSpaceModelMonochrome ||</span><br><span class="line">                                      imageColorSpaceModel == kCGColorSpaceModelCMYK ||</span><br><span class="line">                                      imageColorSpaceModel == kCGColorSpaceModelIndexed);</span><br><span class="line">        if (unsupportedColorSpace) &#123;</span><br><span class="line">            colorspaceRef = CGColorSpaceCreateDeviceRGB();</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        size_t width = CGImageGetWidth(imageRef);</span><br><span class="line">        size_t height = CGImageGetHeight(imageRef);</span><br><span class="line">        NSUInteger bytesPerPixel = 4;</span><br><span class="line">        NSUInteger bytesPerRow = bytesPerPixel * width;</span><br><span class="line">        NSUInteger bitsPerComponent = 8;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">        // kCGImageAlphaNone is not supported in CGBitmapContextCreate.</span><br><span class="line">        // Since the original image here has no alpha info, use kCGImageAlphaNoneSkipLast</span><br><span class="line">        // to create bitmap graphics contexts without alpha info.</span><br><span class="line">        CGContextRef context = CGBitmapContextCreate(NULL,</span><br><span class="line">                                                     width,</span><br><span class="line">                                                     height,</span><br><span class="line">                                                     bitsPerComponent,</span><br><span class="line">                                                     bytesPerRow,</span><br><span class="line">                                                     colorspaceRef,</span><br><span class="line">                                                     kCGBitmapByteOrderDefault|kCGImageAlphaNoneSkipLast);</span><br><span class="line">        </span><br><span class="line">        // Draw the image into the context and retrieve the new bitmap image without alpha</span><br><span class="line">        CGContextDrawImage(context, CGRectMake(0, 0, width, height), imageRef);</span><br><span class="line">        CGImageRef imageRefWithoutAlpha = CGBitmapContextCreateImage(context);</span><br><span class="line">        UIImage *imageWithoutAlpha = [UIImage imageWithCGImage:imageRefWithoutAlpha</span><br><span class="line">                                                         scale:image.scale</span><br><span class="line">                                                   orientation:image.imageOrientation];</span><br><span class="line">        </span><br><span class="line">        if (unsupportedColorSpace) &#123;</span><br><span class="line">            CGColorSpaceRelease(colorspaceRef);</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        CGContextRelease(context);</span><br><span class="line">        CGImageRelease(imageRefWithoutAlpha);</span><br><span class="line">        </span><br><span class="line">        return imageWithoutAlpha;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>使用SDWebImage库就可以帮助我们优化加载图片的过程了,可是这样还不够,在浏览商品列表时我们经常会快速滚动屏幕直到找到心仪的商品才会停下来看,但是在这一过程中其他的商品图片也被加载出来了,这就造成了<code>网络资源的浪费</code>和<code>用户流浪的浪费</code>,在这个网络飞速发展的时代,一眨眼一闭眼几M甚至几十M流量就跑光了,别说用户不敢用,自己用都害怕- -。</p>
+<h1 id="优化加载逻辑"><strong>优化加载逻辑</strong></h1><p>既然要把控住网络开销和用户流量流失就要针对用户的操作来<code>优化加载逻辑</code>,最终的效果希望是这个样子:</p>
+<ul>
+<li>当用户拖拽视图列表时会加载cell中的图片</li>
+<li>当用户快速滑动减速过程中cell只加载已缓存过的图片,未缓存的图片不加载(减少网络开销和图片加载开销)</li>
+<li>如果当前屏幕滚动出来的cell是属于目标区域(targetContentOffset)的cell就正常加载</li>
+<li>显示图片添加渐变过渡效果</li>
+</ul>
+<p>想要实现上面的效果,就要知道tableView什么时候发生了拖拽操作,什么时候在减速运动,然而这里要注意一下:UITableView为我们提供了<code>dragging</code>和<code>decelerating</code>属性,这两个属性并不能用来判断tableView是在被拖动还是减速过程,因为当我们<strong>连续</strong>拖拽tableView列表,这一过程dragging和decelerating的变化是这样的:</p>
+<ol>
+<li>刚刚拖拽时:dragging=YES,decelerating=NO</li>
+<li>拖拽完毕的减速过程:dragging=YES,decelerating=YES</li>
+<li>减速还未完全停止时再次拖拽:dragging=YES,decelerating=YES</li>
+</ol>
+<p>通过阅读<a href="http://tech.glowing.com/cn/practice-in-uiscrollview/" target="_blank" rel="noopener">这篇文章</a>学习到了另一种方式来替代,下面是他的核心代码,我做了一些注释去更好地理解:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView</span><br><span class="line">&#123;</span><br><span class="line">	 </span><br><span class="line">    self.targetRect = nil;</span><br><span class="line">    // 1.用户开始拖拽的时候去加载已显示在屏幕上的cell,如果不调用这个方法的话,当快速滑动图片列表在减速过程尚未完全停止的情况下又对它进行拖动操作,这时候当前屏幕上未加载出来图片的cell拖动的时候就不会重新加载图片了,因为这个cell已经在屏幕上了,不会再走cellForRowAtIndexPath方法</span><br><span class="line">    [self loadImageForVisibleCells];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset</span><br><span class="line">&#123;</span><br><span class="line">	// 2.targetRect用来记录减速到最后会停留的区域</span><br><span class="line">    CGRect targetRect = CGRectMake(targetContentOffset-&gt;x, targetContentOffset-&gt;y, scrollView.frame.size.width, scrollView.frame.size.height);</span><br><span class="line">    self.targetRect = [NSValue valueWithCGRect:targetRect];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView</span><br><span class="line">&#123;</span><br><span class="line">    self.targetRect = nil;</span><br><span class="line">    3. 最终减速到静止状态,再次对已显示在屏幕上的cell加载图片</span><br><span class="line">    [self loadImageForVisibleCells];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>是否加载图片的逻辑:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">BOOL shouldLoadImage = YES;  </span><br><span class="line">// self.targetRect是用来判断是否在减速过程当中</span><br><span class="line">// !CGRectIntersectsRect([self.targetRect CGRectValue], cellFrame)是用来判断出现的cell是否在目标区域</span><br><span class="line">// 4.这两个判断合起来的意思是:tableView正处于减速过程,显示的cell也不在目标区域才为真</span><br><span class="line">if (self.targetRect &amp;&amp; !CGRectIntersectsRect([self.targetRect CGRectValue], cellFrame)) &#123;  </span><br><span class="line">    SDImageCache *cache = [manager imageCache];</span><br><span class="line">    NSString *key = [manager cacheKeyForURL:targetURL];</span><br><span class="line">    // 判断是否有该图片的缓存</span><br><span class="line">    if (![cache imageFromMemoryCacheForKey:key]) &#123;</span><br><span class="line">        shouldLoadImage = NO;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">if (shouldLoadImage) &#123;  </span><br><span class="line">    // load image</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p><strong>代码注释1</strong>中的<code>[self loadImageForVisibleCells]</code>不去调用的话看一下效果:</p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/optimizeTableImageView1.gif" alt></p>
+<p><strong>代码注释4</strong>中的条件判断<code>!CGRectIntersectsRect([self.targetRect CGRectValue], cellFrame)</code>就是用来实现减速过程中,cell在目标区域的直接load image,不在目标区域的判断是否有图片缓存(减速过程中对有缓存的图片也加载),如果去掉这个判断的话,只有当减速完全停止的情况下才会去加载,来感受一下去掉后的效果:</p>
+<p><img src="http://7xob19.com1.z0.glb.clouddn.com/optimizeTableImageView2.gif" alt></p>
+<h1 id="我在项目中的使用"><strong>我在项目中的使用</strong></h1><p>在图片加载方面优化完tableView加载逻辑再配合SDWebImage使用就能达到一个比较不错的效果。由于项目中大多数页面都需要加载图片,所以不可能在每一个页面都去写重复的优化代码,因此我把这部分的优化进行了封装。</p>
+<p><strong>创建UIViewController Category</strong></p>
+<ol>
+<li><p>首先要通过<code>scrollViewWillBeginDragging</code>,<code>scrollViewWillEndDragging:withVelocity:targetContentOffset:</code>,<code>scrollViewDidEndDecelerating</code>协议方法来捕捉tableView的运动状态,但是又不想写在每一个控制器页面,因此我创建了一个UIViewController的分类UIViewController+LEOCellTargetRect来实现这些协议方法,只要你在需要优化页面的控制器实现了UITableViewDelegate(UIScrollViewDelegate)协议,当tableView被操作的时候就会调用分类中的协议方法。</p>
+</li>
+<li><p>然后通过关联对象的方式来为分类<code>添加targetRect属性</code>和<code>把block关联到对象上</code></p>
+</li>
+</ol>
+<p>UIViewController+LEOCellTargetRect分类的实现代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIViewController (LEOCellTargetRect)</span><br><span class="line"></span><br><span class="line">- (NSValue *)targetRect &#123;</span><br><span class="line">   return objc_getAssociatedObject(self, &amp;LEO_TARGETRECT_KEY);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)setTargetRect:(NSValue *)targetRect &#123;</span><br><span class="line">    objc_setAssociatedObject(self, &amp;LEO_TARGETRECT_KEY, targetRect, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)lvh_loadVisibleCellHandle:(LEOLoadVisibleCellHandler)handler &#123;</span><br><span class="line">    objc_setAssociatedObject(self, &amp;LEO_VISIBLECELLBLOCK_KEY, handler, OBJC_ASSOCIATION_COPY_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)scrollViewWillBeginDragging:(UIScrollView *)scrollView &#123;</span><br><span class="line">    </span><br><span class="line">    self.targetRect = nil;</span><br><span class="line">    // 1.用户开始拖拽的时候去加载已显示在屏幕上的cell,如果不调用这个方法的话,当快速滑动图片列表在减速过程尚未完全停止的情况下又对它进行拖动操作,这时候当前屏幕上未加载出来图片的cell拖动的时候就不会重新加载图片了,因为这个cell已经在屏幕上了,不会再走cellForRowAtIndexPath方法</span><br><span class="line">    [self p_loadVisibleCellInScrollView:scrollView];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)scrollViewWillEndDragging:(UIScrollView *)scrollView withVelocity:(CGPoint)velocity targetContentOffset:(inout CGPoint *)targetContentOffset &#123;</span><br><span class="line">    </span><br><span class="line">    // 2.targetRect用来记录减速到最后会停留的区域</span><br><span class="line">    CGRect targetRect = CGRectMake(targetContentOffset-&gt;x, targetContentOffset-&gt;y, scrollView.bounds.size.width, scrollView.bounds.size.height);</span><br><span class="line">    self.targetRect = [NSValue valueWithCGRect:targetRect];</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView &#123;</span><br><span class="line">    </span><br><span class="line">    self.targetRect = nil;</span><br><span class="line">    </span><br><span class="line">    // 3. 最终减速到静止状态,再次对已显示在屏幕上的cell加载图片</span><br><span class="line">    [self p_loadVisibleCellInScrollView:scrollView];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)p_loadVisibleCellInScrollView:(UIScrollView *)scrollView &#123;</span><br><span class="line">    </span><br><span class="line">    LEOLoadVisibleCellHandler block = objc_getAssociatedObject(self, &amp;LEO_VISIBLECELLBLOCK_KEY);</span><br><span class="line">    block(scrollView);</span><br><span class="line">    </span><br><span class="line">    if (block) &#123;</span><br><span class="line">        block(scrollView);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>在需要优化的页面这样使用:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">[self lvh_loadVisibleCellHandle:^(UITableView *tableView) &#123;</span><br><span class="line">        // 由于每一个页面的数据都不相同,所以数据方面的处理放在block中进行</span><br><span class="line">        // 获取可见的cell数组,然后便利数组,对每一个可见的cell进行图片加载操作</span><br><span class="line">        NSArray *visibleCells = [tableView visibleCells];</span><br><span class="line">        for (LEOImageCell *cell in visibleCells) &#123;</span><br><span class="line">            </span><br><span class="line">            NSIndexPath *indexPath = [tableView indexPathForCell:cell];</span><br><span class="line">            NSDictionary *itemDic = weakSelf.imageSource[indexPath.row];</span><br><span class="line">            // 获取cell在tableView中的位置</span><br><span class="line">            CGRect cellFrame = [weakSelf.showImageTableView rectForRowAtIndexPath:indexPath];</span><br><span class="line">            // 把需要的参数传入到cell方法中对UIImageView进行操作(内部实现借助下面提到的UIImageView去做)</span><br><span class="line">            [cell loadVisibleWithItem:itemDic targetRect:weakSelf.targetRect cellFrame:cellFrame];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br></pre></td></tr></table></figure>
+<p><strong>UIImageView Category</strong></p>
+<p>最终不管是哪个cell,都要通过UIImageView来进行加载图片,所以我们可以通过创建一个UIImageView的分类来处理加载逻辑,再创建一个UIImageView的分类来做动画过渡效果:</p>
+<p>1.UIImageView+LEOVisibleImageViewOfCell处理加载逻辑的实现代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIImageView (LEOVisibleImageViewOfCell)</span><br><span class="line"></span><br><span class="line">- (void)lvc_loadVisibleImageWithURL:(NSURL *)imageURL</span><br><span class="line">                        targetRect:(NSValue *)aTargetRect</span><br><span class="line">                         cellFrame:(CGRect)aCellFrame &#123;</span><br><span class="line">    </span><br><span class="line">    // 先判断当前imageView上的图片url 是否与当前要显示的url一致 如果一致的话就不走括号里的处理逻辑 使用当前的图片</span><br><span class="line">    if (![[self sd_imageURL] isEqual:imageURL]) &#123;</span><br><span class="line">        </span><br><span class="line">        BOOL shouldLoadImage = YES;</span><br><span class="line">        SDWebImageManager *manager = [SDWebImageManager sharedManager];</span><br><span class="line">        </span><br><span class="line">        // self.targetRect是用来判断是否在减速过程当中</span><br><span class="line">        // !CGRectIntersectsRect([self.targetRect CGRectValue], cellFrame)是用来判断出现的cell是否在目标区域</span><br><span class="line">        // 4.这两个判断合起来的意思是:tableView正处于减速过程,显示的cell也不在目标区域才为真</span><br><span class="line">        if (aTargetRect &amp;&amp; !CGRectIntersectsRect([aTargetRect CGRectValue], aCellFrame)) &#123;</span><br><span class="line">            </span><br><span class="line">            SDImageCache *cache = [manager imageCache];</span><br><span class="line">            NSString *key = [manager cacheKeyForURL:imageURL];</span><br><span class="line">            </span><br><span class="line">            // 如果不存磁盘 只需要改成imageFromeMemoryCacheForkey:</span><br><span class="line">            if (![cache imageFromDiskCacheForKey:key]) &#123;</span><br><span class="line">                shouldLoadImage = NO;</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        </span><br><span class="line">        UIImage *placeholderImage = [UIImage imageNamed:@&quot;&quot;];</span><br><span class="line">        //3. 加载图片</span><br><span class="line">        if (shouldLoadImage) &#123;</span><br><span class="line">            [self lad_setImageFadeInWithURL:imageURL placeholderImage:placeholderImage];</span><br><span class="line">        &#125;else &#123;</span><br><span class="line">            self.image = placeholderImage;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>2.UIImageView+LEOAnimationLoad动画过渡效果的实现代码:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">@implementation UIImageView (LEOAnimationLoad)</span><br><span class="line"></span><br><span class="line">- (void)lad_setImageFadeInWithURL:(NSURL *)url</span><br><span class="line">                placeholderImage:(UIImage *)placehoderImage &#123;</span><br><span class="line">    </span><br><span class="line">    [self lad_setImageWithURL:url placeholderImage:placehoderImage options:SDWebImageRetryFailed | SDWebImageLowPriority duratingTime:0.5f];</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">- (void)lad_setImageWithURL:(NSURL *)url</span><br><span class="line">          placeholderImage:(UIImage *)image</span><br><span class="line">                   options:(SDWebImageOptions)option</span><br><span class="line">              duratingTime:(NSTimeInterval)duration  &#123;</span><br><span class="line">    </span><br><span class="line">    [self sd_setImageWithURL:url placeholderImage:image options:option completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) &#123;</span><br><span class="line">        </span><br><span class="line">        //针对没缓存过的图片做动画</span><br><span class="line">        if (image &amp;&amp; cacheType == SDImageCacheTypeNone)  &#123;</span><br><span class="line">            CATransition *fadeIn = [CATransition animation];</span><br><span class="line">            fadeIn.type = @&quot;fade&quot;;</span><br><span class="line">            fadeIn.duration = duration;</span><br><span class="line">            fadeIn.timingFunction = [CAMediaTimingFunction functionWithName:kCAMediaTimingFunctionEaseIn];</span><br><span class="line">            [self.layer addAnimation:fadeIn forKey:@&quot;fadeIn&quot;];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+<p>最后别忘了在<code>tableView:cellForRowAtIndexPath:</code>方法中对cell进行图片加载操作:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">__weak typeof(self) weakSelf = self;</span><br><span class="line">   LEOTableViewCellConfigBlock configCellBlock = ^(LEOImageCell *cell, NSDictionary *itemDic,NSIndexPath *currentIndexPath) &#123;</span><br><span class="line">       </span><br><span class="line">       CGRect cellFrame = [weakSelf.showImageTableView rectForRowAtIndexPath:currentIndexPath];</span><br><span class="line">       </span><br><span class="line">       [cell loadVisibleWithItem:itemDic targetRect:weakSelf.targetRect cellFrame:cellFrame];</span><br><span class="line">   &#125;;</span><br></pre></td></tr></table></figure>
+<p>我这里是对tableView的<code>dataSource</code>抽离到了另一个单独类中(瘦Controller处理),通过block回调来实现的,block中的代码就相当于写在了<code>tableView:cellForRowAtIndexPath:</code>中。</p>
+<p>另外要注意,在这里我通过创建UIViewController的Category来实现tableView的那三个代理方法,意思是说:</p>
+<ul>
+<li>只要tableView的代理对象是UIViewController就会触发Category中的代理方法,如果其他UIViewController的Category也实现了这些协议方法,编译器将决定以最后添加的那个Category为主(Category的特性)。</li>
+<li>如果要在当前的UIViewController重写Category中的这三个代理方法,那么需要把Category中的实现代码也要copy过去,因为重写过后Category中的实现就没用了。</li>
+<li>可以考虑把这三个代理方法从UIViewController的Category中转移到具体的基类当中</li>
+</ul>
+<p>至此对图片加载这一块的优化就做完了,代码已上传<a href="https://github.com/LeonZLW/LEOLazyLoad" target="_blank" rel="noopener">GitHub</a>,欢迎指正与吐槽。^ ^</p>
+
+      
+    </div>
+
+  </div>
+
+  <div class="article-footer">
+    <div class="article-meta pull-left">
+
+    
+
+    
+    
+
+    <span class="post-tags">
+      <i class="icon-tags"></i>
+        <a href="/undefined">undefined</a>
+    </span>
+    
+
+    </div>
+
+    
+  </div>
+</article>
+
+  
+
+
+
+
+
+
+
+
+
+    </main>
+
+    <footer class="site-footer">
+  <p class="site-info">
+    Proudly powered by <a href="https://hexo.io/" target="_blank">Hexo</a> and
+    Theme by <a href="https://github.com/CodeDaraW/Hacker" target="_blank">Hacker</a>
+    </br>
+    
+    &copy; 2023 Leon
+    
+  </p>
+</footer>
+    
+    
+  </div>
+</div>
+</body>
+</html>
